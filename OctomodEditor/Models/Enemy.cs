@@ -9,7 +9,7 @@ namespace OctomodEditor.Models
 {
     public class Enemy
     {
-        public byte[] Offset { get; set; }
+        public int Offset { get; set; }
         public string Key { get; set; }
         public int EnemyID { get; set; }
         public string DisplayNameID { get; set; }
@@ -70,13 +70,13 @@ namespace OctomodEditor.Models
         public string[] AbilityList { get; set; }
         public string[] BattleEvents { get; set; }
         public Vector3 DiseaseOffset { get; set; }
-        public Tuple<int, int, int> EffectOffset1 { get; set; }
-        public Tuple<int, int, int> EffectOffset2 { get; set; }
-        public Tuple<int, int, int> DamageUIOffset { get; set; }
-        public Tuple<int, int> IconL { get; set; }
-        public Tuple<int, int> PixelScaleL { get; set; }
-        public Tuple<int, int> IconS { get; set; }
-        public Tuple<int, int> PixelScaleS { get; set; }
+        public Vector3 EffectOffset1 { get; set; }
+        public Vector3 EffectOffset2 { get; set; }
+        public Vector3 DamageUIOffset { get; set; }
+        public Vector2 IconL { get; set; }
+        public Vector2 PixelScaleL { get; set; }
+        public Vector2 IconS { get; set; }
+        public Vector2 PixelScaleS { get; set; }
     }
 
     public enum CharacterRace { RACE0, RACE1 }
