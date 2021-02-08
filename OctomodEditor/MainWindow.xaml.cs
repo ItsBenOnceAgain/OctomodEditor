@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OctomodEditor.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,7 @@ namespace OctomodEditor
         {
             InitializeComponent();
         }
+
+        public void OnTestClick(object sender, RoutedEventArgs e) => EnemyDBParser.ParseEnemyObjects(@"../../Test/EnemyDB.uasset", @"../../Test/EnemyDB.uexp");
     }
 }

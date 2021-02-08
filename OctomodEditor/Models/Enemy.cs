@@ -23,7 +23,7 @@ namespace OctomodEditor.Models
         public bool IsNPC { get; set; }
         public bool PlaysSlowAnimationOnDeath { get; set; }
         public bool IsMainEnemy { get; set; }
-        public bool IsNotPartOfBattle { get; set; }
+        public bool IsExemptFromBattle { get; set; }
         public bool UsesCatDamageType { get; set; }
         public bool HasNoKnockbackAnimation { get; set; }
         public int HP { get; set; }
@@ -44,34 +44,34 @@ namespace OctomodEditor.Models
         public int MoneyFromCollecting { get; set; }
         public bool CanBeCaptured { get; set; }
         public double DefaultTameRate { get; set; }
-        public string InvadeMonsterID { get; set; }
+        public string CapturedEnemyID { get; set; }
         public int FirstBP { get; set; }
         public string BreakType { get; set; }
         public int InvocationValue { get; set; }
         public int InvocationTurn { get; set; }
         public EnemyDeadType DeadType { get; set; }
-        public bool ResistsSwords { get; set; }
-        public bool ResistsSpears { get; set; }
-        public bool ResistsDaggers { get; set; }
-        public bool ResistsAxes { get; set; }
-        public bool ResistsBows { get; set; }
-        public bool ResistsStaves { get; set; }
-        public bool ResistsFire { get; set; }
-        public bool ResistsIce { get; set; }
-        public bool ResistsLightning { get; set; }
-        public bool ResistsWind { get; set; }
-        public bool ResistsLight { get; set; }
-        public bool ResistsDark { get; set; }
-        public bool[] AttributeResistances { get; set; }
-        public bool GuardedFromStealing { get; set; }
+        public bool IsWeakToSwords { get; set; }
+        public bool IsWeakToSpears { get; set; }
+        public bool IsWeakToDaggers { get; set; }
+        public bool IsWeakToAxes { get; set; }
+        public bool IsWeakToBows { get; set; }
+        public bool IsWeakToStaves { get; set; }
+        public bool IsWeakToFire { get; set; }
+        public bool IsWeakToIce { get; set; }
+        public bool IsWeakToLightning { get; set; }
+        public bool IsWeakToWind { get; set; }
+        public bool IsWeakToLight { get; set; }
+        public bool IsWeakToDark { get; set; }
+        public AttributeResistance[] AttributeResistances { get; set; }
+        public bool IsGuardedFromStealing { get; set; }
         public string ItemID { get; set; }
         public int ItemDropPercentage { get; set; }
         public string AIPath { get; set; }
         public string[] AbilityList { get; set; }
         public string[] BattleEvents { get; set; }
         public Vector3 DiseaseOffset { get; set; }
-        public Vector3 EffectOffset1 { get; set; }
-        public Vector3 EffectOffset2 { get; set; }
+        public Vector3 EnemyEffectOffset { get; set; }
+        public Vector3 StatusUIOffset { get; set; }
         public Vector3 DamageUIOffset { get; set; }
         public Vector2 IconL { get; set; }
         public Vector2 PixelScaleL { get; set; }
@@ -79,9 +79,11 @@ namespace OctomodEditor.Models
         public Vector2 PixelScaleS { get; set; }
     }
 
-    public enum CharacterRace { RACE0, RACE1 }
+    public enum AttributeResistance { NONE, WEAK, REDUCE, INVALID}
+    
+    public enum CharacterRace { UNKNOWN, HUMAN, BEAST, INSECT, BIRD, FISH, DRAGON, PLANT, CHIMERA, SHELL, UNDEAD, DEVIL }
 
     public enum CharacterSize { SMALL, MEDIUM, LARGE }
 
-    public enum EnemyDeadType { DEADTYPE0, DEADTYPE1, DEADTYPE2, DEADTYPE3, DEADTYPE4, }
+    public enum EnemyDeadType { DEADTYPE0, DEADTYPE1, DEADTYPE2, DEADTYPE3, DEADTYPE4, DEADTYPE5 }
 }
