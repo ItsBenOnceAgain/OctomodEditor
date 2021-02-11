@@ -1,0 +1,749 @@
+﻿<UserControl x:Class="OctomodEditor.Canvases.EnemyEditorCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OctomodEditor.Canvases"
+             xmlns:converters="clr-namespace:OctomodEditor.ValueConverters"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <converters:EnemyIDValueConverter x:Key="EnemyIdConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="92*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="70*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Category"
+                       FontSize="16"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Style="{DynamicResource ResourceKey=LabelFontColor}">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Label.Background>
+                </Label>
+                <ComboBox x:Name="CategoryComboBox"
+                          FontSize="16"
+                          VerticalContentAlignment="Center"
+                          SelectedValuePath="Content"
+                          SelectionChanged="CategoryComboBox_SelectionChanged"
+                          Grid.Row="1">
+                    <ComboBoxItem>Frostlands</ComboBoxItem>
+                    <ComboBoxItem>Flatlands</ComboBoxItem>
+                    <ComboBoxItem>Coastlands</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">Highlands</ComboBoxItem>
+                    <ComboBoxItem>Sunlands</ComboBoxItem>
+                    <ComboBoxItem>Riverlands</ComboBoxItem>
+                    <ComboBoxItem>Cliftlands</ComboBoxItem>
+                    <ComboBoxItem>Woodlands</ComboBoxItem>
+                    <ComboBoxItem>Bosses</ComboBoxItem>
+                    <ComboBoxItem>Events</ComboBoxItem>
+                    <ComboBoxItem>NPCs</ComboBoxItem>
+                    <ComboBoxItem>Other</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Enemy"
+                       FontSize="16"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Style="{DynamicResource ResourceKey=LabelFontColor}">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Label.Background>
+                </Label>
+                <ComboBox x:Name="EnemyComboBox"
+                          FontSize="16"
+                          VerticalContentAlignment="Center"
+                          ItemsSource="{Binding CurrentEnemyList}"
+                          SelectionChanged="EnemyComboBoxSelectionChanged"
+                          Grid.Row="1"/>
+            </Grid>
+            <Label Grid.Column="2"
+                    x:Name="EnemyNameLabel"
+                    Margin="10"
+                    Padding="10"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="{Binding CurrentEnemy}"
+                    HorizontalAlignment="Right"
+                    VerticalContentAlignment="Center">
+                <Label.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Label.Background>
+            </Label>
+            <Label Grid.Column="3"
+                    x:Name="EnemyIdLabel"
+                    Margin="10"
+                    Padding="10"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="{Binding CurrentEnemy.EnemyID, Converter={StaticResource EnemyIdConverter}}"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Center">
+                <Label.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="10">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="5"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Stats - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="35*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Image Source="/Resources/Images/HP.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="HP: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Column="1"
+                             x:Name="EnemyHPTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.HP}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
+                    <DockPanel Grid.Row="1">
+                        <Image Source="/Resources/Images/Shields.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Shields: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             x:Name="EnemyShieldTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.Shields}"/>
+                    <DockPanel Grid.Row="2">
+                        <Image Source="/Resources/Images/PhysicalAttack.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="P. Attack: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             x:Name="EnemyPAttackTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.PhysicalAttack}"/>
+                    <DockPanel Grid.Row="3">
+                        <Image Source="/Resources/Images/PhysicalDefense.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="P. Def: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             x:Name="EnemyPDefenseTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.PhysicalDefense}"/>
+                    <DockPanel Grid.Row="4">
+                        <Image Source="/Resources/Images/MagicAttack.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="M. Attack: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="4" Grid.Column="1"
+                             x:Name="EnemyMAttackTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.ElementalAttack}"/>
+                    <DockPanel Grid.Row="5">
+                        <Image Source="/Resources/Images/MagicDefense.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="M. Def: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="5" Grid.Column="1"
+                             x:Name="EnemyMDefenseTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.ElementalDefense}"/>
+                    <DockPanel Grid.Row="6">
+                        <Image Source="/Resources/Images/Accuracy.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Accuracy: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="6" Grid.Column="1"
+                             x:Name="EnemyAccuracyTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.Accuracy}"/>
+                    <DockPanel Grid.Row="7">
+                        <Image Source="/Resources/Images/Evasion.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Evasion: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="7" Grid.Column="1"
+                             x:Name="EnemyEvasionTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.Evasion}"/>
+                    <DockPanel Grid.Row="8">
+                        <Image Source="/Resources/Images/Critical.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Critical: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="8" Grid.Column="1"
+                             x:Name="EnemyCriticalTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.Critical}"/>
+                    <DockPanel Grid.Row="9">
+                        <Image Source="/Resources/Images/Speed.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Speed: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="9" Grid.Column="1"
+                             x:Name="EnemySpeedTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.Speed}"/>
+                </Grid>
+            </Grid>
+            <Grid Margin="10" Grid.Column="1">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="5"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Rewards/Other Info - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="35*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Image Source="/Resources/Images/Ability3.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="EXP: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="1">
+                        <Image Source="/Resources/Images/Starseer.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="JP: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="2">
+                        <Image Source="/Resources/Images/Leaves.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Leaves: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="3">
+                        <Image Source="/Resources/Images/Ability1.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Collect: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="4">
+                        <Image Source="/Resources/Images/Item.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Item: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="5">
+                        <Image Source="/Resources/Images/Unknown.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Drop %: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="6">
+                        <Image Source="/Resources/Images/Hunter.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Tame Rate: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="7">
+                        <Image Source="/Resources/Images/Ability4.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Level: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="8">
+                        <Image Source="/Resources/Images/Warrior.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Damage Ratio: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="9">
+                        <Image Source="/Resources/Images/Support.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Size: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+            <Grid Margin="10" Grid.Column="2">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="5"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Weaknesses - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="35*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Image Source="/Resources/Images/Sword.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Swords: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="1">
+                        <Image Source="/Resources/Images/Spear.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Spears: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="2">
+                        <Image Source="/Resources/Images/Dagger.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Daggers: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="3">
+                        <Image Source="/Resources/Images/Axe.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Axes: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="4">
+                        <Image Source="/Resources/Images/Bow.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Bows: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="5">
+                        <Image Source="/Resources/Images/Staff.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Staves: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="6">
+                        <Image Source="/Resources/Images/FireColor.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Fire: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="7">
+                        <Image Source="/Resources/Images/IceColor.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Ice: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="8">
+                        <Image Source="/Resources/Images/LightningColor.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Lightning: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="9">
+                        <Image Source="/Resources/Images/WindColor.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Wind: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="10">
+                        <Image Source="/Resources/Images/LightColor.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Light: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="11">
+                        <Image Source="/Resources/Images/DarkColor.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Dark: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+            <Grid Margin="10" Grid.Column="3">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="5"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Resistances - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="35*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Image Source="/Resources/Images/Poison.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 1: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="1">
+                        <Image Source="/Resources/Images/Blindness.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 2: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="2">
+                        <Image Source="/Resources/Images/Silence.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 3: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="3">
+                        <Image Source="/Resources/Images/Unconcious.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 4: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="4">
+                        <Image Source="/Resources/Images/Terror.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 5: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="5">
+                        <Image Source="/Resources/Images/Debuff.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 6: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="6">
+                        <Image Source="/Resources/Images/Sleep.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 7: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="7">
+                        <Image Source="/Resources/Images/ToxicRainbow.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 8: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="8">
+                        <Image Source="/Resources/Images/PeerlessPoison.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 9: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="9">
+                        <Image Source="/Resources/Images/Confusion.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 10: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="10">
+                        <Image Source="/Resources/Images/Leghold.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 11: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Grid.Row="11">
+                        <Image Source="/Resources/Images/Petrify.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Attribute 12: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

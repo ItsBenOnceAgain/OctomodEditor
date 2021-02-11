@@ -30,6 +30,60 @@ namespace OctomodEditor.Utilities
             return enemyObjects;
         }
 
+        public static void SaveEnemy(Enemy enemy, string path, string newPath)
+        {
+            string fileName = "EnemyDB";
+            string uassetPath = $"{path}\\{fileName}.uasset";
+            string uexpPath = $"{path}\\{fileName}.uexp";
+            string newUexpPath = $"{newPath}\\{fileName}.uexp";
+            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+
+            byte[] allBytes = File.ReadAllBytes(uexpPath);
+            SaveAttributeResistances(enemy, allBytes, uassetStrings);
+            if (!Directory.Exists(newPath))
+            {
+                Directory.CreateDirectory(newPath);
+            }
+            File.WriteAllBytes(newUexpPath, allBytes);
+        }
+
+        public static void SaveAttributeResistances(Enemy enemy, byte[] allBytes, Dictionary<int, string> uassetStrings)
+        {
+            int attributeOffset = 1470 + enemy.Offset;
+            foreach(var attribute in enemy.AttributeResistances)
+            {
+                byte[] attributeBytes = GetBytesFromAttributeResistanceType(uassetStrings, attribute);
+                allBytes[attributeOffset] = attributeBytes[0];
+                allBytes[attributeOffset + 1] = attributeBytes[1];
+                allBytes[attributeOffset + 2] = attributeBytes[2];
+                allBytes[attributeOffset + 3] = attributeBytes[3];
+                attributeOffset += 8;
+            }
+        }
+
+        public static byte[] GetBytesFromAttributeResistanceType(Dictionary<int, string> uassetStrings, AttributeResistance resistance)
+        {
+            int uassetValue = 0;
+            switch (resistance)
+            {
+                case AttributeResistance.NONE:
+                    uassetValue = uassetStrings.Single(x => x.Value == "EATTRIBUTE_RESIST::NewEnumerator0").Key;
+                    break;
+                case AttributeResistance.WEAK:
+                    uassetValue = uassetStrings.Single(x => x.Value == "EATTRIBUTE_RESIST::NewEnumerator1").Key;
+                    break;
+                case AttributeResistance.REDUCE:
+                    uassetValue = uassetStrings.Single(x => x.Value == "EATTRIBUTE_RESIST::NewEnumerator2").Key;
+                    break;
+                case AttributeResistance.INVALID:
+                    uassetValue = uassetStrings.Single(x => x.Value == "EATTRIBUTE_RESIST::NewEnumerator3").Key;
+                    break;
+                default:
+                    throw new ArgumentException("Received a string that did not match an attribute resistance.");
+            }
+            return BitConverter.GetBytes(uassetValue);
+        }
+
         public static Enemy ParseSingleEnemy(Dictionary<int, string> uassetStrings, byte[] allBytes, ref int currentOffset)
         {
             int enemyOffset = currentOffset;

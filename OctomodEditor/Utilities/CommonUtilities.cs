@@ -48,7 +48,14 @@ namespace OctomodEditor.Utilities
             currentOffset += 4;
             if (BitConverter.ToInt32(mainArray, currentOffset) != 0)
             {
-                stringValue += $"_{(BitConverter.ToInt32(mainArray, currentOffset) - 1):D3}";
+                if(uassetStrings.ContainsValue($"{stringValue}_{(BitConverter.ToInt32(mainArray, currentOffset) - 1):D3}"))
+                {
+                    stringValue += $"_{(BitConverter.ToInt32(mainArray, currentOffset) - 1):D1}";
+                }
+                else
+                {
+                    stringValue += $"_{(BitConverter.ToInt32(mainArray, currentOffset) - 1):D3}";
+                }
             }
             return stringValue;
         }

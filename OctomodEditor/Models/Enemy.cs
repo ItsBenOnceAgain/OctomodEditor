@@ -77,6 +77,11 @@ namespace OctomodEditor.Models
         public Vector2 PixelScaleL { get; set; }
         public Vector2 IconS { get; set; }
         public Vector2 PixelScaleS { get; set; }
+
+        public override string ToString()
+        {
+            return MainWindow.MasterGameText.ContainsKey(DisplayNameID) ? IsNPC ? $"{MainWindow.MasterGameText[DisplayNameID]} (ID: {EnemyID})" : MainWindow.MasterGameText[DisplayNameID] : Key;
+        }
     }
 
     public enum AttributeResistance { NONE, WEAK, REDUCE, INVALID}

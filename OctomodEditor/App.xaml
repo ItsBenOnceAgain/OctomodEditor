@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:OctomodEditor"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Label" x:Key="LabelFontColor">
+            <Setter Property="Foreground" Value="LightGray"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="Padding" Value="5 2"/>
+        </Style>
     </Application.Resources>
 </Application>

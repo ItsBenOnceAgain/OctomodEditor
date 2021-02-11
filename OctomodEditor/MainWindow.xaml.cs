@@ -1,6 +1,11 @@
-﻿using OctomodEditor.Utilities;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OctomodEditor.Canvases;
+using OctomodEditor.Models;
+using OctomodEditor.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +26,23 @@ namespace OctomodEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Dictionary<string, string> MasterGameText { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            MasterGameText = GameTextParser.ParseGameText("EN");
         }
 
-        public void OnTestClick(object sender, RoutedEventArgs e) => EnemyDBParser.ParseEnemyObjects(@"../../Test/EnemyDB.uasset", @"../../Test/EnemyDB.uexp");
+        private void EnemySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            foreach(var child in OptionStackPanel.Children)
+            {
+                ((Label)child).Background.Opacity = 0.5;
+            }
+            EnemySelectorLabel.Background.Opacity = 0.8;
+            Dictionary<string, Enemy> enemyData = EnemyDBParser.ParseEnemyObjects(@"../../Test/EnemyDB.uasset", @"../../Test/EnemyDB.uexp");
+            DataGrid.Children.Clear();
+            DataGrid.Children.Add(new EnemyEditorCanvas(new EnemyViewModel(enemyData)));
+        }
     }
 }

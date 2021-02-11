@@ -34,7 +34,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>MainIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
@@ -59,8 +65,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Canvases\EnemyEditorCanvas.xaml.cs">
+      <DependentUpon>EnemyEditorCanvas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EnemyViewModel.cs" />
     <Compile Include="Utilities\CommonUtilities.cs" />
     <Compile Include="Utilities\EnemyDBParser.cs" />
+    <Compile Include="Utilities\GameTextParser.cs" />
+    <Compile Include="ValueConverters\EnemyIDValueConverter.cs" />
+    <Page Include="Canvases\EnemyEditorCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,9 +114,108 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Fonts\smorgasbord\Smorgasbord.otf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\OctomodLogo.png" />
+    <Resource Include="Resources\Images\Orsterra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\MainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\MainIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Ability1.png" />
+    <Resource Include="Resources\Images\Ability2.png" />
+    <Resource Include="Resources\Images\Ability3.png" />
+    <Resource Include="Resources\Images\Ability4.png" />
+    <Resource Include="Resources\Images\Ability5.png" />
+    <Resource Include="Resources\Images\Accuracy.png" />
+    <Resource Include="Resources\Images\Axe.png" />
+    <Resource Include="Resources\Images\Bow.png" />
+    <Resource Include="Resources\Images\Critical.png" />
+    <Resource Include="Resources\Images\Dagger.png" />
+    <Resource Include="Resources\Images\Dark.png" />
+    <Resource Include="Resources\Images\DarkColor.png" />
+    <Resource Include="Resources\Images\Evasion.png" />
+    <Resource Include="Resources\Images\Fire.png" />
+    <Resource Include="Resources\Images\FireColor.png" />
+    <Resource Include="Resources\Images\HP.png" />
+    <Resource Include="Resources\Images\Ice.png" />
+    <Resource Include="Resources\Images\IceColor.png" />
+    <Resource Include="Resources\Images\Light.png" />
+    <Resource Include="Resources\Images\LightColor.png" />
+    <Resource Include="Resources\Images\Lightning.png" />
+    <Resource Include="Resources\Images\LightningColor.png" />
+    <Resource Include="Resources\Images\MagicAttack.png" />
+    <Resource Include="Resources\Images\MagicDefense.png" />
+    <Resource Include="Resources\Images\PhysicalAttack.png" />
+    <Resource Include="Resources\Images\PhysicalDefense.png" />
+    <Resource Include="Resources\Images\Shields.png" />
+    <Resource Include="Resources\Images\SP.png" />
+    <Resource Include="Resources\Images\Spear.png" />
+    <Resource Include="Resources\Images\Speed.png" />
+    <Resource Include="Resources\Images\Staff.png" />
+    <Resource Include="Resources\Images\Sword.png" />
+    <Resource Include="Resources\Images\Wind.png" />
+    <Resource Include="Resources\Images\WindColor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\OctomodLogoWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Leaves.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Hunter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Starseer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Warrior.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Support.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Poison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AccuracyDown.png" />
+    <Resource Include="Resources\Images\Blindness.png" />
+    <Resource Include="Resources\Images\Confusion.png" />
+    <Resource Include="Resources\Images\CriticalDown.png" />
+    <Resource Include="Resources\Images\Debuff.png" />
+    <Resource Include="Resources\Images\EvasionDown.png" />
+    <Resource Include="Resources\Images\Leghold.png" />
+    <Resource Include="Resources\Images\MagicDefenseDown.png" />
+    <Resource Include="Resources\Images\MagicDown.png" />
+    <Resource Include="Resources\Images\MagicSealed.png" />
+    <Resource Include="Resources\Images\PeerlessPoison.png" />
+    <Resource Include="Resources\Images\Petrify.png" />
+    <Resource Include="Resources\Images\PhysicalAttackDown.png" />
+    <Resource Include="Resources\Images\PhysicalDefenseDown.png" />
+    <Resource Include="Resources\Images\Silence.png" />
+    <Resource Include="Resources\Images\Sleep.png" />
+    <Resource Include="Resources\Images\SpeedDown.png" />
+    <Resource Include="Resources\Images\Terror.png" />
+    <Resource Include="Resources\Images\ToxicRainbow.png" />
+    <Resource Include="Resources\Images\Unconcious.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
