@@ -34,6 +34,10 @@ namespace OctomodEditor.Canvases
 
             ViewModel = enemies;
             ViewModel.AllItems = GetItemNames();
+            ViewModel.AllFlipbookPaths = GetFlipbookPaths();
+            ViewModel.AllTexturePaths = GetTexturePaths();
+            ViewModel.AllAIPaths = GetAIPaths();
+            ViewModel.AllBeastLoreIDs = ViewModel.EnemyList.Select(x => x.Value.CapturedEnemyID).Distinct().ToList();
 
             EnemyNameLabel.DataContext = ViewModel;
             EnemyIdLabel.DataContext = ViewModel;
@@ -90,6 +94,18 @@ namespace OctomodEditor.Canvases
             EnemyKnockbackAnimationCheckBox.DataContext = ViewModel;
             EnemyCapturableCheckBox.DataContext = ViewModel;
             EnemyRobbableCheckBox.DataContext = ViewModel;
+            EnemySPTextBox.DataContext = ViewModel;
+            EnemyBPTextBox.DataContext = ViewModel;
+            EnemyBreakTypeLabel.DataContext = ViewModel;
+            EnemyInvocationTurnTextBox.DataContext = ViewModel;
+            EnemyInvocationValueTextBox.DataContext = ViewModel;
+            EnemyRaceComboBox.DataContext = ViewModel;
+            EnemyFlipbookComboBox.DataContext = ViewModel;
+            EnemyTextureComboBox.DataContext = ViewModel;
+            EnemyAIComboBox.DataContext = ViewModel;
+            EnemyBeastLoreComboBox.DataContext = ViewModel;
+            EnemyFirstBPTextBox.DataContext = ViewModel;
+            EnemyDeadTypeComboBox.DataContext = ViewModel;
 
             UnusedStatsGrid.DataContext = ShowUnusedCheckBox;
             AdvancedStatsGrid.DataContext = ShowAdvancedCheckBox;
@@ -98,6 +114,16 @@ namespace OctomodEditor.Canvases
             ViewModel.CurrentEnemyList = ViewModel.EnemyList.Where(x => x.Key.StartsWith("ENE_Mou")).Select(x => x.Value).ToList();
             EnemyComboBox.SelectedIndex = 0;
             UpdateComboBoxes();
+        }
+
+        private void SaveEnemyButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void EnemyComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -113,10 +139,6 @@ namespace OctomodEditor.Canvases
             
             ViewModel.CurrentEnemy = (Enemy)EnemyComboBox.SelectedItem;
             UpdateComboBoxes();
-        }
-
-        private void SaveEnemyButton_Click(object sender, RoutedEventArgs e) {
-
         }
 
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -188,6 +210,42 @@ namespace OctomodEditor.Canvases
             return items;
         }
 
+        private Dictionary<string, string> GetFlipbookPaths()
+        {
+            Dictionary<string, string> flipbookPaths = new Dictionary<string, string>();
+
+            foreach (var flipbookPath in ViewModel.EnemyList.Select(x => x.Value.FlipbookPath).Distinct())
+            {
+                string[] flipbookDirectories = flipbookPath.Split('/');
+                flipbookPaths.Add(flipbookPath, flipbookDirectories.Last());
+            }
+            return flipbookPaths;
+        }
+
+        private Dictionary<string, string> GetTexturePaths()
+        {
+            Dictionary<string, string> texturePaths = new Dictionary<string, string>();
+
+            foreach (var texturePath in ViewModel.EnemyList.Select(x => x.Value.TexturePath).Distinct())
+            {
+                string[] textureDirectories = texturePath.Split('/');
+                texturePaths.Add(texturePath, textureDirectories.Last());
+            }
+            return texturePaths;
+        }
+
+        private Dictionary<string, string> GetAIPaths()
+        {
+            Dictionary<string, string> aiPaths = new Dictionary<string, string>();
+
+            foreach (var aiPath in ViewModel.EnemyList.Where(x => x.Value.AIPath != "None").Select(x => x.Value.AIPath).Distinct())
+            {
+                string[] aiDirectories = aiPath.Split('/');
+                aiPaths.Add(aiPath, aiDirectories.Last());
+            }
+            return aiPaths;
+        }
+
         private void UpdateComboBoxes()
         {
             EnemyItemComboBox.SelectedItem = ViewModel.AllItems.Single(x => x.Key == ViewModel.CurrentEnemy.ItemID);
@@ -204,6 +262,12 @@ namespace OctomodEditor.Canvases
             EnemyAttribute10ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[9]);
             EnemyAttribute11ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[10]);
             EnemyAttribute12ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[11]);
+            EnemyRaceComboBox.SelectedItem = ViewModel.Races.Single(x => x == ViewModel.CurrentEnemy.RaceType);
+            EnemyFlipbookComboBox.SelectedItem = ViewModel.AllFlipbookPaths.Single(x => x.Key == ViewModel.CurrentEnemy.FlipbookPath);
+            EnemyTextureComboBox.SelectedItem = ViewModel.AllTexturePaths.Single(x => x.Key == ViewModel.CurrentEnemy.TexturePath);
+            EnemyAIComboBox.SelectedItem = ViewModel.AllAIPaths.Single(x => x.Key == ViewModel.CurrentEnemy.AIPath);
+            EnemyBeastLoreComboBox.SelectedItem = ViewModel.AllBeastLoreIDs.Single(x => x == ViewModel.CurrentEnemy.CapturedEnemyID);
+            EnemyDeadTypeComboBox.SelectedItem = ViewModel.DeadTypes.Single(x => x == ViewModel.CurrentEnemy.DeadType);
         }
 
         private void EnemyItemComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -290,9 +354,40 @@ namespace OctomodEditor.Canvases
             ValueChanged = true;
         }
 
-        private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
+        private void EnemyRaceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ViewModel.CurrentEnemy.RaceType = (CharacterRace)EnemyRaceComboBox.SelectedItem;
+            ValueChanged = true;
+        }
 
+        private void EnemyFlipbookComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.FlipbookPath = ((KeyValuePair<string, string>)EnemyFlipbookComboBox.SelectedItem).Key;
+            ValueChanged = true;
+        }
+
+        private void EnemyTextureComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.TexturePath = ((KeyValuePair<string, string>)EnemyTextureComboBox.SelectedItem).Key;
+            ValueChanged = true;
+        }
+
+        private void EnemyAIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.AIPath = ((KeyValuePair<string, string>)EnemyAIComboBox.SelectedItem).Key;
+            ValueChanged = true;
+        }
+
+        private void EnemyBeastLoreComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.CapturedEnemyID = (string)EnemyBeastLoreComboBox.SelectedItem;
+            ValueChanged = true;
+        }
+
+        private void EnemyDeadTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.DeadType = (EnemyDeadType)EnemyDeadTypeComboBox.SelectedItem;
+            ValueChanged = true;
         }
     }
 }
