@@ -18,8 +18,8 @@
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="95*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.Background>

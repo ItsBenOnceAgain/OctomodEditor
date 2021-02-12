@@ -14,6 +14,9 @@ namespace OctomodEditor
         private Dictionary<string, Enemy> _enemyList;
         private Enemy _currentEnemy;
         private List<Enemy> _currentEnemyList;
+        public Dictionary<string, string> AllItems { get; set; }
+        public List<CharacterSize> Sizes { get; set; }
+        public List<AttributeResistance> Resistances { get; set; }
 
         public Dictionary<string, Enemy> EnemyList
         {
@@ -63,6 +66,8 @@ namespace OctomodEditor
         {
             EnemyList = enemies;
             CurrentEnemy = enemies.First().Value;
+            Sizes = Enum.GetValues(typeof(CharacterSize)).Cast<CharacterSize>().ToList();
+            Resistances = Enum.GetValues(typeof(AttributeResistance)).Cast<AttributeResistance>().ToList();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

@@ -217,5 +217,8 @@
     <Resource Include="Resources\Images\ToxicRainbow.png" />
     <Resource Include="Resources\Images\Unconcious.png" />
   </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\Images\SplashScreen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

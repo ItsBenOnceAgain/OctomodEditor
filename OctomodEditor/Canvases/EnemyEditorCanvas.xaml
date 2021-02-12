@@ -9,18 +9,13 @@
              d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.Resources>
         <converters:EnemyIDValueConverter x:Key="EnemyIdConverter"/>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
             <RowDefinition Height="92*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30*"/>
-                <ColumnDefinition Width="70*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"/>
@@ -113,8 +108,7 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="20*"/>
+                <RowDefinition Height="40*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -173,9 +167,9 @@
                              x:Name="EnemyHPTextBox"
                              FontSize="24"
                              Margin="5 0"
-                             Style="{DynamicResource ResourceKey=TextBoxStyle}"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.HP}">
+                             Text="{Binding CurrentEnemy.HP}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
                             <SolidColorBrush Color="Black" Opacity="0.65"/>
                         </TextBox.Background>
@@ -194,7 +188,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.Shields}"/>
+                             Text="{Binding CurrentEnemy.Shields}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="2">
                         <Image Source="/Resources/Images/PhysicalAttack.png"/>
                         <Label FontSize="24"
@@ -209,7 +208,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.PhysicalAttack}"/>
+                             Text="{Binding CurrentEnemy.PhysicalAttack}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="3">
                         <Image Source="/Resources/Images/PhysicalDefense.png"/>
                         <Label FontSize="24"
@@ -224,7 +228,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.PhysicalDefense}"/>
+                             Text="{Binding CurrentEnemy.PhysicalDefense}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="4">
                         <Image Source="/Resources/Images/MagicAttack.png"/>
                         <Label FontSize="24"
@@ -239,7 +248,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.ElementalAttack}"/>
+                             Text="{Binding CurrentEnemy.ElementalAttack}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="5">
                         <Image Source="/Resources/Images/MagicDefense.png"/>
                         <Label FontSize="24"
@@ -254,7 +268,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.ElementalDefense}"/>
+                             Text="{Binding CurrentEnemy.ElementalDefense}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="6">
                         <Image Source="/Resources/Images/Accuracy.png"/>
                         <Label FontSize="24"
@@ -269,7 +288,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.Accuracy}"/>
+                             Text="{Binding CurrentEnemy.Accuracy}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="7">
                         <Image Source="/Resources/Images/Evasion.png"/>
                         <Label FontSize="24"
@@ -284,7 +308,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.Evasion}"/>
+                             Text="{Binding CurrentEnemy.Evasion}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="8">
                         <Image Source="/Resources/Images/Critical.png"/>
                         <Label FontSize="24"
@@ -299,7 +328,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.Critical}"/>
+                             Text="{Binding CurrentEnemy.Critical}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="9">
                         <Image Source="/Resources/Images/Speed.png"/>
                         <Label FontSize="24"
@@ -314,7 +348,12 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             Text="{Binding CurrentEnemy.Speed}"/>
+                             Text="{Binding CurrentEnemy.Speed}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Column="1">
@@ -363,6 +402,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Column="1"
+                             x:Name="EnemyExperienceTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.ExperiencePoints}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="1">
                         <Image Source="/Resources/Images/Starseer.png"/>
                         <Label FontSize="24"
@@ -372,6 +422,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             x:Name="EnemyJobPointsTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.JobPoints}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="2">
                         <Image Source="/Resources/Images/Leaves.png"/>
                         <Label FontSize="24"
@@ -381,6 +442,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             x:Name="EnemyLeavesTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.Money}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="3">
                         <Image Source="/Resources/Images/Ability1.png"/>
                         <Label FontSize="24"
@@ -390,6 +462,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             x:Name="EnemyCollectTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.MoneyFromCollecting}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="4">
                         <Image Source="/Resources/Images/Item.png"/>
                         <Label FontSize="24"
@@ -399,6 +482,14 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="4" Grid.Column="1" x:Name="EnemyItemComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              SelectionChanged="EnemyItemComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left"
+                              ItemsSource="{Binding AllItems}"
+                              DisplayMemberPath="Value"/>
                     <DockPanel Grid.Row="5">
                         <Image Source="/Resources/Images/Unknown.png"/>
                         <Label FontSize="24"
@@ -408,6 +499,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="5" Grid.Column="1"
+                             x:Name="EnemyItemPercentageTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.ItemDropPercentage}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="6">
                         <Image Source="/Resources/Images/Hunter.png"/>
                         <Label FontSize="24"
@@ -417,6 +519,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="6" Grid.Column="1"
+                             x:Name="EnemyTameRateTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.DefaultTameRate}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="7">
                         <Image Source="/Resources/Images/Ability4.png"/>
                         <Label FontSize="24"
@@ -426,6 +539,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="7" Grid.Column="1"
+                             x:Name="EnemyLevelTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.EnemyLevel}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="8">
                         <Image Source="/Resources/Images/Warrior.png"/>
                         <Label FontSize="24"
@@ -435,6 +559,17 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <TextBox Grid.Row="8" Grid.Column="1"
+                             x:Name="EnemyDamageRatioTextBox"
+                             FontSize="24"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Text="{Binding CurrentEnemy.DamageRatio}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
                     <DockPanel Grid.Row="9">
                         <Image Source="/Resources/Images/Support.png"/>
                         <Label FontSize="24"
@@ -444,6 +579,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="9" Grid.Column="1"
+                              x:Name="EnemySizeComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Sizes}"
+                              SelectionChanged="EnemySizeComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Column="2">
@@ -494,6 +636,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="0" Grid.Column="1"
+                              x:Name="EnemySwordWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToSwords}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="1">
                         <Image Source="/Resources/Images/Spear.png"/>
                         <Label FontSize="24"
@@ -503,6 +654,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="1" Grid.Column="1"
+                              x:Name="EnemySpearWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToSpears}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="2">
                         <Image Source="/Resources/Images/Dagger.png"/>
                         <Label FontSize="24"
@@ -512,6 +672,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="2" Grid.Column="1"
+                              x:Name="EnemyDaggerWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToDaggers}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="3">
                         <Image Source="/Resources/Images/Axe.png"/>
                         <Label FontSize="24"
@@ -521,6 +690,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="3" Grid.Column="1"
+                              x:Name="EnemyAxeWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToAxes}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="4">
                         <Image Source="/Resources/Images/Bow.png"/>
                         <Label FontSize="24"
@@ -530,6 +708,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="4" Grid.Column="1"
+                              x:Name="EnemyBowWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToBows}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="5">
                         <Image Source="/Resources/Images/Staff.png"/>
                         <Label FontSize="24"
@@ -539,6 +726,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="5" Grid.Column="1"
+                              x:Name="EnemyStaffWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToStaves}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="6">
                         <Image Source="/Resources/Images/FireColor.png"/>
                         <Label FontSize="24"
@@ -548,6 +744,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="6" Grid.Column="1"
+                              x:Name="EnemyFireWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToFire}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="7">
                         <Image Source="/Resources/Images/IceColor.png"/>
                         <Label FontSize="24"
@@ -557,6 +762,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="7" Grid.Column="1"
+                              x:Name="EnemyIceWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToIce}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="8">
                         <Image Source="/Resources/Images/LightningColor.png"/>
                         <Label FontSize="24"
@@ -566,6 +780,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="8" Grid.Column="1"
+                              x:Name="EnemyLightningWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToLightning}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="9">
                         <Image Source="/Resources/Images/WindColor.png"/>
                         <Label FontSize="24"
@@ -575,6 +798,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="9" Grid.Column="1"
+                              x:Name="EnemyWindWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToWind}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="10">
                         <Image Source="/Resources/Images/LightColor.png"/>
                         <Label FontSize="24"
@@ -584,6 +816,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="10" Grid.Column="1"
+                              x:Name="EnemyLightWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToLight}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                     <DockPanel Grid.Row="11">
                         <Image Source="/Resources/Images/DarkColor.png"/>
                         <Label FontSize="24"
@@ -593,6 +834,15 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <CheckBox Grid.Row="11" Grid.Column="1"
+                              x:Name="EnemyDarkWeakCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsWeakToDark}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Column="3">
@@ -643,6 +893,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="0" Grid.Column="1"
+                              x:Name="EnemyAttribute1ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute1ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="1">
                         <Image Source="/Resources/Images/Blindness.png"/>
                         <Label FontSize="24"
@@ -652,6 +909,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="1" Grid.Column="1"
+                              x:Name="EnemyAttribute2ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute2ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="2">
                         <Image Source="/Resources/Images/Silence.png"/>
                         <Label FontSize="24"
@@ -661,6 +925,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="2" Grid.Column="1"
+                              x:Name="EnemyAttribute3ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute3ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="3">
                         <Image Source="/Resources/Images/Unconcious.png"/>
                         <Label FontSize="24"
@@ -670,6 +941,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="3" Grid.Column="1"
+                              x:Name="EnemyAttribute4ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute4ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="4">
                         <Image Source="/Resources/Images/Terror.png"/>
                         <Label FontSize="24"
@@ -679,6 +957,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="4" Grid.Column="1"
+                              x:Name="EnemyAttribute5ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute5ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="5">
                         <Image Source="/Resources/Images/Debuff.png"/>
                         <Label FontSize="24"
@@ -688,6 +973,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="5" Grid.Column="1"
+                              x:Name="EnemyAttribute6ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute6ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="6">
                         <Image Source="/Resources/Images/Sleep.png"/>
                         <Label FontSize="24"
@@ -697,6 +989,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="6" Grid.Column="1"
+                              x:Name="EnemyAttribute7ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute7ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="7">
                         <Image Source="/Resources/Images/ToxicRainbow.png"/>
                         <Label FontSize="24"
@@ -706,6 +1005,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="7" Grid.Column="1"
+                              x:Name="EnemyAttribute8ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute8ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="8">
                         <Image Source="/Resources/Images/PeerlessPoison.png"/>
                         <Label FontSize="24"
@@ -715,6 +1021,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="8" Grid.Column="1"
+                              x:Name="EnemyAttribute9ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute9ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="9">
                         <Image Source="/Resources/Images/Confusion.png"/>
                         <Label FontSize="24"
@@ -724,6 +1037,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="9" Grid.Column="1"
+                              x:Name="EnemyAttribute10ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute10ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="10">
                         <Image Source="/Resources/Images/Leghold.png"/>
                         <Label FontSize="24"
@@ -733,6 +1053,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="10" Grid.Column="1"
+                              x:Name="EnemyAttribute11ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute11ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                     <DockPanel Grid.Row="11">
                         <Image Source="/Resources/Images/Petrify.png"/>
                         <Label FontSize="24"
@@ -742,7 +1069,521 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
+                    <ComboBox Grid.Row="11" Grid.Column="1"
+                              x:Name="EnemyAttribute12ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute12ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
                 </Grid>
+            </Grid>
+            <Grid Margin="10" Grid.Column="4">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="5"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Flags - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="35*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Is NPC: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="0" Grid.Column="1"
+                              x:Name="EnemyIsNPCCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsNPC}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="1">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Slow Death: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="1" Grid.Column="1"
+                              x:Name="EnemySlowDeathCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.PlaysSlowAnimationOnDeath}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="2">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Is Main Enemy: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="2" Grid.Column="1"
+                              x:Name="EnemyIsMainEnemyCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsMainEnemy}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="3">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Exempt From Battle: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="3" Grid.Column="1"
+                              x:Name="EnemyBattleExemptCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsExemptFromBattle}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="4">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Uses Cait Damage: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="4" Grid.Column="1"
+                              x:Name="EnemyCatDamageCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.UsesCatDamageType}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="5">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="No Knockback: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="5" Grid.Column="1"
+                              x:Name="EnemyKnockbackAnimationCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.HasNoKnockbackAnimation}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="6">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Capturable: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="6" Grid.Column="1"
+                              x:Name="EnemyCapturableCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.CanBeCaptured}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <DockPanel Grid.Row="7">
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Cannot Be Robbed: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <CheckBox Grid.Row="7" Grid.Column="1"
+                              x:Name="EnemyRobbableCheckBox"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding CurrentEnemy.IsGuardedFromStealing}">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Margin="10 0">
+                    <CheckBox x:Name="ShowUnusedCheckBox"
+                              Margin="2"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <Label
+                        DockPanel.Dock="Right"
+                        Margin="5"
+                        FontSize="16"
+                        Style="{DynamicResource ResourceKey=LabelFontColor}"
+                        Content="Show Unused Stats"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Stretch">
+                    </Label>
+                    <DockPanel.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </DockPanel.Background>
+                </DockPanel>
+                <Grid Margin="10" Grid.Row="1"
+                      x:Name="UnusedStatsGrid"
+                      Visibility="{Binding IsChecked, Converter={StaticResource VisibilityConverter}}">
+                    <Grid.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="80*"/>
+                    </Grid.RowDefinitions>
+                    <Label
+                    Margin="5"
+                    FontSize="24"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Unused Stats - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.8"/>
+                        </Label.Background>
+                    </Label>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="65*"/>
+                            <ColumnDefinition Width="35*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="SP: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="1">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="BP: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="2">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Break Type: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="3">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Invocation Turn: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="4">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Invocation Value: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="5">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Race: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Margin="10 0">
+                    <CheckBox x:Name="ShowAdvancedCheckBox"
+                              Margin="2"
+                              VerticalContentAlignment="Center"
+                              HorizontalAlignment="Center">
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                        </CheckBox.LayoutTransform>
+                    </CheckBox>
+                    <Label
+                        DockPanel.Dock="Right"
+                        Margin="5"
+                        FontSize="16"
+                        Style="{DynamicResource ResourceKey=LabelFontColor}"
+                        Content="Show Advanced Options"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        HorizontalAlignment="Stretch">
+                    </Label>
+                    <DockPanel.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </DockPanel.Background>
+                </DockPanel>
+                <Grid Margin="10" Grid.Row="1"
+                      x:Name="AdvancedStatsGrid"
+                      Visibility="{Binding IsChecked, Converter={StaticResource VisibilityConverter}}">
+                    <Grid.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="80*"/>
+                    </Grid.RowDefinitions>
+                    <Label
+                    Margin="5"
+                    FontSize="24"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Advanced Options - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.8"/>
+                        </Label.Background>
+                    </Label>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="65*"/>
+                            <ColumnDefinition Width="35*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Flipbook Path: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="1">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Texture Path: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="2">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="AI Path: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="3">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Beast Lore ID: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="4">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="First BP: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <DockPanel Grid.Row="5">
+                            <Label FontSize="18"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Dead Type: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                        </DockPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Margin="10 0 10 10">
+                    <Grid.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
+                    <Label
+                    Margin="5"
+                    FontSize="24"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Abilities - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.8"/>
+                        </Label.Background>
+                    </Label>
+                    <ScrollViewer Grid.Row="1" Margin="5">
+                        <StackPanel x:Name="AbilitiesPanel"/>
+                    </ScrollViewer>
+                </Grid>
+                <Grid Margin="10 0 10 10" Grid.Row="1"
+                      x:Name="BattleEventsGrid"
+                      Visibility="{Binding IsChecked, Converter={StaticResource VisibilityConverter}}">
+                    <Grid.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+                        <RowDefinition Height="70*"/>
+                    </Grid.RowDefinitions>
+                    <Label
+                    Margin="5"
+                    FontSize="24"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Battle Events - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.8"/>
+                        </Label.Background>
+                    </Label>
+                    <ScrollViewer Grid.Row="1" Margin="5">
+                        <StackPanel x:Name="BattleEventsPanel"/>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="3" Margin="10 0 10 10">
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="5"
+                    FontSize="24"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Preview - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Canvas Grid.Row="1" Margin="10">
+                </Canvas>
+                <Button x:Name="ChangeTextureButton"
+                        Margin="10"
+                        FontSize="20"
+                        Grid.Row="2">
+                    Change Texture
+                </Button>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="4" Margin="10 0 10 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="SaveEnemyButton"
+                        Click="SaveEnemyButton_Click"
+                        FontSize="30"
+                        Margin="35 60">
+                    Save Changes
+                </Button>
+                <Button x:Name="DiscardChangesButton"
+                        Click="DiscardChangesButton_Click"
+                        FontSize="30"
+                        Grid.Row="1"
+                        Margin="35 60">
+                    Discard Changes
+                </Button>
             </Grid>
         </Grid>
     </Grid>
