@@ -24,88 +24,18 @@ namespace OctomodEditor.Canvases
     {
         public EnemyViewModel ViewModel { get; private set; }
         public List<Enemy> EnemiesToSave { get; set; }
-        public bool ValueChanged { get; set; }
-        public EnemyEditorCanvas(EnemyViewModel enemies)
+        public EnemyEditorCanvas()
         {
             InitializeComponent();
 
-            ValueChanged = false;
             EnemiesToSave = new List<Enemy>();
 
-            ViewModel = enemies;
-            ViewModel.AllItems = GetItemNames();
-            ViewModel.AllFlipbookPaths = GetFlipbookPaths();
-            ViewModel.AllTexturePaths = GetTexturePaths();
-            ViewModel.AllAIPaths = GetAIPaths();
-            ViewModel.AllBeastLoreIDs = ViewModel.EnemyList.Select(x => x.Value.CapturedEnemyID).Distinct().ToList();
+            ViewModel = new EnemyViewModel(EnemyDBParser.ParseEnemyObjects());
 
-            EnemyNameLabel.DataContext = ViewModel;
-            EnemyIdLabel.DataContext = ViewModel;
-            EnemyComboBox.DataContext = ViewModel;
-            EnemyHPTextBox.DataContext = ViewModel;
-            EnemyShieldTextBox.DataContext = ViewModel;
-            EnemyPAttackTextBox.DataContext = ViewModel;
-            EnemyPDefenseTextBox.DataContext = ViewModel;
-            EnemyMAttackTextBox.DataContext = ViewModel;
-            EnemyMDefenseTextBox.DataContext = ViewModel;
-            EnemyAccuracyTextBox.DataContext = ViewModel;
-            EnemyEvasionTextBox.DataContext = ViewModel;
-            EnemyCriticalTextBox.DataContext = ViewModel;
-            EnemySpeedTextBox.DataContext = ViewModel;
-            EnemyExperienceTextBox.DataContext = ViewModel;
-            EnemyJobPointsTextBox.DataContext = ViewModel;
-            EnemyLeavesTextBox.DataContext = ViewModel;
-            EnemyCollectTextBox.DataContext = ViewModel;
-            EnemyItemPercentageTextBox.DataContext = ViewModel;
-            EnemyTameRateTextBox.DataContext = ViewModel;
-            EnemyLevelTextBox.DataContext = ViewModel;
-            EnemyDamageRatioTextBox.DataContext = ViewModel;
-            EnemyItemComboBox.DataContext = ViewModel;
-            EnemySizeComboBox.DataContext = ViewModel;
-            EnemySwordWeakCheckBox.DataContext = ViewModel;
-            EnemySpearWeakCheckBox.DataContext = ViewModel;
-            EnemyDaggerWeakCheckBox.DataContext = ViewModel;
-            EnemyAxeWeakCheckBox.DataContext = ViewModel;
-            EnemyBowWeakCheckBox.DataContext = ViewModel;
-            EnemyStaffWeakCheckBox.DataContext = ViewModel;
-            EnemyFireWeakCheckBox.DataContext = ViewModel;
-            EnemyIceWeakCheckBox.DataContext = ViewModel;
-            EnemyLightningWeakCheckBox.DataContext = ViewModel;
-            EnemyWindWeakCheckBox.DataContext = ViewModel;
-            EnemyLightWeakCheckBox.DataContext = ViewModel;
-            EnemyDarkWeakCheckBox.DataContext = ViewModel;
-            EnemyAttribute1ComboBox.DataContext = ViewModel;
-            EnemyAttribute2ComboBox.DataContext = ViewModel;
-            EnemyAttribute3ComboBox.DataContext = ViewModel;
-            EnemyAttribute4ComboBox.DataContext = ViewModel;
-            EnemyAttribute5ComboBox.DataContext = ViewModel;
-            EnemyAttribute6ComboBox.DataContext = ViewModel;
-            EnemyAttribute7ComboBox.DataContext = ViewModel;
-            EnemyAttribute8ComboBox.DataContext = ViewModel;
-            EnemyAttribute9ComboBox.DataContext = ViewModel;
-            EnemyAttribute10ComboBox.DataContext = ViewModel;
-            EnemyAttribute11ComboBox.DataContext = ViewModel;
-            EnemyAttribute12ComboBox.DataContext = ViewModel;
-            EnemyIsNPCCheckBox.DataContext = ViewModel;
-            EnemySlowDeathCheckBox.DataContext = ViewModel;
-            EnemyIsMainEnemyCheckBox.DataContext = ViewModel;
-            EnemyBattleExemptCheckBox.DataContext = ViewModel;
-            EnemyCatDamageCheckBox.DataContext = ViewModel;
-            EnemyKnockbackAnimationCheckBox.DataContext = ViewModel;
-            EnemyCapturableCheckBox.DataContext = ViewModel;
-            EnemyRobbableCheckBox.DataContext = ViewModel;
-            EnemySPTextBox.DataContext = ViewModel;
-            EnemyBPTextBox.DataContext = ViewModel;
-            EnemyBreakTypeLabel.DataContext = ViewModel;
-            EnemyInvocationTurnTextBox.DataContext = ViewModel;
-            EnemyInvocationValueTextBox.DataContext = ViewModel;
-            EnemyRaceComboBox.DataContext = ViewModel;
-            EnemyFlipbookComboBox.DataContext = ViewModel;
-            EnemyTextureComboBox.DataContext = ViewModel;
-            EnemyAIComboBox.DataContext = ViewModel;
-            EnemyBeastLoreComboBox.DataContext = ViewModel;
-            EnemyFirstBPTextBox.DataContext = ViewModel;
-            EnemyDeadTypeComboBox.DataContext = ViewModel;
+            this.DataContext = ViewModel;
+            InnerUnusedGrid.DataContext = ViewModel;
+            InnerAdvancedGrid.DataContext = ViewModel;
+            InnerEventsGrid.DataContext = ViewModel;
 
             UnusedStatsGrid.DataContext = ShowUnusedCheckBox;
             AdvancedStatsGrid.DataContext = ShowAdvancedCheckBox;
@@ -113,30 +43,81 @@ namespace OctomodEditor.Canvases
 
             ViewModel.CurrentEnemyList = ViewModel.EnemyList.Where(x => x.Key.StartsWith("ENE_Mou")).Select(x => x.Value).ToList();
             EnemyComboBox.SelectedIndex = 0;
+
             UpdateComboBoxes();
+        }
+
+        private void LoadAbilityComboBoxes()
+        {
+            AbilitiesPanel.Children.Clear();
+            foreach (var ability in ViewModel.CurrentEnemy.AbilityList)
+            {
+                var comboBox = new ComboBox();
+                comboBox.ItemsSource = ViewModel.AllAbilities;
+                comboBox.SelectedItem = ViewModel.AllAbilities.Single(x => x.Key == ability);
+                comboBox.Margin = new Thickness(5, 5, 5, 5);
+                comboBox.DisplayMemberPath = "Value";
+                comboBox.SelectionChanged += AbilityComboBox_SelectionChanged;
+                AbilitiesPanel.Children.Add(comboBox);
+            }
+        }
+
+        private void UpdateComboBoxes()
+        {
+            EnemyItemComboBox.SelectedItem = ViewModel.AllItems.Single(x => x.Key == ViewModel.CurrentEnemy.ItemID);
+            EnemySizeComboBox.SelectedItem = ViewModel.Sizes.Single(x => x == ViewModel.CurrentEnemy.Size);
+            EnemyAttribute1ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[0]);
+            EnemyAttribute2ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[1]);
+            EnemyAttribute3ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[2]);
+            EnemyAttribute4ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[3]);
+            EnemyAttribute5ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[4]);
+            EnemyAttribute6ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[5]);
+            EnemyAttribute7ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[6]);
+            EnemyAttribute8ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[7]);
+            EnemyAttribute9ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[8]);
+            EnemyAttribute10ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[9]);
+            EnemyAttribute11ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[10]);
+            EnemyAttribute12ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[11]);
+            EnemyRaceComboBox.SelectedItem = ViewModel.Races.Single(x => x == ViewModel.CurrentEnemy.RaceType);
+            EnemyFlipbookComboBox.SelectedItem = ViewModel.AllFlipbookPaths.Single(x => x.Key == ViewModel.CurrentEnemy.FlipbookPath);
+            EnemyTextureComboBox.SelectedItem = ViewModel.AllTexturePaths.Single(x => x.Key == ViewModel.CurrentEnemy.TexturePath);
+            EnemyAIComboBox.SelectedItem = ViewModel.AllAIPaths.Single(x => x.Key == ViewModel.CurrentEnemy.AIPath);
+            EnemyBeastLoreComboBox.SelectedItem = ViewModel.AllBeastLoreIDs.Single(x => x == ViewModel.CurrentEnemy.CapturedEnemyID);
+            EnemyDeadTypeComboBox.SelectedItem = ViewModel.DeadTypes.Single(x => x == ViewModel.CurrentEnemy.DeadType);
+            EnemyEvent1ComboBox.SelectedItem = ViewModel.AllEvents.Single(x => x == ViewModel.CurrentEnemy.BattleEvents[0]);
+            EnemyEvent2ComboBox.SelectedItem = ViewModel.AllEvents.Single(x => x == ViewModel.CurrentEnemy.BattleEvents[1]);
+            EnemyEvent3ComboBox.SelectedItem = ViewModel.AllEvents.Single(x => x == ViewModel.CurrentEnemy.BattleEvents[2]);
+            LoadAbilityComboBoxes();
+        }
+
+        private void UpdateEnemiesToSave()
+        {
+            if(EnemiesToSave.Select(x => x.Key).Contains(ViewModel.CurrentEnemy.Key))
+            {
+                EnemiesToSave.Remove(EnemiesToSave.Single(x => x.Key == ViewModel.CurrentEnemy.Key));
+            }
+            EnemiesToSave.Add(ViewModel.CurrentEnemy);
+            SaveEnemyButton.IsEnabled = true;
+            DiscardChangesButton.IsEnabled = true;
         }
 
         private void SaveEnemyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // Save Enemy Here
+            EnemiesToSave.Clear();
+            SaveEnemyButton.IsEnabled = false;
+            DiscardChangesButton.IsEnabled = false;
         }
 
         private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            EnemiesToSave.Clear();
+            SaveEnemyButton.IsEnabled = false;
+            DiscardChangesButton.IsEnabled = false;
         }
 
-        private void EnemyComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void EnemyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ValueChanged)
-            {
-                if (!EnemiesToSave.Any(x => x.Key == ViewModel.CurrentEnemy.Key))
-                {
-                    EnemiesToSave.Add(ViewModel.CurrentEnemy);
-                }
-                ValueChanged = false;
-            }
-            
             ViewModel.CurrentEnemy = (Enemy)EnemyComboBox.SelectedItem;
             UpdateComboBoxes();
         }
@@ -185,209 +166,162 @@ namespace OctomodEditor.Canvases
             }
         }
 
-        private Dictionary<string, string> GetItemNames()
+        private void AbilityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Dictionary<string, string> items = new Dictionary<string, string>();
+            var comboBox = (ComboBox)sender;
+            int index = AbilitiesPanel.Children.IndexOf(comboBox);
 
-            items.Add("None", "None");
-            foreach (var itemId in ViewModel.EnemyList.Where(x => x.Value.ItemID != "None").Select(x => x.Value.ItemID).Distinct())
-            {
-                if (MainWindow.MasterGameText.ContainsKey($"TX_NA_{itemId}"))
-                {
-                    items.Add(itemId, MainWindow.MasterGameText[$"TX_NA_{itemId}"]);
-                }
-                else
-                {
-                    string[] idInfo = itemId.Split('_');
-                    int identifier = int.Parse(idInfo[2]);
-                    if (idInfo[1] == "MB")
-                    {
-                        identifier += 16;
-                    }
-                    items.Add(itemId, MainWindow.MasterGameText[$"MIX_ITM_NA_{identifier:D3}"]);
-                }
-            }
-            return items;
-        }
-
-        private Dictionary<string, string> GetFlipbookPaths()
-        {
-            Dictionary<string, string> flipbookPaths = new Dictionary<string, string>();
-
-            foreach (var flipbookPath in ViewModel.EnemyList.Select(x => x.Value.FlipbookPath).Distinct())
-            {
-                string[] flipbookDirectories = flipbookPath.Split('/');
-                flipbookPaths.Add(flipbookPath, flipbookDirectories.Last());
-            }
-            return flipbookPaths;
-        }
-
-        private Dictionary<string, string> GetTexturePaths()
-        {
-            Dictionary<string, string> texturePaths = new Dictionary<string, string>();
-
-            foreach (var texturePath in ViewModel.EnemyList.Select(x => x.Value.TexturePath).Distinct())
-            {
-                string[] textureDirectories = texturePath.Split('/');
-                texturePaths.Add(texturePath, textureDirectories.Last());
-            }
-            return texturePaths;
-        }
-
-        private Dictionary<string, string> GetAIPaths()
-        {
-            Dictionary<string, string> aiPaths = new Dictionary<string, string>();
-
-            foreach (var aiPath in ViewModel.EnemyList.Where(x => x.Value.AIPath != "None").Select(x => x.Value.AIPath).Distinct())
-            {
-                string[] aiDirectories = aiPath.Split('/');
-                aiPaths.Add(aiPath, aiDirectories.Last());
-            }
-            return aiPaths;
-        }
-
-        private void UpdateComboBoxes()
-        {
-            EnemyItemComboBox.SelectedItem = ViewModel.AllItems.Single(x => x.Key == ViewModel.CurrentEnemy.ItemID);
-            EnemySizeComboBox.SelectedItem = ViewModel.Sizes.Single(x => x == ViewModel.CurrentEnemy.Size);
-            EnemyAttribute1ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[0]);
-            EnemyAttribute2ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[1]);
-            EnemyAttribute3ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[2]);
-            EnemyAttribute4ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[3]);
-            EnemyAttribute5ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[4]);
-            EnemyAttribute6ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[5]);
-            EnemyAttribute7ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[6]);
-            EnemyAttribute8ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[7]);
-            EnemyAttribute9ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[8]);
-            EnemyAttribute10ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[9]);
-            EnemyAttribute11ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[10]);
-            EnemyAttribute12ComboBox.SelectedItem = ViewModel.Resistances.Single(x => x == ViewModel.CurrentEnemy.AttributeResistances[11]);
-            EnemyRaceComboBox.SelectedItem = ViewModel.Races.Single(x => x == ViewModel.CurrentEnemy.RaceType);
-            EnemyFlipbookComboBox.SelectedItem = ViewModel.AllFlipbookPaths.Single(x => x.Key == ViewModel.CurrentEnemy.FlipbookPath);
-            EnemyTextureComboBox.SelectedItem = ViewModel.AllTexturePaths.Single(x => x.Key == ViewModel.CurrentEnemy.TexturePath);
-            EnemyAIComboBox.SelectedItem = ViewModel.AllAIPaths.Single(x => x.Key == ViewModel.CurrentEnemy.AIPath);
-            EnemyBeastLoreComboBox.SelectedItem = ViewModel.AllBeastLoreIDs.Single(x => x == ViewModel.CurrentEnemy.CapturedEnemyID);
-            EnemyDeadTypeComboBox.SelectedItem = ViewModel.DeadTypes.Single(x => x == ViewModel.CurrentEnemy.DeadType);
+            ViewModel.CurrentEnemy.AbilityList[index] = ((KeyValuePair<string, string>)comboBox.SelectedItem).Key;
         }
 
         private void EnemyItemComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.ItemID = ((KeyValuePair<string, string>)EnemyItemComboBox.SelectedItem).Key;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemySizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.Size = (CharacterSize)EnemySizeComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute1ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[0] = (AttributeResistance)EnemyAttribute1ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute2ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[1] = (AttributeResistance)EnemyAttribute2ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute3ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[2] = (AttributeResistance)EnemyAttribute3ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute4ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[3] = (AttributeResistance)EnemyAttribute4ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute5ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[4] = (AttributeResistance)EnemyAttribute5ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute6ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[5] = (AttributeResistance)EnemyAttribute6ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute7ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[6] = (AttributeResistance)EnemyAttribute7ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute8ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[7] = (AttributeResistance)EnemyAttribute8ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute9ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[8] = (AttributeResistance)EnemyAttribute9ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute10ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[9] = (AttributeResistance)EnemyAttribute10ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute11ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[10] = (AttributeResistance)EnemyAttribute11ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAttribute12ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AttributeResistances[11] = (AttributeResistance)EnemyAttribute12ComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyRaceComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.RaceType = (CharacterRace)EnemyRaceComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyFlipbookComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.FlipbookPath = ((KeyValuePair<string, string>)EnemyFlipbookComboBox.SelectedItem).Key;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyTextureComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.TexturePath = ((KeyValuePair<string, string>)EnemyTextureComboBox.SelectedItem).Key;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyAIComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.AIPath = ((KeyValuePair<string, string>)EnemyAIComboBox.SelectedItem).Key;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyBeastLoreComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.CapturedEnemyID = (string)EnemyBeastLoreComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyDeadTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.CurrentEnemy.DeadType = (EnemyDeadType)EnemyDeadTypeComboBox.SelectedItem;
-            ValueChanged = true;
+            UpdateEnemiesToSave();
+        }
+
+        private void EnemyEvent1ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.BattleEvents[0] = (string)EnemyEvent1ComboBox.SelectedItem;
+            UpdateEnemiesToSave();
+        }
+
+        private void EnemyEvent2ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.BattleEvents[0] = (string)EnemyEvent1ComboBox.SelectedItem;
+            UpdateEnemiesToSave();
+        }
+
+        private void EnemyEvent3ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.CurrentEnemy.BattleEvents[0] = (string)EnemyEvent1ComboBox.SelectedItem;
+            UpdateEnemiesToSave();
+        }
+
+        private void AnyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateEnemiesToSave();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            EnemiesToSave.Clear();
+            SaveEnemyButton.IsEnabled = false;
+            DiscardChangesButton.IsEnabled = false;
         }
     }
 }

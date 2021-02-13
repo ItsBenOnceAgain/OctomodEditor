@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:OctomodEditor.Canvases"
              xmlns:converters="clr-namespace:OctomodEditor.ValueConverters"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920">
+             d:DesignHeight="1080" d:DesignWidth="1920"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <converters:EnemyIDValueConverter x:Key="EnemyIdConverter"/>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
@@ -75,7 +76,7 @@
                           FontSize="16"
                           VerticalContentAlignment="Center"
                           ItemsSource="{Binding CurrentEnemyList}"
-                          SelectionChanged="EnemyComboBoxSelectionChanged"
+                          SelectionChanged="EnemyComboBox_SelectionChanged"
                           Grid.Row="1"/>
             </Grid>
             <Label Grid.Column="2"
@@ -169,6 +170,7 @@
                              Margin="5 0"
                              VerticalAlignment="Center"
                              Text="{Binding CurrentEnemy.HP}"
+                             TextChanged="AnyTextBox_TextChanged"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
                             <SolidColorBrush Color="Black" Opacity="0.65"/>
@@ -1302,7 +1304,7 @@
                             <SolidColorBrush Color="Black" Opacity="0.8"/>
                         </Label.Background>
                     </Label>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" x:Name="InnerUnusedGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50*"/>
                             <ColumnDefinition Width="50*"/>
@@ -1478,7 +1480,7 @@
                             <SolidColorBrush Color="Black" Opacity="0.8"/>
                         </Label.Background>
                     </Label>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" x:Name="InnerAdvancedGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40*"/>
                             <ColumnDefinition Width="60*"/>
@@ -1642,7 +1644,7 @@
                             <SolidColorBrush Color="Black" Opacity="0.8"/>
                         </Label.Background>
                     </Label>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" x:Name="InnerEventsGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30*"/>
                             <ColumnDefinition Width="70*"/>
@@ -1660,6 +1662,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="EnemyEvent1ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              SelectionChanged="EnemyEvent1ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left"
+                              ItemsSource="{Binding AllEvents}"/>
                         <DockPanel Grid.Row="1">
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
@@ -1668,6 +1677,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
+                        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="EnemyEvent2ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              SelectionChanged="EnemyEvent2ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left"
+                              ItemsSource="{Binding AllEvents}"/>
                         <DockPanel Grid.Row="2">
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
@@ -1676,6 +1692,13 @@
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
+                        <ComboBox Grid.Row="2" Grid.Column="1" x:Name="EnemyEvent3ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              SelectionChanged="EnemyEvent3ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left"
+                              ItemsSource="{Binding AllEvents}"/>
                     </Grid>
                 </Grid>
             </Grid>

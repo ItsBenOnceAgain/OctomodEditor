@@ -13,9 +13,29 @@ namespace OctomodEditor.Utilities
 
         public static Dictionary<string, string> ParseGameText(string language)
         {
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile($"../../Test/GameText{language}.uasset");
+            string uassetPath;
+            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset"))
+            {
+                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
+            }
+            else
+            {
+                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
+            }
 
-            byte[] allBytes = File.ReadAllBytes($"../../Test/GameText{language}.uexp");
+            string uexpPath;
+            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp"))
+            {
+                uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
+            }
+            else
+            {
+                uexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
+            }
+
+            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+
+            byte[] allBytes = File.ReadAllBytes(uexpPath);
             int numOfEntries = BitConverter.ToInt32(allBytes, ENEMY_ENTRY_COUNT_OFFSET);
             int currentOffset = ENEMY_ENTRY_COUNT_OFFSET + 4;
 

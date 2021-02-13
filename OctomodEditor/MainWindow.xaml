@@ -6,6 +6,7 @@
         WindowState="Maximized"
         mc:Ignorable="d"
         Title="Octomod Editor" Height="900" Width="1600"
+        Loaded="Window_Loaded"
         Style="{DynamicResource CustomFontStyle}">
     <Window.Resources>
         <Style x:Key="CustomFontStyle">

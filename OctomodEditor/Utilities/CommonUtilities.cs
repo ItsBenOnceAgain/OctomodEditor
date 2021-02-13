@@ -11,6 +11,8 @@ namespace OctomodEditor.Utilities
     {
         public const int ENTRY_COUNT_OFFSET = 117;
         public const int ENTRY_LIST_START_OFFSET = 193;
+        public static string BaseFilesLocation { get; set; }
+        public static string ModLocation { get; set; }
         public static Dictionary<int, string> ParseUAssetFile(string path)
         {
             byte[] allBytes = File.ReadAllBytes(path);
@@ -58,6 +60,38 @@ namespace OctomodEditor.Utilities
                 }
             }
             return stringValue;
+        }
+
+        public static bool AddSettingToConfig(KeyValuePair<string, string> setting)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(@"/config.octo");
+                Dictionary<string, string> settings = new Dictionary<string, string>();
+                foreach (string line in lines)
+                {
+                    settings.Add(line.Split('=')[0], line.Split('=')[1]);
+                }
+                if (settings.ContainsKey(setting.Key))
+                {
+                    settings[setting.Key] = setting.Value;
+                }
+                else
+                {
+                    settings.Add(setting.Key, setting.Value);
+                }
+                List<string> newSettings = new List<string>();
+                foreach(var newSetting in settings)
+                {
+                    newSettings.Add($"{newSetting.Key}={newSetting.Value}");
+                }
+                File.WriteAllLines(@"/config.octo", newSettings.ToArray());
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
