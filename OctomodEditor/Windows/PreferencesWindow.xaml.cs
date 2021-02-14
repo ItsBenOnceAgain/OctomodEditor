@@ -47,7 +47,7 @@ namespace OctomodEditor.Windows
             if (resultPath != System.Windows.Forms.DialogResult.Cancel)
             {
                 string path = openOctopathFolderDialogue.SelectedPath;
-                CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modFilesLocation", path));
+                CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
                 CommonUtilities.ModLocation = path;
                 ModLocationLabel.Content = CommonUtilities.ModLocation;
             }
