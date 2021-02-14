@@ -144,6 +144,7 @@ namespace OctomodEditor.Utilities
             UpdateBytesAtOffset(hasNoKnockbackData, allBytes, currentOffset);
             currentOffset += 76;
             byte[] hpData = BitConverter.GetBytes(enemy.HP);
+            UpdateBytesAtOffset(hpData, allBytes, currentOffset);
             currentOffset += 29;
             UpdateBytesAtOffset(hpData, allBytes, currentOffset);
             byte[] mpData = BitConverter.GetBytes(enemy.MP);
