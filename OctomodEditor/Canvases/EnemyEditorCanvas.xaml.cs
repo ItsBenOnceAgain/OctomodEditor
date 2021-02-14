@@ -2,6 +2,7 @@
 using OctomodEditor.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAnimatedGif;
 
 namespace OctomodEditor.Canvases
 {
@@ -45,6 +47,18 @@ namespace OctomodEditor.Canvases
             EnemyComboBox.SelectedIndex = 0;
 
             UpdateComboBoxes();
+            LoadImagePreview();
+        }
+
+        private void LoadImagePreview()
+        {
+            //var image = new BitmapImage();
+            //image.BeginInit();
+            //var path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "/Preview/preview.png");
+            //var uri = new Uri(path, UriKind.Absolute);
+            //image.UriSource = uri;
+            //image.EndInit();
+            //ImageBehavior.SetAnimatedSource(ImagePreview, image);
         }
 
         private void LoadAbilityComboBoxes()
@@ -104,16 +118,40 @@ namespace OctomodEditor.Canvases
         private void SaveEnemyButton_Click(object sender, RoutedEventArgs e)
         {
             // Save Enemy Here
-            EnemiesToSave.Clear();
-            SaveEnemyButton.IsEnabled = false;
-            DiscardChangesButton.IsEnabled = false;
+            string enemyList = "";
+            foreach(var enemy in EnemiesToSave)
+            {
+                enemyList += enemy.ToString() + "\n";
+            }
+            var result = MessageBox.Show($"The following enemies will be saved. Is that OK?\n\n{enemyList}", "", MessageBoxButton.OKCancel);
+
+            if(result == MessageBoxResult.OK)
+            {
+                EnemyDBParser.SaveEnemies(EnemiesToSave);
+                EnemiesToSave.Clear();
+                SaveEnemyButton.IsEnabled = false;
+                DiscardChangesButton.IsEnabled = false;
+            }
         }
 
         private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
-            EnemiesToSave.Clear();
-            SaveEnemyButton.IsEnabled = false;
-            DiscardChangesButton.IsEnabled = false;
+            // Save Enemy Here
+            string enemyList = "";
+            foreach (var enemy in EnemiesToSave)
+            {
+                enemyList += enemy.ToString() + "\n";
+            }
+            var result = MessageBox.Show($"Changes to the following enemies will be discarded. Is that OK?\n\n{enemyList}", "", MessageBoxButton.OKCancel);
+
+            if(result == MessageBoxResult.OK)
+            {
+                EnemiesToSave.Clear();
+                ViewModel.EnemyList = EnemyDBParser.ParseEnemyObjects();
+                ViewModel.CurrentEnemy = ViewModel.EnemyList.Single(x => x.Key == ViewModel.CurrentEnemy.Key).Value;
+                SaveEnemyButton.IsEnabled = false;
+                DiscardChangesButton.IsEnabled = false;
+            }
         }
 
         private void EnemyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -302,13 +340,13 @@ namespace OctomodEditor.Canvases
 
         private void EnemyEvent2ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentEnemy.BattleEvents[0] = (string)EnemyEvent1ComboBox.SelectedItem;
+            ViewModel.CurrentEnemy.BattleEvents[1] = (string)EnemyEvent2ComboBox.SelectedItem;
             UpdateEnemiesToSave();
         }
 
         private void EnemyEvent3ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentEnemy.BattleEvents[0] = (string)EnemyEvent1ComboBox.SelectedItem;
+            ViewModel.CurrentEnemy.BattleEvents[2] = (string)EnemyEvent3ComboBox.SelectedItem;
             UpdateEnemiesToSave();
         }
 
@@ -322,6 +360,11 @@ namespace OctomodEditor.Canvases
             EnemiesToSave.Clear();
             SaveEnemyButton.IsEnabled = false;
             DiscardChangesButton.IsEnabled = false;
+        }
+
+        private void AnyCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateEnemiesToSave();
         }
     }
 }

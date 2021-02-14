@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using OctomodEditor.Canvases;
 using OctomodEditor.Models;
 using OctomodEditor.Utilities;
+using OctomodEditor.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,21 +52,24 @@ namespace OctomodEditor
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadPaths();
-            MasterGameText = GameTextParser.ParseGameText("EN");
+            if (ConfigLoadedSuccessfully)
+            {
+                MasterGameText = GameTextParser.ParseGameText("EN");
+            }
         }
 
         private void LoadPaths()
         {
-            if (!File.Exists(@"/config.octo"))
+            if (!File.Exists(string.Join("/", Directory.GetCurrentDirectory(), "config.octo")))
             {
-                var stream = File.Create(@"/config.octo");
+                var stream = File.Create(string.Join("/", Directory.GetCurrentDirectory(), "config.octo"));
                 stream.Close();
             }
 
             try
             {
                 Dictionary<string, string> settings = new Dictionary<string, string>();
-                string[] lines = File.ReadAllLines(@"/config.octo");
+                string[] lines = File.ReadAllLines(string.Join("/", Directory.GetCurrentDirectory(), "config.octo"));
                 foreach (string line in lines)
                 {
                     settings.Add(line.Split('=')[0], line.Split('=')[1]);
@@ -84,6 +88,7 @@ namespace OctomodEditor
                         {
                             string path = openOctopathFolderDialogue.SelectedPath;
                             CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
+                            CommonUtilities.BaseFilesLocation = path;
                         }
                         else
                         {
@@ -113,6 +118,7 @@ namespace OctomodEditor
                         {
                             string path = openOctopathFolderDialogue.SelectedPath;
                             CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
+                            CommonUtilities.ModLocation = path;
                         }
                         else
                         {
@@ -143,9 +149,17 @@ namespace OctomodEditor
             catch
             {
                 MessageBox.Show("Your config file has been corrupted.");
-                File.Delete(@"/config.octo");
+                File.Delete(string.Join("/", Directory.GetCurrentDirectory(), "config.octo"));
                 Application.Current.Shutdown();
             }
+        }
+
+        private void MenuItemPreferences_Click(object sender, RoutedEventArgs e)
+        {
+            PreferencesWindow prefWindow = new PreferencesWindow();
+            prefWindow.Show();
+            prefWindow.Focus();
+            prefWindow.ResizeMode = ResizeMode.NoResize;
         }
     }
 }

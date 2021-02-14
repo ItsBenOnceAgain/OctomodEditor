@@ -1,0 +1,34 @@
+﻿<Window x:Class="OctomodEditor.Windows.PreferencesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OctomodEditor.Windows"
+        mc:Ignorable="d"
+        Style="{DynamicResource CustomFontStyle}"
+        Title="PreferencesWindow" Height="300" Width="500">
+    <Window.Resources>
+        <Style x:Key="CustomFontStyle">
+            <Setter Property="TextBlock.FontFamily" Value="Resources/Fonts/smorgasbord/Smorgasbord.otf #Smorgasbord"/>
+            <Setter Property="ItemsControl.FontFamily"  Value="Resources/Fonts/smorgasbord/Smorgasbord.otf #Smorgasbord"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="35*"/>
+        </Grid.RowDefinitions>
+        <Label>Main Octopath File Folder Location</Label>
+        <DockPanel Grid.Row="1">
+            <Image Margin="5" Source="/Resources/Images/folder.png" DockPanel.Dock="Left" MouseDown="MainFilesLocationButton_Click"/>
+            <Label x:Name="MainLocationLabel" DockPanel.Dock="Right" Margin="5"/>
+        </DockPanel>
+        <Label Grid.Row="2">Mod Folder Location</Label>
+        <DockPanel Grid.Row="3">
+            <Image Margin="5" Source="/Resources/Images/folder.png" DockPanel.Dock="Left" MouseDown="ModFilesLocationButton_Click"/>
+            <Label x:Name="ModLocationLabel" DockPanel.Dock="Right" Margin="5"/>
+        </DockPanel>
+    </Grid>
+</Window>

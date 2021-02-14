@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OctomodEditor.Canvases"
              xmlns:converters="clr-namespace:OctomodEditor.ValueConverters"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920"
              Loaded="UserControl_Loaded">
@@ -190,6 +191,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Shields}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -210,6 +212,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.PhysicalAttack}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -230,6 +233,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.PhysicalDefense}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -250,6 +254,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ElementalAttack}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -270,6 +275,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ElementalDefense}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -290,6 +296,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Accuracy}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -310,6 +317,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Evasion}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -330,6 +338,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Critical}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -350,6 +359,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Speed}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -409,6 +419,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ExperiencePoints}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -429,6 +440,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.JobPoints}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -449,6 +461,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Money}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -469,6 +482,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.MoneyFromCollecting}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -506,6 +520,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ItemDropPercentage}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -526,6 +541,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.DefaultTameRate}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -546,6 +562,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.EnemyLevel}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -566,6 +583,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.DamageRatio}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -642,6 +660,7 @@
                               x:Name="EnemySwordWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToSwords}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -660,6 +679,7 @@
                               x:Name="EnemySpearWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToSpears}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -678,6 +698,7 @@
                               x:Name="EnemyDaggerWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToDaggers}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -696,6 +717,7 @@
                               x:Name="EnemyAxeWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToAxes}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -714,6 +736,7 @@
                               x:Name="EnemyBowWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToBows}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -732,6 +755,7 @@
                               x:Name="EnemyStaffWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToStaves}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -750,6 +774,7 @@
                               x:Name="EnemyFireWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToFire}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -768,6 +793,7 @@
                               x:Name="EnemyIceWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToIce}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -786,6 +812,7 @@
                               x:Name="EnemyLightningWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToLightning}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -804,6 +831,7 @@
                               x:Name="EnemyWindWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToWind}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -822,6 +850,7 @@
                               x:Name="EnemyLightWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToLight}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -840,6 +869,7 @@
                               x:Name="EnemyDarkWeakCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsWeakToDark}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1127,6 +1157,7 @@
                               x:Name="EnemyIsNPCCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsNPC}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1144,6 +1175,7 @@
                               x:Name="EnemySlowDeathCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.PlaysSlowAnimationOnDeath}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1161,6 +1193,7 @@
                               x:Name="EnemyIsMainEnemyCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsMainEnemy}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1178,6 +1211,7 @@
                               x:Name="EnemyBattleExemptCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsExemptFromBattle}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1195,6 +1229,7 @@
                               x:Name="EnemyCatDamageCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.UsesCatDamageType}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1212,6 +1247,7 @@
                               x:Name="EnemyKnockbackAnimationCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.HasNoKnockbackAnimation}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1229,6 +1265,7 @@
                               x:Name="EnemyCapturableCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.CanBeCaptured}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1246,6 +1283,7 @@
                               x:Name="EnemyRobbableCheckBox"
                               VerticalContentAlignment="Center"
                               HorizontalAlignment="Center"
+                              Click="AnyCheckBox_Click"
                               IsChecked="{Binding CurrentEnemy.IsGuardedFromStealing}">
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="2" ScaleY="2"/>
@@ -1330,6 +1368,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                                 TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.MP}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1349,6 +1388,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                                 TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.BP}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1387,6 +1427,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                                 TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.InvocationTurn}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1406,6 +1447,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                                 TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.InvocationValue}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1569,6 +1611,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
+                             TextChanged="AnyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.FirstBP}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1723,11 +1766,14 @@
                         <SolidColorBrush Color="Black" Opacity="0.8"/>
                     </Label.Background>
                 </Label>
-                <Canvas Grid.Row="1" Margin="10">
-                </Canvas>
+                <Image x:Name="ImagePreview"
+                       Margin="10"
+                       Source="/preview.png"
+                       Grid.Row="1"/>
                 <Button x:Name="ChangeTextureButton"
                         Margin="10"
                         FontSize="20"
+                        IsEnabled="False"
                         Grid.Row="2">
                     Change Texture
                 </Button>

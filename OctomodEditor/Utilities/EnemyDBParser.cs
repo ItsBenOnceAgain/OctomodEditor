@@ -50,35 +50,237 @@ namespace OctomodEditor.Utilities
             return enemyObjects;
         }
 
-        public static void SaveEnemy(Enemy enemy, string path, string newPath)
+        public static void SaveEnemies(List<Enemy> enemies)
         {
-            string fileName = "EnemyDB";
-            string uassetPath = $"{path}\\{fileName}.uasset";
-            string uexpPath = $"{path}\\{fileName}.uexp";
-            string newUexpPath = $"{newPath}\\{fileName}.uexp";
+            string uassetPath;
+            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset"))
+            {
+                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset";
+            }
+            else
+            {
+                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset";
+            }
+            string oldUexpPath;
+            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp"))
+            {
+                oldUexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp";
+            }
+            else
+            {
+                oldUexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp";
+            }
+
+            string uexpPath;
+            if (!File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp"))
+            {
+                var openStream = File.Create($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp");
+                openStream.Close();
+            }
+            uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp";
+
             Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
 
-            byte[] allBytes = File.ReadAllBytes(uexpPath);
-            SaveAttributeResistances(enemy, allBytes, uassetStrings);
-            if (!Directory.Exists(newPath))
+            byte[] allBytes = File.ReadAllBytes(oldUexpPath);
+            foreach(var enemy in enemies)
             {
-                Directory.CreateDirectory(newPath);
+                SaveEnemy(enemy, allBytes, uassetStrings);
             }
-            File.WriteAllBytes(newUexpPath, allBytes);
+            File.WriteAllBytes(uexpPath, allBytes);
         }
 
-        public static void SaveAttributeResistances(Enemy enemy, byte[] allBytes, Dictionary<int, string> uassetStrings)
+        private static void UpdateBytesAtOffset(byte[] updateBytes, byte[] allBytes, int currentOffset)
         {
-            int attributeOffset = 1470 + enemy.Offset;
-            foreach(var attribute in enemy.AttributeResistances)
+            for(int i = 0; i < updateBytes.Length; i++)
             {
-                byte[] attributeBytes = GetBytesFromAttributeResistanceType(uassetStrings, attribute);
-                allBytes[attributeOffset] = attributeBytes[0];
-                allBytes[attributeOffset + 1] = attributeBytes[1];
-                allBytes[attributeOffset + 2] = attributeBytes[2];
-                allBytes[attributeOffset + 3] = attributeBytes[3];
-                attributeOffset += 8;
+                allBytes[currentOffset + i] = updateBytes[i];
             }
+        }
+
+        public static void SaveEnemy(Enemy enemy, byte[] allBytes, Dictionary<int, string> uassetStrings)
+        {
+            int currentOffset = enemy.Offset + 95;
+            byte[] flipbookData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.FlipbookPath).Key);
+            UpdateBytesAtOffset(flipbookData, allBytes, currentOffset);
+            currentOffset += 37;
+            byte[] textureData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.TexturePath).Key);
+            UpdateBytesAtOffset(textureData, allBytes, currentOffset);
+            currentOffset += 37;
+            byte[] displayRankData = BitConverter.GetBytes(enemy.DisplayRank);
+            UpdateBytesAtOffset(displayRankData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] enemyLevelData = BitConverter.GetBytes(enemy.EnemyLevel);
+            UpdateBytesAtOffset(enemyLevelData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] damageRatioData = BitConverter.GetBytes((float)enemy.DamageRatio);
+            UpdateBytesAtOffset(damageRatioData, allBytes, currentOffset);
+            currentOffset += 37;
+            byte[] enemyRaceData = ConvertRaceTypeToBytes(enemy.RaceType, uassetStrings);
+            UpdateBytesAtOffset(enemyRaceData, allBytes, currentOffset);
+            currentOffset += 41;
+            byte[] enemySizeData = ConvertSizeTypeToBytes(enemy.Size, uassetStrings);
+            UpdateBytesAtOffset(enemySizeData, allBytes, currentOffset);
+            currentOffset += 32;
+            byte[] isNPCData = BitConverter.GetBytes(enemy.IsNPC);
+            UpdateBytesAtOffset(isNPCData, allBytes, currentOffset);
+            currentOffset += 26;
+            byte[] playsSlowDeathAnimData = BitConverter.GetBytes(enemy.PlaysSlowAnimationOnDeath);
+            UpdateBytesAtOffset(playsSlowDeathAnimData, allBytes, currentOffset);
+            currentOffset += 26;
+            byte[] isMainEnemyData = BitConverter.GetBytes(enemy.IsMainEnemy);
+            UpdateBytesAtOffset(isMainEnemyData, allBytes, currentOffset);
+            currentOffset += 26;
+            byte[] isExemptFromBattleData = BitConverter.GetBytes(enemy.IsExemptFromBattle);
+            UpdateBytesAtOffset(isExemptFromBattleData, allBytes, currentOffset);
+            currentOffset += 26;
+            byte[] usesCatDamageData = BitConverter.GetBytes(enemy.UsesCatDamageType);
+            UpdateBytesAtOffset(isExemptFromBattleData, allBytes, currentOffset);
+            currentOffset += 26;
+            byte[] hasNoKnockbackData = BitConverter.GetBytes(enemy.HasNoKnockbackAnimation);
+            UpdateBytesAtOffset(hasNoKnockbackData, allBytes, currentOffset);
+            currentOffset += 76;
+            byte[] hpData = BitConverter.GetBytes(enemy.HP);
+            currentOffset += 29;
+            UpdateBytesAtOffset(hpData, allBytes, currentOffset);
+            byte[] mpData = BitConverter.GetBytes(enemy.MP);
+            UpdateBytesAtOffset(mpData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] bpData = BitConverter.GetBytes(enemy.BP);
+            UpdateBytesAtOffset(bpData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] shieldsData = BitConverter.GetBytes(enemy.Shields);
+            UpdateBytesAtOffset(shieldsData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] physAttackData = BitConverter.GetBytes(enemy.PhysicalAttack);
+            UpdateBytesAtOffset(physAttackData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] physDefData = BitConverter.GetBytes(enemy.PhysicalDefense);
+            UpdateBytesAtOffset(physDefData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] elemAttackData = BitConverter.GetBytes(enemy.ElementalAttack);
+            UpdateBytesAtOffset(elemAttackData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] elemDefData = BitConverter.GetBytes(enemy.ElementalDefense);
+            UpdateBytesAtOffset(elemDefData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] accuracyData = BitConverter.GetBytes(enemy.Accuracy);
+            UpdateBytesAtOffset(accuracyData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] evasionData = BitConverter.GetBytes(enemy.Evasion);
+            UpdateBytesAtOffset(evasionData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] criticalData = BitConverter.GetBytes(enemy.Critical);
+            UpdateBytesAtOffset(criticalData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] speedData = BitConverter.GetBytes(enemy.Speed);
+            UpdateBytesAtOffset(speedData, allBytes, currentOffset);
+            currentOffset += 37;
+            byte[] experienceData = BitConverter.GetBytes(enemy.ExperiencePoints);
+            UpdateBytesAtOffset(experienceData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] jobPointsData = BitConverter.GetBytes(enemy.JobPoints);
+            UpdateBytesAtOffset(jobPointsData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] moneyData = BitConverter.GetBytes(enemy.Money);
+            UpdateBytesAtOffset(moneyData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] stealableMoneyData = BitConverter.GetBytes(enemy.MoneyFromCollecting);
+            UpdateBytesAtOffset(stealableMoneyData, allBytes, currentOffset);
+            currentOffset += 28;
+            byte[] canBeCapturedData = BitConverter.GetBytes(enemy.CanBeCaptured);
+            UpdateBytesAtOffset(canBeCapturedData, allBytes, currentOffset);
+            currentOffset += 27;
+            byte[] tameRateData = BitConverter.GetBytes((float)enemy.DefaultTameRate);
+            UpdateBytesAtOffset(tameRateData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] capturedEnemyIdData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.CapturedEnemyID).Key);
+            UpdateBytesAtOffset(capturedEnemyIdData, allBytes, currentOffset);
+            currentOffset += 33;
+            byte[] firstBPData = BitConverter.GetBytes(enemy.FirstBP);
+            UpdateBytesAtOffset(firstBPData, allBytes, currentOffset);
+            currentOffset += 37;
+            byte[] breakTypeData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.BreakType).Key);
+            UpdateBytesAtOffset(breakTypeData, allBytes, currentOffset);
+            currentOffset += 33;
+            byte[] invocationValueData = BitConverter.GetBytes(enemy.InvocationValue);
+            UpdateBytesAtOffset(invocationValueData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] invocationTurnData = BitConverter.GetBytes(enemy.InvocationTurn);
+            UpdateBytesAtOffset(invocationTurnData, allBytes, currentOffset);
+            currentOffset += 37;
+            byte[] deadTypeBytes = ConvertDeadTypeToBytes(enemy.DeadType, uassetStrings);
+            UpdateBytesAtOffset(deadTypeBytes, allBytes, currentOffset);
+            currentOffset += 53;
+            byte[] isWeakToFireBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToFire, uassetStrings);
+            UpdateBytesAtOffset(isWeakToFireBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToIceBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToIce, uassetStrings);
+            UpdateBytesAtOffset(isWeakToIceBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToLightningBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToLightning, uassetStrings);
+            UpdateBytesAtOffset(isWeakToLightningBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToWindBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToWind, uassetStrings);
+            UpdateBytesAtOffset(isWeakToWindBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToLightBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToLight, uassetStrings);
+            UpdateBytesAtOffset(isWeakToLightBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToDarkBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToDark, uassetStrings);
+            UpdateBytesAtOffset(isWeakToDarkBytes, allBytes, currentOffset);
+            currentOffset += 45;
+            byte[] isWeakToSwordsBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToSwords, uassetStrings);
+            UpdateBytesAtOffset(isWeakToSwordsBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToSpearsBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToSpears, uassetStrings);
+            UpdateBytesAtOffset(isWeakToSpearsBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToDaggersBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToDaggers, uassetStrings);
+            UpdateBytesAtOffset(isWeakToDaggersBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToAxesBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToAxes, uassetStrings);
+            UpdateBytesAtOffset(isWeakToAxesBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToBowsBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToBows, uassetStrings);
+            UpdateBytesAtOffset(isWeakToBowsBytes, allBytes, currentOffset);
+            currentOffset += 8;
+            byte[] isWeakToStavesBytes = ConvertAttributeBoolToBytes(enemy.IsWeakToStaves, uassetStrings);
+            UpdateBytesAtOffset(isWeakToStavesBytes, allBytes, currentOffset);
+            currentOffset += 53;
+            UpdateDiseaseResistanceBytes(enemy.AttributeResistances, allBytes, uassetStrings, ref currentOffset);
+            currentOffset += 24;
+            byte[] isGuardedFromStealingData = BitConverter.GetBytes(enemy.IsGuardedFromStealing);
+            UpdateBytesAtOffset(isGuardedFromStealingData, allBytes, currentOffset);
+            currentOffset += 27;
+            byte[] itemIdData = GetBytesFromItemId(enemy.ItemID, uassetStrings);
+            UpdateBytesAtOffset(itemIdData, allBytes, currentOffset);
+            currentOffset += 33;
+            byte[] itemDropPercentageData = BitConverter.GetBytes(enemy.ItemDropPercentage);
+            UpdateBytesAtOffset(itemDropPercentageData, allBytes, currentOffset);
+            currentOffset += 29;
+            byte[] aiPathData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.AIPath).Key);
+            UpdateBytesAtOffset(aiPathData, allBytes, currentOffset);
+            currentOffset += 49;
+            UpdateAbilityEventBytes(enemy.AbilityList, allBytes, uassetStrings, ref currentOffset);
+            currentOffset += 37;
+            UpdateAbilityEventBytes(enemy.BattleEvents, allBytes, uassetStrings, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector3Bytes(enemy.DiseaseOffset, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector3Bytes(enemy.EnemyEffectOffset, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector3Bytes(enemy.StatusUIOffset, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector3Bytes(enemy.DamageUIOffset, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector2Bytes(enemy.IconL, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector2Bytes(enemy.PixelScaleL, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector2Bytes(enemy.IconS, allBytes, ref currentOffset);
+            currentOffset += 49;
+            UpdateVector2Bytes(enemy.PixelScaleS, allBytes, ref currentOffset);
+            currentOffset += 8;
         }
 
         public static byte[] GetBytesFromAttributeResistanceType(Dictionary<int, string> uassetStrings, AttributeResistance resistance)
@@ -335,6 +537,29 @@ namespace OctomodEditor.Utilities
             return new Vector3(x, y, z);
         }
 
+        public static void UpdateVector3Bytes(Vector3 values, byte[] allBytes, ref int currentOffset)
+        {
+            byte[] xData = BitConverter.GetBytes(values.X);
+            UpdateBytesAtOffset(xData, allBytes, currentOffset);
+            currentOffset += 4;
+            byte[] yData = BitConverter.GetBytes(values.Y);
+            UpdateBytesAtOffset(yData, allBytes, currentOffset);
+            currentOffset += 4;
+            byte[] zData = BitConverter.GetBytes(values.Z);
+            UpdateBytesAtOffset(zData, allBytes, currentOffset);
+            currentOffset += 4;
+        }
+
+        public static void UpdateVector2Bytes(Vector2 values, byte[] allBytes, ref int currentOffset)
+        {
+            byte[] xData = BitConverter.GetBytes(values.X);
+            UpdateBytesAtOffset(xData, allBytes, currentOffset);
+            currentOffset += 4;
+            byte[] yData = BitConverter.GetBytes(values.Y);
+            UpdateBytesAtOffset(yData, allBytes, currentOffset);
+            currentOffset += 4;
+        }
+
         public static string[] GetEventList(byte[] allBytes, Dictionary<int, string> uassetStrings, ref int currentOffset)
         {
             string[] eventList = new string[3];
@@ -357,6 +582,58 @@ namespace OctomodEditor.Utilities
                 currentOffset += 8;
             }
             return abilityList;
+        }
+
+        public static void UpdateAbilityEventBytes(string[] abilities, byte[] allBytes, Dictionary<int, string> uassetStrings, ref int currentOffset)
+        {
+            for (int i = 0; i < abilities.Length; i++)
+            {
+                byte[] abilityBytes = new byte[8];
+                if (uassetStrings.ContainsValue(abilities[i]))
+                {
+                    UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == abilities[i]).Key), abilityBytes, 0);
+                }
+                else
+                {
+                    string[] abilityData = abilities[i].Split('_');
+                    string abilityPrefix = string.Join("_", abilityData.ToList().Where(x => x != abilityData.Last()));
+                    int abilitySuffix = int.Parse(abilityData.Last()) + 1;
+                    byte[] abilityNumberValue = BitConverter.GetBytes(abilitySuffix);
+                    UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == abilityPrefix).Key), abilityBytes, 0);
+                    UpdateBytesAtOffset(abilityNumberValue, abilityBytes, 4);
+                }
+                UpdateBytesAtOffset(abilityBytes, allBytes, currentOffset);
+                currentOffset += 8;
+            }
+        }
+
+        public static void UpdateDiseaseResistanceBytes(AttributeResistance[] resistances, byte[] allBytes, Dictionary<int, string> uassetStrings, ref int currentOffset)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                string value;
+                switch (resistances[i])
+                {
+                    case AttributeResistance.NONE:
+                        value = "EATTRIBUTE_RESIST::NewEnumerator0";
+                        break;
+                    case AttributeResistance.WEAK:
+                        value = "EATTRIBUTE_RESIST::NewEnumerator1";
+                        break;
+                    case AttributeResistance.REDUCE:
+                        value = "EATTRIBUTE_RESIST::NewEnumerator2";
+                        break;
+                    case AttributeResistance.INVALID:
+                        value = "EATTRIBUTE_RESIST::NewEnumerator3";
+                        break;
+                    default:
+                        throw new ArgumentException("Received a string that did not match an attribute resistance.");
+                }
+                byte[] resistanceBytes = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == value).Key);
+                UpdateBytesAtOffset(resistanceBytes, allBytes, currentOffset);
+
+                currentOffset += 8;
+            }
         }
 
         public static AttributeResistance[] GetDiseaseResistances(byte[] allBytes, Dictionary<int, string> uassetStrings, ref int currentOffset)
@@ -387,6 +664,12 @@ namespace OctomodEditor.Utilities
                 currentOffset += 8;
             }
             return resistances;
+        }
+
+        public static byte[] ConvertAttributeBoolToBytes(bool attributeBool, Dictionary<int, string> uassetStrings)
+        {
+            string attributeString = attributeBool ? "EATTRIBUTE_RESIST::NewEnumerator1" : "EATTRIBUTE_RESIST::NewEnumerator0";
+            return BitConverter.GetBytes(uassetStrings.Single(x => x.Value == attributeString).Key);
         }
 
         public static bool ConvertStringToAttributeBool(string attributeString)
@@ -443,10 +726,89 @@ namespace OctomodEditor.Utilities
             return race;
         }
 
-        public static CharacterSize ConvertStringToSizeType(string raceString)
+        public static byte[] ConvertRaceTypeToBytes(CharacterRace race, Dictionary<int, string> uassetStrings)
+        {
+            string raceString;
+            switch (race)
+            {
+                case CharacterRace.UNKNOWN:
+                    raceString = "ECHARACTER_RACE::NewEnumerator0";
+                    break;
+                case CharacterRace.HUMAN:
+                    raceString = "ECHARACTER_RACE::NewEnumerator1";
+                    break;
+                case CharacterRace.BEAST:
+                    raceString = "ECHARACTER_RACE::NewEnumerator2";
+                    break;
+                case CharacterRace.INSECT:
+                    raceString = "ECHARACTER_RACE::NewEnumerator3";
+                    break;
+                case CharacterRace.BIRD:
+                    raceString = "ECHARACTER_RACE::NewEnumerator4";
+                    break;
+                case CharacterRace.FISH:
+                    raceString = "ECHARACTER_RACE::NewEnumerator5";
+                    break;
+                case CharacterRace.DRAGON:
+                    raceString = "ECHARACTER_RACE::NewEnumerator6";
+                    break;
+                case CharacterRace.PLANT:
+                    raceString = "ECHARACTER_RACE::NewEnumerator7";
+                    break;
+                case CharacterRace.CHIMERA:
+                    raceString = "ECHARACTER_RACE::NewEnumerator8";
+                    break;
+                case CharacterRace.SHELL:
+                    raceString = "ECHARACTER_RACE::NewEnumerator9";
+                    break;
+                case CharacterRace.UNDEAD:
+                    raceString = "ECHARACTER_RACE::NewEnumerator10";
+                    break;
+                case CharacterRace.DEVIL:
+                    raceString = "ECHARACTER_RACE::NewEnumerator11";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            int value;
+            try
+            {
+                value = uassetStrings.Single(x => x.Value == raceString).Key;
+            }
+            catch (KeyNotFoundException)
+            {
+                value = uassetStrings.Single(x => x.Value == "ECHARACTER_RACE::NewEnumerator0").Key;
+            }
+
+            return BitConverter.GetBytes(value);
+        }
+
+        public static byte[] ConvertSizeTypeToBytes(CharacterSize size, Dictionary<int, string> uassetStrings)
+        {
+            string sizeString;
+            switch (size)
+            {
+                case CharacterSize.SMALL:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator0";
+                    break;
+                case CharacterSize.MEDIUM:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator1";
+                    break;
+                case CharacterSize.LARGE:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator2";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return BitConverter.GetBytes(uassetStrings.Single(x => x.Value == sizeString).Key);
+        }
+
+        public static CharacterSize ConvertStringToSizeType(string sizeString)
         {
             CharacterSize size;
-            switch (raceString)
+            switch (sizeString)
             {
                 case "ECHARACTER_SIZE::NewEnumerator0":
                     size = CharacterSize.SMALL;
@@ -464,10 +826,40 @@ namespace OctomodEditor.Utilities
             return size;
         }
 
-        public static EnemyDeadType ConvertStringToDeadType(string raceString)
+        public static byte[] ConvertDeadTypeToBytes(EnemyDeadType deadType, Dictionary<int, string> uassetStrings)
+        {
+            string deadString;
+            switch (deadType)
+            {
+                case EnemyDeadType.DEADTYPE0:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator0";
+                    break;
+                case EnemyDeadType.DEADTYPE1:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator1";
+                    break;
+                case EnemyDeadType.DEADTYPE2:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator2";
+                    break;
+                case EnemyDeadType.DEADTYPE3:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator3";
+                    break;
+                case EnemyDeadType.DEADTYPE4:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator4";
+                    break;
+                case EnemyDeadType.DEADTYPE5:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator5";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return BitConverter.GetBytes(uassetStrings.Single(x => x.Value == deadString).Key);
+        }
+
+        public static EnemyDeadType ConvertStringToDeadType(string deadString)
         {
             EnemyDeadType deadType;
-            switch (raceString)
+            switch (deadString)
             {
                 case "EENEMY_DEAD_TYPE::NewEnumerator0":
                     deadType = EnemyDeadType.DEADTYPE0;
@@ -492,6 +884,23 @@ namespace OctomodEditor.Utilities
             }
 
             return deadType;
+        }
+
+        public static byte[] GetBytesFromItemId(string itemId, Dictionary<int, string> uassetStrings)
+        {
+            byte[] itemIdData = new byte[8];
+            if (uassetStrings.ContainsValue(itemId))
+            {
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == itemId).Key), itemIdData, 0);
+            }
+            else
+            {
+                string[] itemData = itemId.Split('_');
+                byte[] itemNumberValue = BitConverter.GetBytes(int.Parse(itemData[1]));
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == itemData[0]).Key), itemIdData, 0);
+                UpdateBytesAtOffset(itemNumberValue, itemIdData, 4);
+            }
+            return itemIdData;
         }
     }
 }
