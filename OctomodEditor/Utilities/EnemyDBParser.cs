@@ -74,6 +74,10 @@ namespace OctomodEditor.Utilities
             string uexpPath;
             if (!File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp"))
             {
+                if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/"))
+                {
+                    Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/");
+                }
                 var openStream = File.Create($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp");
                 openStream.Close();
             }
