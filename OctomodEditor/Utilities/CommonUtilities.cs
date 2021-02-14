@@ -66,7 +66,7 @@ namespace OctomodEditor.Utilities
         {
             try
             {
-                string[] lines = File.ReadAllLines(@"/config.octo");
+                string[] lines = File.ReadAllLines(string.Join("/", Directory.GetCurrentDirectory(), "config.octo"));
                 Dictionary<string, string> settings = new Dictionary<string, string>();
                 foreach (string line in lines)
                 {
@@ -85,7 +85,7 @@ namespace OctomodEditor.Utilities
                 {
                     newSettings.Add($"{newSetting.Key}={newSetting.Value}");
                 }
-                File.WriteAllLines(@"/config.octo", newSettings.ToArray());
+                File.WriteAllLines(string.Join("/", Directory.GetCurrentDirectory(), "config.octo"), newSettings.ToArray());
                 return true;
             }
             catch
