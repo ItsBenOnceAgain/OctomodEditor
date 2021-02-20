@@ -115,7 +115,7 @@ namespace OctomodEditor
                     items.Add(itemId, MainWindow.MasterGameText[$"MIX_ITM_NA_{identifier:D3}"]);
                 }
             }
-            return items;
+            return items.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private Dictionary<string, string> GetFlipbookPaths()
@@ -127,7 +127,7 @@ namespace OctomodEditor
                 string[] flipbookDirectories = flipbookPath.Split('/');
                 flipbookPaths.Add(flipbookPath, flipbookDirectories.Last());
             }
-            return flipbookPaths;
+            return flipbookPaths.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private Dictionary<string, string> GetTexturePaths()
@@ -139,7 +139,7 @@ namespace OctomodEditor
                 string[] textureDirectories = texturePath.Split('/');
                 texturePaths.Add(texturePath, textureDirectories.Last());
             }
-            return texturePaths;
+            return texturePaths.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private Dictionary<string, string> GetAIPaths()
@@ -152,7 +152,7 @@ namespace OctomodEditor
                 string[] aiDirectories = aiPath.Split('/');
                 aiPaths.Add(aiPath, aiDirectories.Last());
             }
-            return aiPaths;
+            return aiPaths.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private List<string> GetEvents()
@@ -169,6 +169,7 @@ namespace OctomodEditor
                     }
                 }
             }
+            events.Sort();
             return events;
         }
 
@@ -205,7 +206,7 @@ namespace OctomodEditor
                     }
                 }
             }
-            return allAbilities;
+            return allAbilities.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }

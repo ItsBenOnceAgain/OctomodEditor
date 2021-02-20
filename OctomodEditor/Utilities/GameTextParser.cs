@@ -11,10 +11,10 @@ namespace OctomodEditor.Utilities
     {
         public const int ENEMY_ENTRY_COUNT_OFFSET = 41;
 
-        public static Dictionary<string, string> ParseGameText(string language)
+        public static Dictionary<string, string> ParseGameText(string language, bool useMasterFile = false)
         {
             string uassetPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset"))
+            if (!useMasterFile && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset"))
             {
                 uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
             }
@@ -24,7 +24,7 @@ namespace OctomodEditor.Utilities
             }
 
             string uexpPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp"))
+            if (!useMasterFile && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp"))
             {
                 uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
             }

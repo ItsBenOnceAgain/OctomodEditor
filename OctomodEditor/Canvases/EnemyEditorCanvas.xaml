@@ -171,7 +171,7 @@
                              Margin="5 0"
                              VerticalAlignment="Center"
                              Text="{Binding CurrentEnemy.HP}"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyHPTextBox_TextChanged"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
                             <SolidColorBrush Color="Black" Opacity="0.65"/>
@@ -191,7 +191,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyShieldTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Shields}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -212,7 +212,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyPAttackTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.PhysicalAttack}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -233,7 +233,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyPDefenseTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.PhysicalDefense}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -254,7 +254,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyMAttackTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ElementalAttack}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -275,7 +275,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyMDefenseTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ElementalDefense}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -296,7 +296,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyAccuracyTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Accuracy}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -317,7 +317,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyEvasionTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Evasion}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -338,7 +338,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyCriticalTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Critical}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -359,7 +359,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemySpeedTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Speed}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -406,7 +406,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0">
-                        <Image Source="/Resources/Images/Ability3.png"/>
+                        <Image Source="/Resources/Images/Warmaster.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -419,7 +419,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyExperienceTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ExperiencePoints}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -440,7 +440,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyJobPointsTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.JobPoints}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -448,7 +448,7 @@
                         </TextBox.Background>
                     </TextBox>
                     <DockPanel Grid.Row="2">
-                        <Image Source="/Resources/Images/Leaves.png"/>
+                        <Image Source="/Resources/Images/Merchant.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -461,7 +461,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyLeavesTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.Money}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -469,7 +469,7 @@
                         </TextBox.Background>
                     </TextBox>
                     <DockPanel Grid.Row="3">
-                        <Image Source="/Resources/Images/Ability1.png"/>
+                        <Image Source="/Resources/Images/Dancer.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -482,7 +482,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyCollectTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.MoneyFromCollecting}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -490,7 +490,7 @@
                         </TextBox.Background>
                     </TextBox>
                     <DockPanel Grid.Row="4">
-                        <Image Source="/Resources/Images/Item.png"/>
+                        <Image Source="/Resources/Images/Apothecary.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -507,7 +507,7 @@
                               ItemsSource="{Binding AllItems}"
                               DisplayMemberPath="Value"/>
                     <DockPanel Grid.Row="5">
-                        <Image Source="/Resources/Images/Unknown.png"/>
+                        <Image Source="/Resources/Images/Thief.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -520,7 +520,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyItemPercentageTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.ItemDropPercentage}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -541,7 +541,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyTameRateTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.DefaultTameRate}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -549,7 +549,7 @@
                         </TextBox.Background>
                     </TextBox>
                     <DockPanel Grid.Row="7">
-                        <Image Source="/Resources/Images/Ability4.png"/>
+                        <Image Source="/Resources/Images/Scholar.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -562,7 +562,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyLevelTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.EnemyLevel}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -583,7 +583,7 @@
                              FontSize="24"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyDamageRatioTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.DamageRatio}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                         <TextBox.Background>
@@ -591,7 +591,7 @@
                         </TextBox.Background>
                     </TextBox>
                     <DockPanel Grid.Row="9">
-                        <Image Source="/Resources/Images/Support.png"/>
+                        <Image Source="/Resources/Images/Cleric.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -914,14 +914,13 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0">
                         <Image Source="/Resources/Images/Poison.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 1: "
+                                   Content="Poison: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
@@ -937,146 +936,159 @@
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 2: "
+                                   Content="Blindness: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
                     <ComboBox Grid.Row="1" Grid.Column="1"
-                              x:Name="EnemyAttribute2ComboBox"
-                              FontSize="12"
-                              Margin="5"
-                              ItemsSource="{Binding Resistances}"
-                              SelectionChanged="EnemyAttribute2ComboBox_SelectionChanged"
-                              VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="2">
-                        <Image Source="/Resources/Images/Silence.png"/>
-                        <Label FontSize="24"
-                               Style="{DynamicResource ResourceKey=LabelFontColor}"
-                                   Padding="5 0"
-                                   Content="Attribute 3: "
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <ComboBox Grid.Row="2" Grid.Column="1"
                               x:Name="EnemyAttribute3ComboBox"
                               FontSize="12"
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute3ComboBox_SelectionChanged"
                               VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="3">
-                        <Image Source="/Resources/Images/Unconcious.png"/>
+                    <DockPanel Grid.Row="2">
+                        <Image Source="/Resources/Images/Confusion.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 4: "
+                                   Content="Confusion: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
-                    <ComboBox Grid.Row="3" Grid.Column="1"
+                    <ComboBox Grid.Row="2" Grid.Column="1"
                               x:Name="EnemyAttribute4ComboBox"
                               FontSize="12"
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute4ComboBox_SelectionChanged"
                               VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="4">
-                        <Image Source="/Resources/Images/Terror.png"/>
+                    <DockPanel Grid.Row="3">
+                        <Image Source="/Resources/Images/Sleep.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 5: "
+                                   Content="Sleep: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
-                    <ComboBox Grid.Row="4" Grid.Column="1"
+                    <ComboBox Grid.Row="3" Grid.Column="1"
                               x:Name="EnemyAttribute5ComboBox"
                               FontSize="12"
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute5ComboBox_SelectionChanged"
                               VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="5">
-                        <Image Source="/Resources/Images/Debuff.png"/>
+                    <DockPanel Grid.Row="4">
+                        <Image Source="/Resources/Images/PeerlessPoison.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 6: "
+                                   Content="Instant Death: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
-                    <ComboBox Grid.Row="5" Grid.Column="1"
-                              x:Name="EnemyAttribute6ComboBox"
-                              FontSize="12"
-                              Margin="5"
-                              ItemsSource="{Binding Resistances}"
-                              SelectionChanged="EnemyAttribute6ComboBox_SelectionChanged"
-                              VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="6">
-                        <Image Source="/Resources/Images/Sleep.png"/>
-                        <Label FontSize="24"
-                               Style="{DynamicResource ResourceKey=LabelFontColor}"
-                                   Padding="5 0"
-                                   Content="Attribute 7: "
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <ComboBox Grid.Row="6" Grid.Column="1"
-                              x:Name="EnemyAttribute7ComboBox"
-                              FontSize="12"
-                              Margin="5"
-                              ItemsSource="{Binding Resistances}"
-                              SelectionChanged="EnemyAttribute7ComboBox_SelectionChanged"
-                              VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="7">
-                        <Image Source="/Resources/Images/ToxicRainbow.png"/>
-                        <Label FontSize="24"
-                               Style="{DynamicResource ResourceKey=LabelFontColor}"
-                                   Padding="5 0"
-                                   Content="Attribute 8: "
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <ComboBox Grid.Row="7" Grid.Column="1"
+                    <ComboBox Grid.Row="4" Grid.Column="1"
                               x:Name="EnemyAttribute8ComboBox"
                               FontSize="12"
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute8ComboBox_SelectionChanged"
                               VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="8">
-                        <Image Source="/Resources/Images/PeerlessPoison.png"/>
+                    <Label Margin="5"
+                           Grid.Row="5"
+                           Grid.ColumnSpan="2"
+                           FontSize="24"
+                           Style="{DynamicResource ResourceKey=LabelFontColor}"
+                           Content="- Unused Resistances - "
+                           HorizontalContentAlignment="Left"
+                           VerticalContentAlignment="Center"
+                           HorizontalAlignment="Stretch">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.8"/>
+                        </Label.Background>
+                    </Label>
+                    <DockPanel Grid.Row="6">
+                        <Image Source="/Resources/Images/Silence.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 9: "
+                                   Content="Silence: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <ComboBox Grid.Row="6" Grid.Column="1"
+                              x:Name="EnemyAttribute2ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute2ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
+                    <DockPanel Grid.Row="7">
+                        <Image Source="/Resources/Images/Terror.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Terror: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <ComboBox Grid.Row="7" Grid.Column="1"
+                              x:Name="EnemyAttribute6ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute6ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
+                    <DockPanel Grid.Row="8">
+                        <Image Source="/Resources/Images/Unconcious.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Unconcious: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
                     <ComboBox Grid.Row="8" Grid.Column="1"
+                              x:Name="EnemyAttribute7ComboBox"
+                              FontSize="12"
+                              Margin="5"
+                              ItemsSource="{Binding Resistances}"
+                              SelectionChanged="EnemyAttribute7ComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"/>
+                    <DockPanel Grid.Row="9">
+                        <Image Source="/Resources/Images/ToxicRainbow.png"/>
+                        <Label FontSize="24"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Transform: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <ComboBox Grid.Row="9" Grid.Column="1"
                               x:Name="EnemyAttribute9ComboBox"
                               FontSize="12"
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute9ComboBox_SelectionChanged"
                               VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="9">
-                        <Image Source="/Resources/Images/Confusion.png"/>
+                    <DockPanel Grid.Row="10">
+                        <Image Source="/Resources/Images/Debuff.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Attribute 10: "
+                                   Content="Debuff: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                     </DockPanel>
-                    <ComboBox Grid.Row="9" Grid.Column="1"
+                    <ComboBox Grid.Row="10" Grid.Column="1"
                               x:Name="EnemyAttribute10ComboBox"
                               FontSize="12"
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute10ComboBox_SelectionChanged"
                               VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="10">
+                    <DockPanel Grid.Row="10" Visibility="Collapsed">
                         <Image Source="/Resources/Images/Leghold.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
@@ -1091,15 +1103,16 @@
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute11ComboBox_SelectionChanged"
-                              VerticalContentAlignment="Center"/>
-                    <DockPanel Grid.Row="11">
+                              VerticalContentAlignment="Center"
+                              Visibility="Collapsed"/>
+                    <DockPanel Grid.Row="11" Visibility="Collapsed">
                         <Image Source="/Resources/Images/Petrify.png"/>
                         <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
-                                   Padding="5 0"
-                                   Content="Attribute 12: "
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"/>
+                               Padding="5 0"
+                               Content="Attribute 12: "
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"/>
                     </DockPanel>
                     <ComboBox Grid.Row="11" Grid.Column="1"
                               x:Name="EnemyAttribute12ComboBox"
@@ -1107,7 +1120,8 @@
                               Margin="5"
                               ItemsSource="{Binding Resistances}"
                               SelectionChanged="EnemyAttribute12ComboBox_SelectionChanged"
-                              VerticalContentAlignment="Center"/>
+                              VerticalContentAlignment="Center"
+                              Visibility="Collapsed"/>
                 </Grid>
             </Grid>
             <Grid Margin="10" Grid.Column="4">
@@ -1120,7 +1134,7 @@
                 </Grid.RowDefinitions>
                 <Label
                     Margin="5"
-                    FontSize="32"
+                    FontSize="30"
                     Style="{DynamicResource ResourceKey=LabelFontColor}"
                     Content="- Flags - "
                     HorizontalContentAlignment="Left"
@@ -1146,7 +1160,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Primrose.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Is NPC: "
@@ -1164,7 +1179,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="1">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Olberic.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Slow Death: "
@@ -1182,7 +1198,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="2">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Ophilia.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Is Main Enemy: "
@@ -1200,7 +1217,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="3">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Cyrus.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Exempt From Battle: "
@@ -1218,7 +1236,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="4">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Tressa.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Uses Cait Damage: "
@@ -1236,7 +1255,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="5">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Alfyn.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="No Knockback: "
@@ -1254,7 +1274,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="6">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Hannit.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Capturable: "
@@ -1272,7 +1293,8 @@
                         </CheckBox.LayoutTransform>
                     </CheckBox>
                     <DockPanel Grid.Row="7">
-                        <Label FontSize="24"
+                        <Image Source="/Resources/Images/Sprites/Therion.png"/>
+                        <Label FontSize="20"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
                                    Content="Cannot Be Robbed: "
@@ -1356,6 +1378,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <DockPanel Grid.Row="0">
+                            <Image Source="/Resources/Images/SP.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1368,7 +1391,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                                 TextChanged="AnyTextBox_TextChanged"
+                                 TextChanged="EnemySPTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.MP}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1376,6 +1399,7 @@
                             </TextBox.Background>
                         </TextBox>
                         <DockPanel Grid.Row="1">
+                            <Image Source="/Resources/Images/Ability2.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1388,7 +1412,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                                 TextChanged="AnyTextBox_TextChanged"
+                                 TextChanged="EnemyBPTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.BP}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1396,6 +1420,7 @@
                             </TextBox.Background>
                         </TextBox>
                         <DockPanel Grid.Row="2">
+                            <Image Source="/Resources/Images/Support.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1415,6 +1440,7 @@
                             </Label.Background>
                         </Label>
                         <DockPanel Grid.Row="3">
+                            <Image Source="/Resources/Images/Ability1.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1427,7 +1453,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                                 TextChanged="AnyTextBox_TextChanged"
+                                 TextChanged="EnemyInvocationTurnTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.InvocationTurn}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1435,6 +1461,7 @@
                             </TextBox.Background>
                         </TextBox>
                         <DockPanel Grid.Row="4">
+                            <Image Source="/Resources/Images/Ability4.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1447,7 +1474,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                                 TextChanged="AnyTextBox_TextChanged"
+                                 TextChanged="EnemyInvocationValueTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.InvocationValue}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1455,6 +1482,7 @@
                             </TextBox.Background>
                         </TextBox>
                         <DockPanel Grid.Row="5">
+                            <Image Source="/Resources/Images/Ability3.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1536,10 +1564,11 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <DockPanel Grid.Row="0">
+                            <Image Source="/Resources/Images/Grape.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Flipbook Path: "
+                                   Content="Flipbook: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
@@ -1552,10 +1581,11 @@
                               ItemsSource="{Binding AllFlipbookPaths}"
                               DisplayMemberPath="Value"/>
                         <DockPanel Grid.Row="1">
+                            <Image Source="/Resources/Images/Plum.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Texture Path: "
+                                   Content="Texture: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
@@ -1568,10 +1598,11 @@
                               ItemsSource="{Binding AllTexturePaths}"
                               DisplayMemberPath="Value"/>
                         <DockPanel Grid.Row="2">
+                            <Image Source="/Resources/Images/Pomegranate.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="AI Path: "
+                                   Content="AI: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
@@ -1584,10 +1615,11 @@
                               ItemsSource="{Binding AllAIPaths}"
                               DisplayMemberPath="Value"/>
                         <DockPanel Grid.Row="3">
+                            <Image Source="/Resources/Images/Bottle.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
-                                   Content="Beast Lore ID: "
+                                   Content="Beast Lore: "
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
                         </DockPanel>
@@ -1599,6 +1631,7 @@
                               HorizontalContentAlignment="Left"
                               ItemsSource="{Binding AllBeastLoreIDs}"/>
                         <DockPanel Grid.Row="4">
+                            <Image Source="/Resources/Images/Nut.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1611,7 +1644,7 @@
                              FontSize="18"
                              Margin="5 0"
                              VerticalAlignment="Center"
-                             TextChanged="AnyTextBox_TextChanged"
+                             TextChanged="EnemyFirstBPTextBox_TextChanged"
                              Text="{Binding CurrentEnemy.FirstBP}"
                              Style="{DynamicResource ResourceKey=TextBoxStyle}">
                             <TextBox.Background>
@@ -1619,6 +1652,7 @@
                             </TextBox.Background>
                         </TextBox>
                         <DockPanel Grid.Row="5">
+                            <Image Source="/Resources/Images/Herb.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1698,6 +1732,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <DockPanel Grid.Row="0">
+                            <Image Source="/Resources/Images/BattleFont/Blue1.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1713,6 +1748,7 @@
                               HorizontalContentAlignment="Left"
                               ItemsSource="{Binding AllEvents}"/>
                         <DockPanel Grid.Row="1">
+                            <Image Source="/Resources/Images/BattleFont/Blue2.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"
@@ -1728,6 +1764,7 @@
                               HorizontalContentAlignment="Left"
                               ItemsSource="{Binding AllEvents}"/>
                         <DockPanel Grid.Row="2">
+                            <Image Source="/Resources/Images/BattleFont/Blue3.png"/>
                             <Label FontSize="18"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"

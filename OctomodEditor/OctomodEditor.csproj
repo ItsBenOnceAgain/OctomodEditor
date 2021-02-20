@@ -185,9 +185,6 @@
     <Resource Include="Resources\Images\OctomodLogoWhite.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Leaves.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\Unknown.png" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +235,79 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Merchant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Apothecary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Cleric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Dancer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Runelord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Scholar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Sorcerer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Thief.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Warmaster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Pomegranate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Plum.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Olive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Nut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Jam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Herb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Grape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ConcoctItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Bottle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BattleFont\Blue0.png" />
+    <Resource Include="Resources\Images\BattleFont\Blue1.png" />
+    <Resource Include="Resources\Images\BattleFont\Blue2.png" />
+    <Resource Include="Resources\Images\BattleFont\Blue3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Sprites\Alfyn.png" />
+    <Resource Include="Resources\Images\Sprites\Cyrus.png" />
+    <Resource Include="Resources\Images\Sprites\Hannit.png" />
+    <Resource Include="Resources\Images\Sprites\Olberic.png" />
+    <Resource Include="Resources\Images\Sprites\Ophilia.png" />
+    <Resource Include="Resources\Images\Sprites\Primrose.png" />
+    <Resource Include="Resources\Images\Sprites\Therion.png" />
+    <Resource Include="Resources\Images\Sprites\Tressa.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

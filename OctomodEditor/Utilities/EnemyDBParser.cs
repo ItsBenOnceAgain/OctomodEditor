@@ -12,10 +12,10 @@ namespace OctomodEditor.Utilities
     public static class EnemyDBParser
     {
         public const int ENEMY_ENTRY_COUNT_OFFSET = 41;
-        public static Dictionary<string, Enemy> ParseEnemyObjects()
+        public static Dictionary<string, Enemy> ParseEnemyObjects(bool useBaseGame = false)
         {
             string uassetPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset"))
+            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset"))
             {
                 uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset";
             }
@@ -25,7 +25,7 @@ namespace OctomodEditor.Utilities
             }
 
             string uexpPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp"))
+            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp"))
             {
                 uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp";
             }

@@ -115,6 +115,38 @@ namespace OctomodEditor.Canvases
             DiscardChangesButton.IsEnabled = true;
         }
 
+        private void ChangeTextBoxColor(TextBox sender, int valueToCompare)
+        {
+            bool parsed = int.TryParse(sender.Text, out int newValue);
+            if (parsed)
+            {
+                if (newValue != valueToCompare)
+                {
+                    sender.Foreground = new SolidColorBrush(Color.FromRgb(0, 150, 150));
+                }
+                else
+                {
+                    sender.Foreground = Brushes.LightGray;
+                }
+            }
+        }
+
+        private void ChangeTextBoxColor(TextBox sender, double valueToCompare)
+        {
+            bool parsed = double.TryParse(sender.Text, out double newValue);
+            if (parsed)
+            {
+                if (newValue != valueToCompare)
+                {
+                    sender.Foreground = new SolidColorBrush(Color.FromRgb(0, 150, 150));
+                }
+                else
+                {
+                    sender.Foreground = Brushes.LightGray;
+                }
+            }
+        }
+
         private void SaveEnemyButton_Click(object sender, RoutedEventArgs e)
         {
             // Save Enemy Here
@@ -365,6 +397,144 @@ namespace OctomodEditor.Canvases
         private void AnyCheckBox_Click(object sender, RoutedEventArgs e)
         {
             UpdateEnemiesToSave();
+        }
+
+        private void EnemyHPTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].HP);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyShieldTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].Shields);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyPAttackTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].PhysicalAttack);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyPDefenseTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].PhysicalDefense);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyMAttackTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].ElementalAttack);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyMDefenseTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].ElementalDefense);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyAccuracyTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].Accuracy);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyEvasionTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].Evasion);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyCriticalTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].Critical);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemySpeedTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].Speed);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyExperienceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].ExperiencePoints);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyJobPointsTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].JobPoints);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyLeavesTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].Money);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyCollectTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].MoneyFromCollecting);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyItemPercentageTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].ItemDropPercentage);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyTameRateTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].DefaultTameRate);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyLevelTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].EnemyLevel);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyDamageRatioTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].DamageRatio);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemySPTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].MP);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyBPTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].BP);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyInvocationTurnTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].InvocationTurn);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyInvocationValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].InvocationValue);
+            AnyTextBox_TextChanged(sender, e);
+        }
+
+        private void EnemyFirstBPTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeTextBoxColor((TextBox)sender, MainWindow.MasterEnemyList[ViewModel.CurrentEnemy.Key].FirstBP);
+            AnyTextBox_TextChanged(sender, e);
         }
     }
 }
