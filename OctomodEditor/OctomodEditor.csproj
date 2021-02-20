@@ -74,10 +74,13 @@
     <Compile Include="Canvases\EnemyEditorCanvas.xaml.cs">
       <DependentUpon>EnemyEditorCanvas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EnemyViewModel.cs" />
+    <Compile Include="ViewModels\EnemyViewModel.cs" />
+    <Compile Include="Models\Ailment.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Utilities\CommonUtilities.cs" />
     <Compile Include="Utilities\EnemyDBParser.cs" />
     <Compile Include="Utilities\GameTextParser.cs" />
+    <Compile Include="Utilities\ItemDBParser.cs" />
     <Compile Include="ValueConverters\EnemyIDValueConverter.cs" />
     <Compile Include="Windows\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>

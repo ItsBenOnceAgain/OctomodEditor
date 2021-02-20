@@ -30,6 +30,7 @@ namespace OctomodEditor
         public static Dictionary<string, string> MasterGameText { get; set; }
         public static Dictionary<string, string> ModGameText { get; set; }
         public static Dictionary<string, Enemy> MasterEnemyList { get; set; }
+        public static Dictionary<string, Item> MasterItemList { get; set; }
         public bool ConfigLoadedSuccessfully { get; set; }
         public MainWindow()
         {
@@ -65,6 +66,7 @@ namespace OctomodEditor
             MasterGameText = GameTextParser.ParseGameText("EN", true);
             ModGameText = GameTextParser.ParseGameText("EN", true);
             MasterEnemyList = EnemyDBParser.ParseEnemyObjects(true);
+            MasterItemList = ItemDBParser.ParseItemObjects(true);
         }
 
         private void LoadPaths()

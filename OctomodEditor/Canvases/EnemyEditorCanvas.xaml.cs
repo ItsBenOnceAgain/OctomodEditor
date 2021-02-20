@@ -1,4 +1,5 @@
 ﻿using OctomodEditor.Models;
+using OctomodEditor.ViewModels;
 using OctomodEditor.Utilities;
 using System;
 using System.Collections.Generic;

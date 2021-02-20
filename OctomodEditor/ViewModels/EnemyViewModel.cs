@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OctomodEditor
+namespace OctomodEditor.ViewModels
 {
     public class EnemyViewModel : INotifyPropertyChanged
     {
@@ -96,24 +96,10 @@ namespace OctomodEditor
         private Dictionary<string, string> GetItemNames()
         {
             Dictionary<string, string> items = new Dictionary<string, string>();
-
             items.Add("None", "None");
-            foreach (var itemId in EnemyList.Where(x => x.Value.ItemID != "None").Select(x => x.Value.ItemID).Distinct())
+            foreach(var item in MainWindow.MasterItemList)
             {
-                if (MainWindow.MasterGameText.ContainsKey($"TX_NA_{itemId}"))
-                {
-                    items.Add(itemId, MainWindow.MasterGameText[$"TX_NA_{itemId}"]);
-                }
-                else
-                {
-                    string[] idInfo = itemId.Split('_');
-                    int identifier = int.Parse(idInfo[2]);
-                    if (idInfo[1] == "MB")
-                    {
-                        identifier += 16;
-                    }
-                    items.Add(itemId, MainWindow.MasterGameText[$"MIX_ITM_NA_{identifier:D3}"]);
-                }
+                items.Add(item.Value.Key, MainWindow.MasterGameText[item.Value.ItemNameID]);
             }
             return items.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
