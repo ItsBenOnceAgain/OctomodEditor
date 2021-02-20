@@ -101,7 +101,7 @@ namespace OctomodEditor.ViewModels
             {
                 items.Add(item.Value.Key, MainWindow.MasterGameText[item.Value.ItemNameID]);
             }
-            return items.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            return items.Where(x => x.Key.StartsWith("ITM")).OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         private Dictionary<string, string> GetFlipbookPaths()
