@@ -74,6 +74,11 @@
     <Compile Include="Canvases\EnemyEditorCanvas.xaml.cs">
       <DependentUpon>EnemyEditorCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Canvases\ItemEditorCanvas.xaml.cs">
+      <DependentUpon>ItemEditorCanvas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueConverters\ItemIDValueConverter.cs" />
+    <Compile Include="ValueConverters\TextBlockNewLineConverter.cs" />
     <Compile Include="ViewModels\EnemyViewModel.cs" />
     <Compile Include="Models\Ailment.cs" />
     <Compile Include="Models\Item.cs" />
@@ -82,10 +87,15 @@
     <Compile Include="Utilities\GameTextParser.cs" />
     <Compile Include="Utilities\ItemDBParser.cs" />
     <Compile Include="ValueConverters\EnemyIDValueConverter.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="Windows\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Canvases\EnemyEditorCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Canvases\ItemEditorCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

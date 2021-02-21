@@ -48,9 +48,22 @@ namespace OctomodEditor.Models
         public bool ResistTransform { get; set; }
         public bool ResistDebuff { get; set; }
         public string CommandEffecterPath { get; set; }
+
+        public string DescriptionText
+        {
+            get
+            {
+                return MainWindow.MasterGameText.ContainsKey(DetailTextID) ? MainWindow.MasterGameText[DetailTextID] : DetailTextID;
+            }
+        }
+
+        public override string ToString()
+        {
+            return MainWindow.MasterGameText.ContainsKey(ItemNameID) ? MainWindow.MasterGameText[ItemNameID] : Key;
+        }
     }
 
-    public enum ItemCategory { CONSUMABLE, EQUIPMENT, INFORMATION, MATERIAL_A, MATERIAL_B, TRADING, TREASURE}
+    public enum ItemCategory { CONSUMABLE, EQUIPMENT, INFORMATION, MATERIAL_A, MATERIAL_B, TRADING, TREASURE }
     public enum ItemDisplayType { DISABLE, ITEM_USE, ON_HIT, BATTLE_START, ON_TAKE_DAMAGE }
     public enum ItemUseType { DISABLE, ALWAYS, FIELD_ONLY, BATTLE_ONLY }
     public enum ItemTargetType { SELF, PARTY_SINGLE, PARTY_ALL, ENEMY_SINGLE, ENEMY_ALL, ALL, ALL_SINGLE }

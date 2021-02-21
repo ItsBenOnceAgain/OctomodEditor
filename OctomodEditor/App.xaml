@@ -12,5 +12,9 @@
             <Setter Property="BorderBrush" Value="#333"/>
             <Setter Property="Padding" Value="5 2"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="Padding" Value="5 2"/>
+        </Style>
     </Application.Resources>
 </Application>

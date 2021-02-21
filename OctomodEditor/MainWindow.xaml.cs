@@ -37,21 +37,6 @@ namespace OctomodEditor
             InitializeComponent();
         }
 
-        private void EnemySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (ConfigLoadedSuccessfully)
-            {
-                foreach (var child in OptionStackPanel.Children)
-                {
-                    ((Label)child).Background.Opacity = 0.5;
-                }
-                EnemySelectorLabel.Background.Opacity = 0.8;
-                DataGrid.Children.Clear();
-
-                DataGrid.Children.Add(new EnemyEditorCanvas());
-            }
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadPaths();
@@ -165,12 +150,41 @@ namespace OctomodEditor
             }
         }
 
+        private void ClearCanvas()
+        {
+            foreach (var child in OptionStackPanel.Children)
+            {
+                ((Label)child).Background.Opacity = 0.5;
+            }
+            DataGrid.Children.Clear();
+        }
+
         private void MenuItemPreferences_Click(object sender, RoutedEventArgs e)
         {
             PreferencesWindow prefWindow = new PreferencesWindow();
             prefWindow.Show();
             prefWindow.Focus();
             prefWindow.ResizeMode = ResizeMode.NoResize;
+        }
+
+        private void EnemySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ConfigLoadedSuccessfully)
+            {
+                ClearCanvas();
+                EnemySelectorLabel.Background.Opacity = 0.8;
+                DataGrid.Children.Add(new EnemyEditorCanvas());
+            }
+        }
+
+        private void ItemSelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ConfigLoadedSuccessfully)
+            {
+                ClearCanvas();
+                ItemSelectorLabel.Background.Opacity = 0.8;
+                DataGrid.Children.Add(new ItemEditorCanvas());
+            }
         }
     }
 }
