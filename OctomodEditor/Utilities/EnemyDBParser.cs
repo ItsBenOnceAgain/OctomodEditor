@@ -900,7 +900,8 @@ namespace OctomodEditor.Utilities
             else
             {
                 string[] itemData = itemId.Split('_');
-                byte[] itemNumberValue = BitConverter.GetBytes(int.Parse(itemData[1]) + 1);
+                byte[] itemNumberValue = BitConverter.GetBytes(int.Parse(itemData[itemData.Length - 1]) + 1);
+                string prefix = string.Join("_", itemData.Where(y => y != itemData.Last()));
                 UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == itemData[0]).Key), itemIdData, 0);
                 UpdateBytesAtOffset(itemNumberValue, itemIdData, 4);
             }

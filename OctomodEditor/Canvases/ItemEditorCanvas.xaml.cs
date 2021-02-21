@@ -387,7 +387,7 @@ namespace OctomodEditor.Canvases
 
             if (result == MessageBoxResult.OK)
             {
-                //ItemDBParser.SaveEnemies(ItemsToSave);
+                ItemDBParser.SaveItems(ItemsToSave);
                 ItemsToSave.Clear();
                 SaveItemButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
@@ -396,7 +396,6 @@ namespace OctomodEditor.Canvases
 
         private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
-            // Save Enemy Here
             string itemList = "";
             foreach (var item in ItemsToSave)
             {
