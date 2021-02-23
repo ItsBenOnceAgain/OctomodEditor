@@ -34,7 +34,7 @@ namespace OctomodEditor.Canvases
             ViewModel = new ItemViewModel(ItemDBParser.ParseItemObjects());
             this.DataContext = ViewModel;
 
-            ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.CONSUMABLE).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+            UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
             ItemComboBox.SelectedItem = ViewModel.CurrentItem;
 
             UpdateComboBoxes();
@@ -62,9 +62,17 @@ namespace OctomodEditor.Canvases
             {
                 ItemsToSave.Remove(ItemsToSave.Single(x => x.Key == ViewModel.CurrentItem.Key));
             }
-            ItemsToSave.Add(ViewModel.CurrentItem);
-            SaveItemButton.IsEnabled = true;
-            DiscardChangesButton.IsEnabled = true;
+            if (ViewModel.CurrentItem.IsDifferentFrom(MainWindow.ModItemList[ViewModel.CurrentItem.Key]))
+            {
+                ItemsToSave.Add(ViewModel.CurrentItem);
+                SaveItemButton.IsEnabled = true;
+                DiscardChangesButton.IsEnabled = true;
+            }
+            else if (ItemsToSave.Count == 0)
+            {
+                SaveItemButton.IsEnabled = false;
+                DiscardChangesButton.IsEnabled = false;
+            }
         }
 
         private void ChangeTextBoxColor(TextBox sender, int valueToCompare)
@@ -91,7 +99,12 @@ namespace OctomodEditor.Canvases
 
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch ((string)CategoryComboBox.SelectedValue)
+            UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
+        }
+
+        private void UpdateCurrentItemList(string s)
+        {
+            switch (s)
             {
                 case "Standard":
                     ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.CONSUMABLE).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
@@ -155,12 +168,14 @@ namespace OctomodEditor.Canvases
         private void BuyPriceTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].BuyPrice);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void SellPriceTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].SellPrice);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -173,18 +188,21 @@ namespace OctomodEditor.Canvases
         private void Effect1ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[0].InvocationValue);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect1TurnsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[0].InvocationTurn);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect1InflictPercentTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[0].DiseaseRate);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -197,18 +215,21 @@ namespace OctomodEditor.Canvases
         private void Effect2ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[1].InvocationValue);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect2TurnsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[1].InvocationTurn);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect2InflictPercentTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[1].DiseaseRate);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -221,18 +242,21 @@ namespace OctomodEditor.Canvases
         private void Effect3ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[2].InvocationValue);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect3TurnsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[2].InvocationTurn);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect3InflictPercentTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[2].DiseaseRate);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -245,134 +269,158 @@ namespace OctomodEditor.Canvases
         private void Effect4ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[3].InvocationValue);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect4TurnsTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[3].InvocationTurn);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void Effect4InflictPercentTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].Ailments[3].DiseaseRate);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void HPRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].HPRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void MPRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].MPRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void BPRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].BPRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void PAttackRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].PAttackRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void PDefenseRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].PDefenseRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void MAttackRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].MAttackRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void MDefenseRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].MDefenseRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void AccuracyRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].AccuracyRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void EvasionRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].EvasionRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void CriticalRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].CriticalRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void SpeedRevisionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].SpeedRevision);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void PoisonResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void SilenceResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void BlindnessResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void ConfusionResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void SleepResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void TerrorResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void UnconciousnessResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void InstantDeathResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void TransformResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
         private void DebuffResistanceCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -391,6 +439,7 @@ namespace OctomodEditor.Canvases
                 ItemsToSave.Clear();
                 SaveItemButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
+                MainWindow.ModItemList = ItemDBParser.ParseItemObjects();
             }
         }
 
@@ -408,6 +457,8 @@ namespace OctomodEditor.Canvases
                 ItemsToSave.Clear();
                 ViewModel.ItemList = ItemDBParser.ParseItemObjects();
                 ViewModel.CurrentItem = ViewModel.ItemList.Single(x => x.Key == ViewModel.CurrentItem.Key).Value;
+                UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
+                ItemComboBox.SelectedItem = ViewModel.CurrentItem;
                 SaveItemButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
             }
@@ -435,6 +486,7 @@ namespace OctomodEditor.Canvases
         private void SortCategoryTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeTextBoxColor((TextBox)sender, MainWindow.MasterItemList[ViewModel.CurrentItem.Key].SortCategory);
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateItemsToSave();
         }
     }

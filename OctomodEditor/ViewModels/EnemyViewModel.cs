@@ -47,7 +47,7 @@ namespace OctomodEditor.ViewModels
             }
             set
             {
-                if(value != null)
+                if(!(value is null))
                 {
                     _currentEnemy = value;
                     OnPropertyChanged();

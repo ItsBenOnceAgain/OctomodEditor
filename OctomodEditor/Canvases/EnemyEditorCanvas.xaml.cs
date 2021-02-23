@@ -44,7 +44,7 @@ namespace OctomodEditor.Canvases
             AdvancedStatsGrid.DataContext = ShowAdvancedCheckBox;
             BattleEventsGrid.DataContext = ShowAdvancedCheckBox;
 
-            ViewModel.CurrentEnemyList = ViewModel.EnemyList.Where(x => x.Key.StartsWith("ENE_Mou")).Select(x => x.Value).ToList();
+            UpdateCurrentEnemyList((string)CategoryComboBox.SelectedValue);
             EnemyComboBox.SelectedIndex = 0;
 
             UpdateComboBoxes();
@@ -107,13 +107,21 @@ namespace OctomodEditor.Canvases
 
         private void UpdateEnemiesToSave()
         {
-            if(EnemiesToSave.Select(x => x.Key).Contains(ViewModel.CurrentEnemy.Key))
+            if (EnemiesToSave.Select(x => x.Key).Contains(ViewModel.CurrentEnemy.Key))
             {
                 EnemiesToSave.Remove(EnemiesToSave.Single(x => x.Key == ViewModel.CurrentEnemy.Key));
             }
-            EnemiesToSave.Add(ViewModel.CurrentEnemy);
-            SaveEnemyButton.IsEnabled = true;
-            DiscardChangesButton.IsEnabled = true;
+            if (ViewModel.CurrentEnemy.IsDifferentFrom(MainWindow.ModEnemyList[ViewModel.CurrentEnemy.Key]))
+            {
+                EnemiesToSave.Add(ViewModel.CurrentEnemy);
+                SaveEnemyButton.IsEnabled = true;
+                DiscardChangesButton.IsEnabled = true;
+            }
+            else if(EnemiesToSave.Count == 0)
+            {
+                SaveEnemyButton.IsEnabled = false;
+                DiscardChangesButton.IsEnabled = false;
+            }
         }
 
         private void ChangeTextBoxColor(TextBox sender, int valueToCompare)
@@ -137,7 +145,7 @@ namespace OctomodEditor.Canvases
             bool parsed = double.TryParse(sender.Text, out double newValue);
             if (parsed)
             {
-                if (newValue != valueToCompare)
+                if (Math.Abs(newValue - valueToCompare) > .0000001)
                 {
                     sender.Foreground = new SolidColorBrush(Color.FromRgb(0, 150, 150));
                 }
@@ -164,6 +172,7 @@ namespace OctomodEditor.Canvases
                 EnemiesToSave.Clear();
                 SaveEnemyButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
+                MainWindow.ModEnemyList = EnemyDBParser.ParseEnemyObjects();
             }
         }
 
@@ -182,6 +191,8 @@ namespace OctomodEditor.Canvases
                 EnemiesToSave.Clear();
                 ViewModel.EnemyList = EnemyDBParser.ParseEnemyObjects();
                 ViewModel.CurrentEnemy = ViewModel.EnemyList.Single(x => x.Key == ViewModel.CurrentEnemy.Key).Value;
+                UpdateCurrentEnemyList((string)CategoryComboBox.SelectedValue);
+                EnemyComboBox.SelectedItem = ViewModel.CurrentEnemy;
                 SaveEnemyButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
             }
@@ -195,8 +206,13 @@ namespace OctomodEditor.Canvases
 
         private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UpdateCurrentEnemyList((string)CategoryComboBox.SelectedValue);
+        }
+
+        private void UpdateCurrentEnemyList(string s)
+        {
             string[] prefixes = { "ENE_Sno", "ENE_Pla", "ENE_Sea", "ENE_Mou", "ENE_Des", "ENE_Riv", "ENE_Cri", "ENE_For", "BOS_", "EVE_", "BT_ENE_NPC" };
-            switch ((string)CategoryComboBox.SelectedValue)
+            switch (s)
             {
                 case "Frostlands":
                     ViewModel.CurrentEnemyList = ViewModel.EnemyList.Where(x => x.Key.StartsWith(prefixes[0])).Select(x => x.Value).ToList();
@@ -385,6 +401,7 @@ namespace OctomodEditor.Canvases
 
         private void AnyTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ((TextBox)sender).GetBindingExpression(TextBox.TextProperty).UpdateSource();
             UpdateEnemiesToSave();
         }
 
@@ -397,6 +414,7 @@ namespace OctomodEditor.Canvases
 
         private void AnyCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateEnemiesToSave();
         }
 

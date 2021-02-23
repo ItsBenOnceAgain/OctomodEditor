@@ -53,13 +53,57 @@ namespace OctomodEditor.Models
         {
             get
             {
-                return MainWindow.MasterGameText.ContainsKey(DetailTextID) ? MainWindow.MasterGameText[DetailTextID] : DetailTextID;
+                return MainWindow.ModGameText.ContainsKey(DetailTextID) ? MainWindow.ModGameText[DetailTextID] : DetailTextID;
             }
+        }
+
+        public bool IsDifferentFrom(Item item)
+        {
+            return !(Key == item.Key &&
+                   ItemID == item.ItemID &&
+                   ItemNameID == item.ItemNameID &&
+                   DetailTextID == item.DetailTextID &&
+                   IconLabelID == item.IconLabelID &&
+                   Category == item.Category &&
+                   SortCategory == item.SortCategory &&
+                   DisplayType == item.DisplayType &&
+                   UseType == item.UseType &&
+                   TargetType == item.TargetType &&
+                   AttributeType == item.AttributeType &&
+                   Ailments.SequenceEqual(item.Ailments) &&
+                   IsValuable == item.IsValuable &&
+                   BuyPrice == item.BuyPrice &&
+                   SellPrice == item.SellPrice &&
+                   EquipmentCategory == item.EquipmentCategory &&
+                   HPRevision == item.HPRevision &&
+                   MPRevision == item.MPRevision &&
+                   BPRevision == item.BPRevision &&
+                   SPRevision == item.SPRevision &&
+                   PAttackRevision == item.PAttackRevision &&
+                   PDefenseRevision == item.PDefenseRevision &&
+                   MAttackRevision == item.MAttackRevision &&
+                   MDefenseRevision == item.MDefenseRevision &&
+                   AccuracyRevision == item.AccuracyRevision &&
+                   EvasionRevision == item.EvasionRevision &&
+                   CriticalRevision == item.CriticalRevision &&
+                   SpeedRevision == item.SpeedRevision &&
+                   ResistPoison == item.ResistPoison &&
+                   ResistSilence == item.ResistSilence &&
+                   ResistBlindness == item.ResistBlindness &&
+                   ResistConfusion == item.ResistConfusion &&
+                   ResistSleep == item.ResistSleep &&
+                   ResistTerror == item.ResistTerror &&
+                   ResistUnconciousness == item.ResistUnconciousness &&
+                   ResistInstantDeath == item.ResistInstantDeath &&
+                   ResistTransform == item.ResistTransform &&
+                   ResistDebuff == item.ResistDebuff &&
+                   CommandEffecterPath == item.CommandEffecterPath &&
+                   DescriptionText == item.DescriptionText);
         }
 
         public override string ToString()
         {
-            return MainWindow.MasterGameText.ContainsKey(ItemNameID) ? MainWindow.MasterGameText[ItemNameID] : Key;
+            return MainWindow.ModGameText.ContainsKey(ItemNameID) ? MainWindow.ModGameText[ItemNameID] : Key;
         }
     }
 

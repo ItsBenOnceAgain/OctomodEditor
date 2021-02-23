@@ -77,6 +77,12 @@
     <Compile Include="Canvases\ItemEditorCanvas.xaml.cs">
       <DependentUpon>ItemEditorCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\PurchaseItem.cs" />
+    <Compile Include="Models\ShopInfo.cs" />
+    <Compile Include="Models\ShopList.cs" />
+    <Compile Include="Utilities\PurchaseItemTableParser.cs" />
+    <Compile Include="Utilities\ShopInfoParser.cs" />
+    <Compile Include="Utilities\ShopListParser.cs" />
     <Compile Include="ValueConverters\ItemIDValueConverter.cs" />
     <Compile Include="ValueConverters\TextBlockNewLineConverter.cs" />
     <Compile Include="ViewModels\EnemyViewModel.cs" />

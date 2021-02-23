@@ -30,7 +30,15 @@ namespace OctomodEditor
         public static Dictionary<string, string> MasterGameText { get; set; }
         public static Dictionary<string, string> ModGameText { get; set; }
         public static Dictionary<string, Enemy> MasterEnemyList { get; set; }
+        public static Dictionary<string, Enemy> ModEnemyList { get; set; }
         public static Dictionary<string, Item> MasterItemList { get; set; }
+        public static Dictionary<string, Item> ModItemList { get; set; }
+        public static Dictionary<string, PurchaseItem> MasterPurchaseItemList { get; set; }
+        public static Dictionary<string, PurchaseItem> ModPurchaseItemList { get; set; }
+        public static Dictionary<string, ShopList> MasterShopListList { get; set; }
+        public static Dictionary<string, ShopList> ModShopListList { get; set; }
+        public static Dictionary<string, ShopInfo> MasterShopInfoList { get; set; }
+        public static Dictionary<string, ShopInfo> ModShopInfoList { get; set; }
         public bool ConfigLoadedSuccessfully { get; set; }
         public MainWindow()
         {
@@ -49,9 +57,17 @@ namespace OctomodEditor
         public static void LoadMasterFiles()
         {
             MasterGameText = GameTextParser.ParseGameText("EN", true);
-            ModGameText = GameTextParser.ParseGameText("EN", true);
+            ModGameText = GameTextParser.ParseGameText("EN");
             MasterEnemyList = EnemyDBParser.ParseEnemyObjects(true);
+            ModEnemyList = EnemyDBParser.ParseEnemyObjects();
             MasterItemList = ItemDBParser.ParseItemObjects(true);
+            ModItemList = ItemDBParser.ParseItemObjects();
+            MasterPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects(true);
+            ModPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects();
+            MasterShopListList = ShopListParser.ParseShopListObjects(true);
+            ModShopListList = ShopListParser.ParseShopListObjects();
+            MasterShopInfoList = ShopInfoParser.ParseShopInfoObjects(true);
+            ModShopInfoList = ShopInfoParser.ParseShopInfoObjects();
         }
 
         private void LoadPaths()
