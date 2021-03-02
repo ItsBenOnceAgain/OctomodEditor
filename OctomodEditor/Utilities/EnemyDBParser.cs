@@ -138,7 +138,7 @@ namespace OctomodEditor.Utilities
             UpdateBytesAtOffset(isExemptFromBattleData, allBytes, currentOffset);
             currentOffset += 26;
             byte[] usesCatDamageData = BitConverter.GetBytes(enemy.UsesCatDamageType);
-            UpdateBytesAtOffset(isExemptFromBattleData, allBytes, currentOffset);
+            UpdateBytesAtOffset(usesCatDamageData, allBytes, currentOffset);
             currentOffset += 26;
             byte[] hasNoKnockbackData = BitConverter.GetBytes(enemy.HasNoKnockbackAnimation);
             UpdateBytesAtOffset(hasNoKnockbackData, allBytes, currentOffset);
