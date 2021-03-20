@@ -189,7 +189,7 @@ namespace OctomodEditor.Utilities
             string oldUexpPath;
             if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
             {
-                oldUexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Item/Character/Database/ItemDB.uexp";
+                oldUexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
             }
             else
             {

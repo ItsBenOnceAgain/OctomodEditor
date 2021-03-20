@@ -96,12 +96,13 @@ namespace OctomodEditor.ViewModels
         private Dictionary<string, string> GetItemNames()
         {
             Dictionary<string, string> items = new Dictionary<string, string>();
-            items.Add("None", "None");
             foreach(var item in MainWindow.MasterItemList)
             {
                 items.Add(item.Value.Key, MainWindow.MasterGameText[item.Value.ItemNameID]);
             }
-            return items.Where(x => x.Key.StartsWith("ITM")).OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            var finalDictionary = items.Where(x => x.Key.StartsWith("ITM")).OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            finalDictionary.Add("None", "None");
+            return finalDictionary;
         }
 
         private Dictionary<string, string> GetFlipbookPaths()
