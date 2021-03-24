@@ -174,7 +174,7 @@ namespace OctomodEditor.Canvases
         private void PurchaseItemBaseComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = (ComboBox)sender;
-            int index = Grid.GetRow(comboBox);
+            int index = PurchaseItemPanel.Children.IndexOf((UIElement)comboBox.Parent);
 
             ViewModel.CurrentPurchaseItems[index].ItemLabel = ((KeyValuePair<string, string>)comboBox.SelectedItem).Key;
             UpdateShopsToSave();
@@ -183,7 +183,7 @@ namespace OctomodEditor.Canvases
         private void PurchaseItemNecessaryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = (ComboBox)sender;
-            int index = Grid.GetRow(comboBox);
+            int index = PurchaseItemPanel.Children.IndexOf((UIElement)comboBox.Parent);
 
             ViewModel.CurrentPurchaseItems[index].PossibleItemLabel = ((KeyValuePair<string, string>)comboBox.SelectedItem).Key;
             UpdateShopsToSave();
