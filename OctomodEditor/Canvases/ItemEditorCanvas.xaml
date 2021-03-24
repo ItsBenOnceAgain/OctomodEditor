@@ -1253,7 +1253,7 @@
                             </CheckBox.LayoutTransform>
                         </CheckBox>
                         <DockPanel Grid.Row="1">
-                            <Image Margin="0 10 10 10" Source="/Resources/Images/Unconcious.png"/>
+                            <Image Margin="0 10 10 10" Source="/Resources/Images/Debuff.png"/>
                             <Label FontSize="24"
                                Style="{DynamicResource ResourceKey=LabelFontColor}"
                                    Padding="5 0"

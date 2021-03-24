@@ -1,0 +1,328 @@
+﻿<UserControl x:Class="OctomodEditor.Canvases.ShopEditorCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OctomodEditor.Canvases"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="92*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Category"
+                       FontSize="16"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Style="{DynamicResource ResourceKey=LabelFontColor}">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Label.Background>
+                </Label>
+                <ComboBox x:Name="CategoryComboBox"
+                          FontSize="16"
+                          VerticalContentAlignment="Center"
+                          SelectedValuePath="Content"
+                          SelectionChanged="CategoryComboBox_SelectionChanged"
+                          Grid.Row="1">
+                    <ComboBoxItem>Frostlands</ComboBoxItem>
+                    <ComboBoxItem>Flatlands</ComboBoxItem>
+                    <ComboBoxItem>Coastlands</ComboBoxItem>
+                    <ComboBoxItem>Highlands</ComboBoxItem>
+                    <ComboBoxItem>Sunlands</ComboBoxItem>
+                    <ComboBoxItem>Riverlands</ComboBoxItem>
+                    <ComboBoxItem>Cliftlands</ComboBoxItem>
+                    <ComboBoxItem>Woodlands</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">NPCs</ComboBoxItem>
+                    <ComboBoxItem>Unused</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Shop"
+                       FontSize="16"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Style="{DynamicResource ResourceKey=LabelFontColor}">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.5"/>
+                    </Label.Background>
+                </Label>
+                <ComboBox x:Name="ShopComboBox"
+                          FontSize="16"
+                          VerticalContentAlignment="Center"
+                          ItemsSource="{Binding CurrentSelectableShopInfoRecords}"
+                          SelectionChanged="ShopComboBox_SelectionChanged"
+                          Grid.Row="1"/>
+            </Grid>
+            <Label Grid.Column="2"
+                    x:Name="ShopNameLabel"
+                    Margin="10"
+                    Padding="10"
+                    FontSize="32"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="{Binding CurrentShop}"
+                    HorizontalAlignment="Right"
+                    VerticalContentAlignment="Center">
+                <Label.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Label.Background>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Label
+                    Margin="5"
+                    FontSize="48"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Shop Info - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Label FontSize="40"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Shop Type: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ShopTypeComboBox"
+                              FontSize="40"
+                              Margin="5"
+                              MaxHeight="75"
+                              SelectionChanged="ShopTypeComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left"
+                              ItemsSource="{Binding ShopTypes}"/>
+                    <DockPanel Grid.Row="1">
+                        <Label FontSize="40"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Inn Base Price: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             x:Name="InnBaseTypeTextBox"
+                             FontSize="40"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             TextChanged="InnBaseTypeTextBox_TextChanged"
+                             Text="{Binding CurrentShop.InnBasePrice}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
+                    <DockPanel Grid.Row="2">
+                        <Label FontSize="40"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Inn Discount Price: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             x:Name="InnDiscountPriceTextBox"
+                             FontSize="40"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             TextChanged="InnDiscountPriceTextBox_TextChanged"
+                             Text="{Binding CurrentShop.InnDiscountBasePrice}"
+                             Style="{DynamicResource ResourceKey=TextBoxStyle}">
+                        <TextBox.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </TextBox.Background>
+                    </TextBox>
+                    <DockPanel Grid.Row="3">
+                        <Label FontSize="40"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Inn Discount Item: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <ComboBox Grid.Row="3" Grid.Column="1" x:Name="InnDiscountItemComboBox"
+                              FontSize="20"
+                              Margin="5"
+                              MaxHeight="75"
+                              SelectionChanged="InnDiscountItemComboBox_SelectionChanged"
+                              VerticalContentAlignment="Center"
+                              HorizontalContentAlignment="Left"
+                              ItemsSource="{Binding AllItems}"/>
+                    <DockPanel Grid.Row="4">
+                        <Label FontSize="40"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Shop Name: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Label Grid.Row="4" Grid.Column="1"
+                             x:Name="ParsedShopNameLabel"
+                             FontSize="20"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Style="{DynamicResource ResourceKey=LabelFontColor}"
+                             Content="{Binding CurrentShop.ShopName}">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </Label.Background>
+                    </Label>
+                    <DockPanel Grid.Row="5">
+                        <Label FontSize="40"
+                               Style="{DynamicResource ResourceKey=LabelFontColor}"
+                                   Padding="5 0"
+                                   Content="Shop BGM: "
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Label Grid.Row="5" Grid.Column="1"
+                             x:Name="ShopBGMLabel"
+                             FontSize="20"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             Style="{DynamicResource ResourceKey=LabelFontColor}"
+                             Content="{Binding CurrentShop.ShopBGM}">
+                        <Label.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.65"/>
+                        </Label.Background>
+                    </Label>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1"
+                  Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Grid.Background>
+                <Label Grid.Column="1"
+                    Margin="5"
+                    FontSize="48"
+                    Style="{DynamicResource ResourceKey=LabelFontColor}"
+                    Content="- Item List - "
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Stretch">
+                    <Label.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.8"/>
+                    </Label.Background>
+                </Label>
+                <Grid Grid.Column="1"
+                  Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="95*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label   Grid.Column="0"
+                             FontSize="20"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Style="{DynamicResource ResourceKey=LabelFontColor}"
+                             Content="Item Name">
+                            <Label.Background>
+                                <SolidColorBrush Color="Black" Opacity="0.65"/>
+                            </Label.Background>
+                        </Label>
+                        <Label   Grid.Column="1"
+                             FontSize="20"
+                             Margin="5 0"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Style="{DynamicResource ResourceKey=LabelFontColor}"
+                             Content="Necessary Item">
+                            <Label.Background>
+                                <SolidColorBrush Color="Black" Opacity="0.65"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                    <ScrollViewer Margin="5"
+                              Grid.Row="1">
+                        <StackPanel x:Name="PurchaseItemPanel"/>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="40*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="SaveShopButton"
+                        Click="SaveShopButton_Click"
+                        FontSize="30"
+                        Margin="35 50">
+                        Save Changes
+                    </Button>
+                    <Button x:Name="DiscardChangesButton"
+                        Click="DiscardChangesButton_Click"
+                        FontSize="30"
+                        Grid.Row="1"
+                        Margin="35 50">
+                        Discard Changes
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

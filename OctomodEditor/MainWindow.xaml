@@ -64,6 +64,18 @@
                             <SolidColorBrush Opacity="0.5" Color="Black"/>
                         </Label.Background>
                     </Label>
+                    <Label x:Name="ShopSelectorLabel"
+                       Margin="0 10"
+                       Content="Shops"
+                       FontSize="30"
+                       Style="{DynamicResource ResourceKey=LabelFontColor}"
+                       HorizontalContentAlignment="Center"
+                       HorizontalAlignment="Stretch"
+                       MouseDown="ShopSelectorLabel_MouseDown">
+                        <Label.Background>
+                            <SolidColorBrush Opacity="0.5" Color="Black"/>
+                        </Label.Background>
+                    </Label>
                 </StackPanel>
                 <Grid x:Name="DataGrid" Grid.Column="1">
                     <Image Source="/Resources/Images/OctomodLogoWhite.png"

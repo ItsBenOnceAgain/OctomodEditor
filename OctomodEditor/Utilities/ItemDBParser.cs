@@ -177,6 +177,11 @@ namespace OctomodEditor.Utilities
 
         public static void SaveItems(List<Item> items)
         {
+            if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/"))
+            {
+                Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/");
+            }
+
             string uassetPath;
             if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset"))
             {
@@ -199,10 +204,6 @@ namespace OctomodEditor.Utilities
             string uexpPath;
             if (!File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
             {
-                if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/"))
-                {
-                    Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/");
-                }
                 var openStream = File.Create($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp");
                 openStream.Close();
             }
@@ -213,18 +214,18 @@ namespace OctomodEditor.Utilities
             byte[] allBytes = File.ReadAllBytes(oldUexpPath);
             foreach (var item in items)
             {
-                SaveItem(item, allBytes, uassetStrings);
+                SaveItem(item, allBytes, uassetStrings, uassetPath);
             }
             File.WriteAllBytes(uexpPath, allBytes);
         }
 
-        public static void SaveItem(Item item, byte[] allBytes, Dictionary<int, string> uassetStrings)
+        public static void SaveItem(Item item, byte[] allBytes, Dictionary<int, string> uassetStrings, string uassetPath)
         {
             int currentOffset = item.Offset + 95;
-            byte[] detailTextIdData = GetBytesFromDetailTextId(item.DetailTextID, uassetStrings);
+            byte[] detailTextIdData = GetBytesFromStringWithPossibleSuffix(item.DetailTextID, uassetStrings, uassetPath);
             UpdateBytesAtOffset(detailTextIdData, allBytes, currentOffset);
             currentOffset += 33;
-            byte[] iconLabelData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == item.IconLabelID).Key);
+            byte[] iconLabelData = GetBytesFromStringWithPossibleSuffix(item.IconLabelID, uassetStrings, uassetPath);
             UpdateBytesAtOffset(iconLabelData, allBytes, currentOffset);
             currentOffset += 41;
             byte[] categoryData = ConvertItemCategoryToBytes(item.Category, uassetStrings);
@@ -247,7 +248,7 @@ namespace OctomodEditor.Utilities
             currentOffset += 119;
             for (int i = 0; i < item.Ailments.Length; i++)
             {
-                byte[] ailmentNameData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == item.Ailments[i].AilmentName).Key);
+                byte[] ailmentNameData = GetBytesFromStringWithPossibleSuffix(item.Ailments[i].AilmentName, uassetStrings, uassetPath);
                 UpdateBytesAtOffset(ailmentNameData, allBytes, currentOffset);
                 currentOffset += 33;
                 byte[] invocationValueData = BitConverter.GetBytes(item.Ailments[i].InvocationValue);
@@ -313,24 +314,6 @@ namespace OctomodEditor.Utilities
             currentOffset += 37;
             byte[] commandEffecterData = GetEffecterBytesFromString(uassetStrings, item.CommandEffecterPath);
             UpdateBytesAtOffset(commandEffecterData, allBytes, currentOffset);
-        }
-
-        public static byte[] GetBytesFromDetailTextId(string detailTextID, Dictionary<int, string> uassetStrings)
-        {
-            byte[] detailTextIDData = new byte[8];
-            if (uassetStrings.ContainsValue(detailTextID))
-            {
-                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == detailTextID).Key), detailTextIDData, 0);
-            }
-            else
-            {
-                string[] detailTextData = detailTextID.Split('_');
-                byte[] itemNumberValue = BitConverter.GetBytes(int.Parse(detailTextData[detailTextData.Length - 1]) + 1);
-                string prefix = string.Join("_", detailTextData.Where(y => y != detailTextData.Last()));
-                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == prefix).Key), detailTextIDData, 0);
-                UpdateBytesAtOffset(itemNumberValue, detailTextIDData, 4);
-            }
-            return detailTextIDData;
         }
 
         private static void UpdateBytesAtOffset(byte[] updateBytes, byte[] allBytes, int currentOffset)
@@ -778,6 +761,31 @@ namespace OctomodEditor.Utilities
             }
 
             return effecterValues[value];
+        }
+
+        public static byte[] GetBytesFromStringWithPossibleSuffix(string stringWithPossibleSuffix, Dictionary<int, string> uassetStrings, string uassetPath)
+        {
+            string[] data = stringWithPossibleSuffix.Split('_');
+            string prefix = string.Join("_", data.Where(y => y != data.Last()));
+
+            byte[] byteData = new byte[8];
+            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            {
+                CommonUtilities.AddStringToUasset(uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset", stringWithPossibleSuffix);
+                uassetStrings = CommonUtilities.ParseUAssetFile($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset");
+            }
+
+            if (uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            {
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == stringWithPossibleSuffix).Key), byteData, 0);
+            }
+            else
+            {
+                byte[] numericValue = BitConverter.GetBytes(int.Parse(data[data.Length - 1]) + 1);
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == prefix).Key), byteData, 0);
+                UpdateBytesAtOffset(numericValue, byteData, 4);
+            }
+            return byteData;
         }
     }
 }

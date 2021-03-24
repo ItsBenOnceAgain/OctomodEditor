@@ -77,6 +77,9 @@
     <Compile Include="Canvases\ItemEditorCanvas.xaml.cs">
       <DependentUpon>ItemEditorCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Canvases\ShopEditorCanvas.xaml.cs">
+      <DependentUpon>ShopEditorCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\PurchaseItem.cs" />
     <Compile Include="Models\ShopInfo.cs" />
     <Compile Include="Models\ShopList.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Utilities\ItemDBParser.cs" />
     <Compile Include="ValueConverters\EnemyIDValueConverter.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\ShopViewModel.cs" />
     <Compile Include="Windows\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
@@ -102,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Canvases\ItemEditorCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Canvases\ShopEditorCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -52,6 +52,11 @@ namespace OctomodEditor.Utilities
 
         public static void SaveEnemies(List<Enemy> enemies)
         {
+            if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/"))
+            {
+                Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/");
+            }
+
             string uassetPath;
             if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset"))
             {
@@ -74,10 +79,6 @@ namespace OctomodEditor.Utilities
             string uexpPath;
             if (!File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp"))
             {
-                if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/"))
-                {
-                    Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/");
-                }
                 var openStream = File.Create($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uexp");
                 openStream.Close();
             }
@@ -88,7 +89,7 @@ namespace OctomodEditor.Utilities
             byte[] allBytes = File.ReadAllBytes(oldUexpPath);
             foreach(var enemy in enemies)
             {
-                SaveEnemy(enemy, allBytes, uassetStrings);
+                SaveEnemy(enemy, allBytes, uassetStrings, uassetPath);
             }
             File.WriteAllBytes(uexpPath, allBytes);
         }
@@ -101,13 +102,13 @@ namespace OctomodEditor.Utilities
             }
         }
 
-        public static void SaveEnemy(Enemy enemy, byte[] allBytes, Dictionary<int, string> uassetStrings)
+        public static void SaveEnemy(Enemy enemy, byte[] allBytes, Dictionary<int, string> uassetStrings, string uassetPath)
         {
             int currentOffset = enemy.Offset + 95;
-            byte[] flipbookData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.FlipbookPath).Key);
+            byte[] flipbookData = GetBytesFromStringWithPossibleSuffix(enemy.FlipbookPath, uassetStrings, uassetPath);
             UpdateBytesAtOffset(flipbookData, allBytes, currentOffset);
             currentOffset += 37;
-            byte[] textureData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.TexturePath).Key);
+            byte[] textureData = GetBytesFromStringWithPossibleSuffix(enemy.TexturePath, uassetStrings, uassetPath);
             UpdateBytesAtOffset(textureData, allBytes, currentOffset);
             currentOffset += 37;
             byte[] displayRankData = BitConverter.GetBytes(enemy.DisplayRank);
@@ -197,13 +198,13 @@ namespace OctomodEditor.Utilities
             byte[] tameRateData = BitConverter.GetBytes((float)enemy.DefaultTameRate);
             UpdateBytesAtOffset(tameRateData, allBytes, currentOffset);
             currentOffset += 29;
-            byte[] capturedEnemyIdData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.CapturedEnemyID).Key);
+            byte[] capturedEnemyIdData = GetBytesFromStringWithPossibleSuffix(enemy.CapturedEnemyID, uassetStrings, uassetPath);
             UpdateBytesAtOffset(capturedEnemyIdData, allBytes, currentOffset);
             currentOffset += 33;
             byte[] firstBPData = BitConverter.GetBytes(enemy.FirstBP);
             UpdateBytesAtOffset(firstBPData, allBytes, currentOffset);
             currentOffset += 37;
-            byte[] breakTypeData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.BreakType).Key);
+            byte[] breakTypeData = GetBytesFromStringWithPossibleSuffix(enemy.BreakType, uassetStrings, uassetPath);
             UpdateBytesAtOffset(breakTypeData, allBytes, currentOffset);
             currentOffset += 33;
             byte[] invocationValueData = BitConverter.GetBytes(enemy.InvocationValue);
@@ -256,13 +257,13 @@ namespace OctomodEditor.Utilities
             byte[] isGuardedFromStealingData = BitConverter.GetBytes(enemy.IsGuardedFromStealing);
             UpdateBytesAtOffset(isGuardedFromStealingData, allBytes, currentOffset);
             currentOffset += 27;
-            byte[] itemIdData = GetBytesFromItemId(enemy.ItemID, uassetStrings);
+            byte[] itemIdData = GetBytesFromStringWithPossibleSuffix(enemy.ItemID, uassetStrings, uassetPath);
             UpdateBytesAtOffset(itemIdData, allBytes, currentOffset);
             currentOffset += 33;
             byte[] itemDropPercentageData = BitConverter.GetBytes(enemy.ItemDropPercentage);
             UpdateBytesAtOffset(itemDropPercentageData, allBytes, currentOffset);
             currentOffset += 29;
-            byte[] aiPathData = BitConverter.GetBytes(uassetStrings.Single(x => x.Value == enemy.AIPath).Key);
+            byte[] aiPathData = GetBytesFromStringWithPossibleSuffix(enemy.AIPath, uassetStrings, uassetPath);
             UpdateBytesAtOffset(aiPathData, allBytes, currentOffset);
             currentOffset += 49;
             UpdateAbilityEventBytes(enemy.AbilityList, allBytes, uassetStrings, ref currentOffset);
@@ -890,22 +891,29 @@ namespace OctomodEditor.Utilities
             return deadType;
         }
 
-        public static byte[] GetBytesFromItemId(string itemId, Dictionary<int, string> uassetStrings)
+        public static byte[] GetBytesFromStringWithPossibleSuffix(string stringWithPossibleSuffix, Dictionary<int, string> uassetStrings, string uassetPath)
         {
-            byte[] itemIdData = new byte[8];
-            if (uassetStrings.ContainsValue(itemId))
+            string[] data = stringWithPossibleSuffix.Split('_');
+            string prefix = string.Join("_", data.Where(y => y != data.Last()));
+
+            byte[] byteData = new byte[8];
+            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(stringWithPossibleSuffix))
             {
-                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == itemId).Key), itemIdData, 0);
+                CommonUtilities.AddStringToUasset(uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset", stringWithPossibleSuffix);
+                uassetStrings = CommonUtilities.ParseUAssetFile($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset");
+            }
+
+            if (uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            {
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == stringWithPossibleSuffix).Key), byteData, 0);
             }
             else
             {
-                string[] itemData = itemId.Split('_');
-                byte[] itemNumberValue = BitConverter.GetBytes(int.Parse(itemData[itemData.Length - 1]) + 1);
-                string prefix = string.Join("_", itemData.Where(y => y != itemData.Last()));
-                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == itemData[0]).Key), itemIdData, 0);
-                UpdateBytesAtOffset(itemNumberValue, itemIdData, 4);
+                byte[] numericValue = BitConverter.GetBytes(int.Parse(data[data.Length - 1]) + 1);
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == prefix).Key), byteData, 0);
+                UpdateBytesAtOffset(numericValue, byteData, 4);
             }
-            return itemIdData;
+            return byteData;
         }
     }
 }

@@ -17,5 +17,31 @@ namespace OctomodEditor.Models
         public int ArrivalStatus { get; set; }
         public int ObtainFlag { get; set; }
         public int ProperSteal { get; set; }
+
+        public override string ToString()
+        {
+            string returnString = Key;
+            if (MainWindow.ModItemList.ContainsKey(ItemLabel))
+            {
+                Item item = MainWindow.ModItemList[ItemLabel];
+                if (MainWindow.ModGameText.ContainsKey(item.ItemNameID))
+                {
+                    returnString = MainWindow.ModGameText[item.ItemNameID];
+                }
+            }
+            return returnString;
+        }
+
+        public bool IsDifferentFrom(PurchaseItem item)
+        {
+            return !(Key == item.Key &&
+                   ItemLabel == item.ItemLabel &&
+                   FCPrice == item.FCPrice &&
+                   PossibleFlag == item.PossibleFlag &&
+                   PossibleItemLabel == item.PossibleItemLabel &&
+                   ArrivalStatus == item.ArrivalStatus &&
+                   ObtainFlag == item.ObtainFlag && 
+                   ProperSteal == item.ProperSteal);
+        }
     }
 }

@@ -178,7 +178,7 @@ namespace OctomodEditor.Canvases
 
         private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
-            // Save Enemy Here
+            // Discard Enemy Here
             string enemyList = "";
             foreach (var enemy in EnemiesToSave)
             {
@@ -259,6 +259,7 @@ namespace OctomodEditor.Canvases
             int index = AbilitiesPanel.Children.IndexOf(comboBox);
 
             ViewModel.CurrentEnemy.AbilityList[index] = ((KeyValuePair<string, string>)comboBox.SelectedItem).Key;
+            UpdateEnemiesToSave();
         }
 
         private void EnemyItemComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

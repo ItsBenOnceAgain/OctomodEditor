@@ -96,11 +96,11 @@ namespace OctomodEditor.ViewModels
         private Dictionary<string, string> GetItemNames()
         {
             Dictionary<string, string> items = new Dictionary<string, string>();
-            foreach(var item in MainWindow.MasterItemList)
+            foreach(var item in MainWindow.ModItemList)
             {
-                items.Add(item.Value.Key, MainWindow.MasterGameText[item.Value.ItemNameID]);
+                items.Add(item.Value.Key, MainWindow.ModGameText[item.Value.ItemNameID]);
             }
-            var finalDictionary = items.Where(x => x.Key.StartsWith("ITM")).OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            var finalDictionary = items.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
             finalDictionary.Add("None", "None");
             return finalDictionary;
         }

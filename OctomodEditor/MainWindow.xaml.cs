@@ -202,5 +202,15 @@ namespace OctomodEditor
                 DataGrid.Children.Add(new ItemEditorCanvas());
             }
         }
+
+        private void ShopSelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ConfigLoadedSuccessfully)
+            {
+                ClearCanvas();
+                ShopSelectorLabel.Background.Opacity = 0.8;
+                DataGrid.Children.Add(new ShopEditorCanvas());
+            }
+        }
     }
 }
