@@ -18,13 +18,13 @@ namespace OctomodEditor.Models
         public int SortCategory { get; set; }
         public ItemDisplayType DisplayType { get; set; }
         public ItemUseType UseType { get; set; }
-        public ItemTargetType TargetType { get; set; }
-        public ItemAttributeType AttributeType { get; set; }
+        public TargetType TargetType { get; set; }
+        public AttributeType AttributeType { get; set; }
         public Ailment[] Ailments { get; set; }
         public bool IsValuable { get; set; }
         public int BuyPrice { get; set; }
         public int SellPrice { get; set; }
-        public ItemEquipmentCategory EquipmentCategory { get; set; }
+        public EquipmentCategory EquipmentCategory { get; set; }
         public int HPRevision { get; set; }
         public int MPRevision { get; set; }
         public int BPRevision { get; set; }
@@ -106,11 +106,4 @@ namespace OctomodEditor.Models
             return MainWindow.ModGameText.ContainsKey(ItemNameID) ? MainWindow.ModGameText[ItemNameID] : Key;
         }
     }
-
-    public enum ItemCategory { CONSUMABLE, EQUIPMENT, INFORMATION, MATERIAL_A, MATERIAL_B, TRADING, TREASURE }
-    public enum ItemDisplayType { DISABLE, ITEM_USE, ON_HIT, BATTLE_START, ON_TAKE_DAMAGE }
-    public enum ItemUseType { DISABLE, ALWAYS, FIELD_ONLY, BATTLE_ONLY }
-    public enum ItemTargetType { SELF, PARTY_SINGLE, PARTY_ALL, ENEMY_SINGLE, ENEMY_ALL, ALL, ALL_SINGLE }
-    public enum ItemAttributeType { NONE, FIRE, ICE, LIGHTNING, WIND, LIGHT, DARK }
-    public enum ItemEquipmentCategory { ACCESSORY, AXE, BEAST, BOW, CLOTH, DAGGER, HAT, HEAVY_ARMOR, HEAVY_HELMET, HUMAN, LANCE, LIGHT_ARMOR, LIGHT_HELMET, PLANT, ROD, SHIELD, SWORD, UNDEAD }
 }

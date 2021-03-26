@@ -39,6 +39,8 @@ namespace OctomodEditor
         public static Dictionary<string, ShopList> ModShopListList { get; set; }
         public static Dictionary<string, ShopInfo> MasterShopInfoList { get; set; }
         public static Dictionary<string, ShopInfo> ModShopInfoList { get; set; }
+        public static Dictionary<string, Ability> MasterAbilityList { get; set; }
+        public static Dictionary<string, Ability> ModAbilityList { get; set; }
         public bool ConfigLoadedSuccessfully { get; set; }
         public MainWindow()
         {
@@ -68,6 +70,8 @@ namespace OctomodEditor
             ModShopListList = ShopListParser.ParseShopListObjects();
             MasterShopInfoList = ShopInfoParser.ParseShopInfoObjects(true);
             ModShopInfoList = ShopInfoParser.ParseShopInfoObjects();
+            MasterAbilityList = AbilityDataParser.ParseAbilityObjects(true);
+            ModAbilityList = AbilityDataParser.ParseAbilityObjects();
         }
 
         private void LoadPaths()

@@ -154,12 +154,4 @@ namespace OctomodEditor.Models
                    PixelScaleS.Equals(enemy.PixelScaleS));
         }
     }
-
-    public enum AttributeResistance { NONE, WEAK, REDUCE, INVALID}
-    
-    public enum CharacterRace { UNKNOWN, HUMAN, BEAST, INSECT, BIRD, FISH, DRAGON, PLANT, CHIMERA, SHELL, UNDEAD, DEVIL }
-
-    public enum CharacterSize { SMALL, MEDIUM, LARGE }
-
-    public enum EnemyDeadType { DEADTYPE0, DEADTYPE1, DEADTYPE2, DEADTYPE3, DEADTYPE4, DEADTYPE5 }
 }

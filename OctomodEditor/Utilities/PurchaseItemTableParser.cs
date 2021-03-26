@@ -123,67 +123,34 @@ namespace OctomodEditor.Utilities
             byte[] allBytes = File.ReadAllBytes(oldUexpPath);
             foreach (var purchaseItem in purchaseItems)
             {
-                SaveSinglePurchaseItem(purchaseItem, allBytes, uassetStrings, uassetPath);
+                SaveSinglePurchaseItem(purchaseItem, allBytes, uassetStrings, uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/PurchaseItemTable.uasset");
             }
             File.WriteAllBytes(uexpPath, allBytes);
         }
 
-        public static void SaveSinglePurchaseItem(PurchaseItem item, byte[] allBytes, Dictionary<int, string> uassetStrings, string uassetPath)
+        public static void SaveSinglePurchaseItem(PurchaseItem item, byte[] allBytes, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
         {
             int currentOffset = item.Offset + 33;
-            byte[] itemLabelData = GetBytesFromStringWithPossibleSuffix(item.ItemLabel, uassetStrings, uassetPath);
-            UpdateBytesAtOffset(itemLabelData, allBytes, currentOffset);
+            byte[] itemLabelData = CommonUtilities.GetBytesFromStringWithPossibleSuffix(item.ItemLabel, uassetStrings, uassetPath, modUassetPath);
+            CommonUtilities.UpdateBytesAtOffset(itemLabelData, allBytes, currentOffset);
             currentOffset += 33;
             byte[] fcPriceData = BitConverter.GetBytes(item.FCPrice);
-            UpdateBytesAtOffset(fcPriceData, allBytes, currentOffset);
+            CommonUtilities.UpdateBytesAtOffset(fcPriceData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] possibleFlagData = BitConverter.GetBytes(item.PossibleFlag);
-            UpdateBytesAtOffset(possibleFlagData, allBytes, currentOffset);
+            CommonUtilities.UpdateBytesAtOffset(possibleFlagData, allBytes, currentOffset);
             currentOffset += 29;
-            byte[] possibleItemLabelData = GetBytesFromStringWithPossibleSuffix(item.PossibleItemLabel, uassetStrings, uassetPath);
-            UpdateBytesAtOffset(possibleItemLabelData, allBytes, currentOffset);
+            byte[] possibleItemLabelData = CommonUtilities.GetBytesFromStringWithPossibleSuffix(item.PossibleItemLabel, uassetStrings, uassetPath, modUassetPath);
+            CommonUtilities.UpdateBytesAtOffset(possibleItemLabelData, allBytes, currentOffset);
             currentOffset += 33;
             byte[] arrivalStatusData = BitConverter.GetBytes(item.ArrivalStatus);
-            UpdateBytesAtOffset(arrivalStatusData, allBytes, currentOffset);
+            CommonUtilities.UpdateBytesAtOffset(arrivalStatusData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] obtainFlagData = BitConverter.GetBytes(item.ObtainFlag);
-            UpdateBytesAtOffset(obtainFlagData, allBytes, currentOffset);
+            CommonUtilities.UpdateBytesAtOffset(obtainFlagData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] properStealData = BitConverter.GetBytes(item.ProperSteal);
-            UpdateBytesAtOffset(properStealData, allBytes, currentOffset);
-        }
-
-        private static void UpdateBytesAtOffset(byte[] updateBytes, byte[] allBytes, int currentOffset)
-        {
-            for (int i = 0; i < updateBytes.Length; i++)
-            {
-                allBytes[currentOffset + i] = updateBytes[i];
-            }
-        }
-
-        public static byte[] GetBytesFromStringWithPossibleSuffix(string stringWithPossibleSuffix, Dictionary<int, string> uassetStrings, string uassetPath)
-        {
-            string[] data = stringWithPossibleSuffix.Split('_');
-            string prefix = string.Join("_", data.Where(y => y != data.Last()));
-
-            byte[] byteData = new byte[8];
-            if(!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(stringWithPossibleSuffix))
-            {
-                CommonUtilities.AddStringToUasset(uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/PurchaseItemTable.uasset", stringWithPossibleSuffix);
-                uassetStrings = CommonUtilities.ParseUAssetFile($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/PurchaseItemTable.uasset");
-            }
-
-            if (uassetStrings.ContainsValue(stringWithPossibleSuffix))
-            {
-                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == stringWithPossibleSuffix).Key), byteData, 0);
-            }
-            else
-            {
-                byte[] numericValue = BitConverter.GetBytes(int.Parse(data[data.Length - 1]) + 1);
-                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == prefix).Key), byteData, 0);
-                UpdateBytesAtOffset(numericValue, byteData, 4);
-            }
-            return byteData;
+            CommonUtilities.UpdateBytesAtOffset(properStealData, allBytes, currentOffset);
         }
     }
 }

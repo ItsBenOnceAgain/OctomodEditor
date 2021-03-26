@@ -159,6 +159,4 @@ namespace OctomodEditor.Models
             }
         }
     }
-    
-    public enum ShopType { WEAPON, ITEM, GENERAL, INN, BAR }
 }

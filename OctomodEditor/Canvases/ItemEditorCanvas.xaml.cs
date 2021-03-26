@@ -144,19 +144,19 @@ namespace OctomodEditor.Canvases
 
         private void TargetTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentItem.TargetType = (ItemTargetType)TargetTypeComboBox.SelectedItem;
+            ViewModel.CurrentItem.TargetType = (TargetType)TargetTypeComboBox.SelectedItem;
             UpdateItemsToSave();
         }
 
         private void AttributeTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentItem.AttributeType = (ItemAttributeType)AttributeTypeComboBox.SelectedItem;
+            ViewModel.CurrentItem.AttributeType = (AttributeType)AttributeTypeComboBox.SelectedItem;
             UpdateItemsToSave();
         }
 
         private void EquipmentCategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentItem.EquipmentCategory = (ItemEquipmentCategory)EquipmentCategoryComboBox.SelectedItem;
+            ViewModel.CurrentItem.EquipmentCategory = (EquipmentCategory)EquipmentCategoryComboBox.SelectedItem;
             UpdateItemsToSave();
         }
 

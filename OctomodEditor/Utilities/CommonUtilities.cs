@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OctomodEditor.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -172,7 +173,7 @@ namespace OctomodEditor.Utilities
             File.WriteAllBytes(uassetPathWrite, finalBytes);
         }
 
-        private static void UpdateBytesAtOffset(byte[] updateBytes, byte[] allBytes, int currentOffset)
+        public static void UpdateBytesAtOffset(byte[] updateBytes, byte[] allBytes, int currentOffset)
         {
             for (int i = 0; i < updateBytes.Length; i++)
             {
@@ -256,5 +257,1048 @@ namespace OctomodEditor.Utilities
             }
             return finalArray;
         }
+
+        public static byte[] GetBytesFromStringWithPossibleSuffix(string stringWithPossibleSuffix, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string[] data = stringWithPossibleSuffix.Split('_');
+            string prefix = string.Join("_", data.Where(y => y != data.Last()));
+
+            byte[] byteData = new byte[8];
+            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            {
+                AddStringToUasset(uassetPath, modUassetPath, stringWithPossibleSuffix);
+                uassetStrings = ParseUAssetFile(modUassetPath);
+            }
+
+            if (uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            {
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == stringWithPossibleSuffix).Key), byteData, 0);
+            }
+            else
+            {
+                byte[] numericValue = BitConverter.GetBytes(int.Parse(data[data.Length - 1]) + 1);
+                UpdateBytesAtOffset(BitConverter.GetBytes(uassetStrings.Single(x => x.Value == prefix).Key), byteData, 0);
+                UpdateBytesAtOffset(numericValue, byteData, 4);
+            }
+            return byteData;
+        }
+
+        #region Enum to Byte Array Converters
+
+        public static byte[] ConvertItemCategoryToBytes(ItemCategory category, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string categoryString;
+            switch (category)
+            {
+                case ItemCategory.CONSUMABLE:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator0";
+                    break;
+                case ItemCategory.MATERIAL_A:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator1";
+                    break;
+                case ItemCategory.TREASURE:
+                case ItemCategory.TRADING:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator4";
+                    break;
+                case ItemCategory.EQUIPMENT:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator7";
+                    break;
+                case ItemCategory.INFORMATION:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator8";
+                    break;
+                case ItemCategory.MATERIAL_B:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator9";
+                    break;
+                default:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator0";
+                    break;
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(categoryString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertItemDisplayTypeToBytes(ItemDisplayType displayType, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string displayTypeString;
+            switch (displayType)
+            {
+                case ItemDisplayType.ITEM_USE:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator0";
+                    break;
+                case ItemDisplayType.ON_HIT:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator1";
+                    break;
+                case ItemDisplayType.BATTLE_START:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator2";
+                    break;
+                case ItemDisplayType.DISABLE:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator3";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(displayTypeString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertItemUseTypeToBytes(ItemUseType useType, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string useTypeString;
+            switch (useType)
+            {
+                case ItemUseType.DISABLE:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator0";
+                    break;
+                case ItemUseType.ALWAYS:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator1";
+                    break;
+                case ItemUseType.FIELD_ONLY:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator2";
+                    break;
+                case ItemUseType.BATTLE_ONLY:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator3";
+                    break;
+                default:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator0";
+                    break;
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(useTypeString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertItemTargetTypeToBytes(TargetType targetType, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string targetTypeString;
+            switch (targetType)
+            {
+                case TargetType.SELF:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator0";
+                    break;
+                case TargetType.PARTY_SINGLE:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator1";
+                    break;
+                case TargetType.PARTY_ALL:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator2";
+                    break;
+                case TargetType.ENEMY_SINGLE:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator3";
+                    break;
+                case TargetType.ENEMY_ALL:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator4";
+                    break;
+                case TargetType.ALL:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator5";
+                    break;
+                default:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator0";
+                    break;
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(targetTypeString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertItemAttributeTypeToBytes(AttributeType attributeType, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string attributeTypeString;
+            switch (attributeType)
+            {
+                case AttributeType.NONE:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator0";
+                    break;
+                case AttributeType.FIRE:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator1";
+                    break;
+                case AttributeType.ICE:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator2";
+                    break;
+                case AttributeType.LIGHTNING:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator3";
+                    break;
+                case AttributeType.WIND:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator4";
+                    break;
+                case AttributeType.LIGHT:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator5";
+                    break;
+                case AttributeType.DARK:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator6";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(attributeTypeString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertItemEquipmentCategoryToBytes(EquipmentCategory equipmentCategory, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string equipmentCategoryString;
+            switch (equipmentCategory)
+            {
+                case EquipmentCategory.SWORD:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator0";
+                    break;
+                case EquipmentCategory.LANCE:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator1";
+                    break;
+                case EquipmentCategory.DAGGER:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator2";
+                    break;
+                case EquipmentCategory.AXE:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator3";
+                    break;
+                case EquipmentCategory.BOW:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator5";
+                    break;
+                case EquipmentCategory.ROD:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator6";
+                    break;
+                case EquipmentCategory.SHIELD:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator7";
+                    break;
+                case EquipmentCategory.HEAVY_HELMET:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator10";
+                    break;
+                case EquipmentCategory.HEAVY_ARMOR:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator11";
+                    break;
+                case EquipmentCategory.ACCESSORY:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator14";
+                    break;
+                default:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator0";
+                    break;
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(equipmentCategoryString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertShopTypeToBytes(ShopType shopType, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string shopTypeString;
+            switch (shopType)
+            {
+                case ShopType.WEAPON:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator0";
+                    break;
+                case ShopType.ITEM:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator1";
+                    break;
+                case ShopType.GENERAL:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator2";
+                    break;
+                case ShopType.INN:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator3";
+                    break;
+                case ShopType.BAR:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator4";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(shopTypeString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertDeadTypeToBytes(EnemyDeadType deadType, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string deadString;
+            switch (deadType)
+            {
+                case EnemyDeadType.DEADTYPE0:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator0";
+                    break;
+                case EnemyDeadType.DEADTYPE1:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator1";
+                    break;
+                case EnemyDeadType.DEADTYPE2:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator2";
+                    break;
+                case EnemyDeadType.DEADTYPE3:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator3";
+                    break;
+                case EnemyDeadType.DEADTYPE4:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator4";
+                    break;
+                case EnemyDeadType.DEADTYPE5:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator5";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(deadString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertSizeTypeToBytes(CharacterSize size, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string sizeString;
+            switch (size)
+            {
+                case CharacterSize.SMALL:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator0";
+                    break;
+                case CharacterSize.MEDIUM:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator1";
+                    break;
+                case CharacterSize.LARGE:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator2";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(sizeString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertAttributeResistanceToBytes(AttributeResistance resistance, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string resistanceString;
+            switch (resistance)
+            {
+                case AttributeResistance.NONE:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator0";
+                    break;
+                case AttributeResistance.WEAK:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator1";
+                    break;
+                case AttributeResistance.REDUCE:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator2";
+                    break;
+                case AttributeResistance.INVALID:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator3";
+                    break;
+                default:
+                    throw new ArgumentException("Received a string that did not match an attribute resistance.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(resistanceString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] ConvertRaceTypeToBytes(CharacterRace race, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
+        {
+            string raceString;
+            switch (race)
+            {
+                case CharacterRace.UNKNOWN:
+                    raceString = "ECHARACTER_RACE::NewEnumerator0";
+                    break;
+                case CharacterRace.HUMAN:
+                    raceString = "ECHARACTER_RACE::NewEnumerator1";
+                    break;
+                case CharacterRace.BEAST:
+                    raceString = "ECHARACTER_RACE::NewEnumerator2";
+                    break;
+                case CharacterRace.INSECT:
+                    raceString = "ECHARACTER_RACE::NewEnumerator3";
+                    break;
+                case CharacterRace.BIRD:
+                    raceString = "ECHARACTER_RACE::NewEnumerator4";
+                    break;
+                case CharacterRace.FISH:
+                    raceString = "ECHARACTER_RACE::NewEnumerator5";
+                    break;
+                case CharacterRace.DRAGON:
+                    raceString = "ECHARACTER_RACE::NewEnumerator6";
+                    break;
+                case CharacterRace.PLANT:
+                    raceString = "ECHARACTER_RACE::NewEnumerator7";
+                    break;
+                case CharacterRace.CHIMERA:
+                    raceString = "ECHARACTER_RACE::NewEnumerator8";
+                    break;
+                case CharacterRace.SHELL:
+                    raceString = "ECHARACTER_RACE::NewEnumerator9";
+                    break;
+                case CharacterRace.UNDEAD:
+                    raceString = "ECHARACTER_RACE::NewEnumerator10";
+                    break;
+                case CharacterRace.DEVIL:
+                    raceString = "ECHARACTER_RACE::NewEnumerator11";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return GetBytesFromStringWithPossibleSuffix(raceString, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        public static byte[] GetBytesFromAttributeResistanceType(Dictionary<int, string> uassetStrings, AttributeResistance resistance, string uassetPath, string modUassetPath)
+        {
+            string uassetValue;
+            switch (resistance)
+            {
+                case AttributeResistance.NONE:
+                    uassetValue = "EATTRIBUTE_RESIST::NewEnumerator0";
+                    break;
+                case AttributeResistance.WEAK:
+                    uassetValue = "EATTRIBUTE_RESIST::NewEnumerator1";
+                    break;
+                case AttributeResistance.REDUCE:
+                    uassetValue = "EATTRIBUTE_RESIST::NewEnumerator2";
+                    break;
+                case AttributeResistance.INVALID:
+                    uassetValue = "EATTRIBUTE_RESIST::NewEnumerator3";
+                    break;
+                default:
+                    throw new ArgumentException("Received a string that did not match an attribute resistance.");
+            }
+            return GetBytesFromStringWithPossibleSuffix(uassetValue, uassetStrings, uassetPath, modUassetPath);
+        }
+
+        #endregion
+
+        #region String to Enum Converters
+
+        public static AbilityType ConvertStringToAbilityType(string abilityTypeString)
+        {
+            AbilityType abilityType;
+            switch (abilityTypeString)
+            {
+                case "EABILITY_TYPE::NewEnumerator0":
+                    abilityType = AbilityType.PHYSICS;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator1":
+                    abilityType = AbilityType.MAGIC;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator2":
+                    abilityType = AbilityType.HP_RECOVERY;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator3":
+                    abilityType = AbilityType.REVIVE;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator6":
+                    abilityType = AbilityType.OTHER;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator7":
+                    abilityType = AbilityType.TAME_MONSTER;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator8":
+                    abilityType = AbilityType.MP_RECOVERY;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator9":
+                    abilityType = AbilityType.BUFF;
+                    break;
+                case "EABILITY_TYPE::NewEnumerator10":
+                    abilityType = AbilityType.DEBUFF;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+            return abilityType;
+        }
+
+        public static AbilityUseType ConvertStringToUseType(string abilityUseTypeString)
+        {
+            AbilityUseType abilityUseType;
+            switch (abilityUseTypeString)
+            {
+                case "EABILITY_USE_TYPE::NewEnumerator0":
+                    abilityUseType = AbilityUseType.ALWAYS;
+                    break;
+                case "EABILITY_USE_TYPE::NewEnumerator1":
+                    abilityUseType = AbilityUseType.BATTLE_ONLY;
+                    break;
+                case "EABILITY_USE_TYPE::NewEnumerator2":
+                    abilityUseType = AbilityUseType.FIELD_ONLY;
+                    break;
+                case "EABILITY_USE_TYPE::NewEnumerator3":
+                    abilityUseType = AbilityUseType.SUPPORT;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+            return abilityUseType;
+        }
+
+        public static WeaponCategory ConvertStringToWeaponType(string weaponCategoryString)
+        {
+            WeaponCategory weaponCategory;
+            switch (weaponCategoryString)
+            {
+                case "EWEAPON_CATEGORY::NewEnumerator0":
+                    weaponCategory = WeaponCategory.SWORD;
+                    break;
+                case "EWEAPON_CATEGORY::NewEnumerator1":
+                    weaponCategory = WeaponCategory.LANCE;
+                    break;
+                case "EWEAPON_CATEGORY::NewEnumerator2":
+                    weaponCategory = WeaponCategory.DAGGER;
+                    break;
+                case "EWEAPON_CATEGORY::NewEnumerator3":
+                    weaponCategory = WeaponCategory.AXE;
+                    break;
+                case "EWEAPON_CATEGORY::NewEnumerator4":
+                    weaponCategory = WeaponCategory.BOW;
+                    break;
+                case "EWEAPON_CATEGORY::NewEnumerator5":
+                    weaponCategory = WeaponCategory.ROD;
+                    break;
+                case "EWEAPON_CATEGORY::NewEnumerator6":
+                    weaponCategory = WeaponCategory.NONE;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+            return weaponCategory;
+        }
+
+        public static ItemCategory ConvertStringToItemCategory(string categoryString)
+        {
+            ItemCategory category;
+            switch (categoryString)
+            {
+                case "EITEM_CATEGORY::NewEnumerator0":
+                    category = ItemCategory.CONSUMABLE;
+                    break;
+                case "EITEM_CATEGORY::NewEnumerator1":
+                    category = ItemCategory.MATERIAL_A;
+                    break;
+                case "EITEM_CATEGORY::NewEnumerator4":
+                    category = ItemCategory.TREASURE;
+                    break;
+                case "EITEM_CATEGORY::NewEnumerator7":
+                    category = ItemCategory.EQUIPMENT;
+                    break;
+                case "EITEM_CATEGORY::NewEnumerator8":
+                    category = ItemCategory.INFORMATION;
+                    break;
+                case "EITEM_CATEGORY::NewEnumerator9":
+                    category = ItemCategory.MATERIAL_B;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return category;
+        }
+
+        public static ItemDisplayType ConvertStringToItemDisplayType(string displayTypeString)
+        {
+            ItemDisplayType displayType;
+            switch (displayTypeString)
+            {
+                case "EITEM_DISPLAY_TYPE::NewEnumerator0":
+                    displayType = ItemDisplayType.ITEM_USE;
+                    break;
+                case "EITEM_DISPLAY_TYPE::NewEnumerator1":
+                    displayType = ItemDisplayType.ON_HIT;
+                    break;
+                case "EITEM_DISPLAY_TYPE::NewEnumerator2":
+                    displayType = ItemDisplayType.BATTLE_START;
+                    break;
+                case "EITEM_DISPLAY_TYPE::NewEnumerator3":
+                    displayType = ItemDisplayType.DISABLE;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return displayType;
+        }
+
+        public static ItemUseType ConvertStringToItemUseType(string useTypeString)
+        {
+            ItemUseType useType;
+            switch (useTypeString)
+            {
+                case "EITEM_USE_TYPE::NewEnumerator0":
+                    useType = ItemUseType.DISABLE;
+                    break;
+                case "EITEM_USE_TYPE::NewEnumerator1":
+                    useType = ItemUseType.ALWAYS;
+                    break;
+                case "EITEM_USE_TYPE::NewEnumerator2":
+                    useType = ItemUseType.FIELD_ONLY;
+                    break;
+                case "EITEM_USE_TYPE::NewEnumerator3":
+                    useType = ItemUseType.BATTLE_ONLY;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return useType;
+        }
+
+        public static TargetType ConvertStringToTargetType(string targetTypeString)
+        {
+            TargetType targetType;
+            switch (targetTypeString)
+            {
+                case "ETARGET_TYPE::NewEnumerator0":
+                    targetType = TargetType.SELF;
+                    break;
+                case "ETARGET_TYPE::NewEnumerator1":
+                    targetType = TargetType.PARTY_SINGLE;
+                    break;
+                case "ETARGET_TYPE::NewEnumerator2":
+                    targetType = TargetType.PARTY_ALL;
+                    break;
+                case "ETARGET_TYPE::NewEnumerator3":
+                    targetType = TargetType.ENEMY_SINGLE;
+                    break;
+                case "ETARGET_TYPE::NewEnumerator4":
+                    targetType = TargetType.ENEMY_ALL;
+                    break;
+                case "ETARGET_TYPE::NewEnumerator5":
+                    targetType = TargetType.ALL;
+                    break;
+                case "ETARGET_TYPE::NewEnumerator7":
+                    targetType = TargetType.ALL_SINGLE;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return targetType;
+        }
+
+        public static AttributeType ConvertStringToItemAttributeType(string targetTypeString)
+        {
+            AttributeType targetType;
+            switch (targetTypeString)
+            {
+                case "EATTRIBUTE_TYPE::NewEnumerator0":
+                    targetType = AttributeType.NONE;
+                    break;
+                case "EATTRIBUTE_TYPE::NewEnumerator1":
+                    targetType = AttributeType.FIRE;
+                    break;
+                case "EATTRIBUTE_TYPE::NewEnumerator2":
+                    targetType = AttributeType.ICE;
+                    break;
+                case "EATTRIBUTE_TYPE::NewEnumerator3":
+                    targetType = AttributeType.LIGHTNING;
+                    break;
+                case "EATTRIBUTE_TYPE::NewEnumerator4":
+                    targetType = AttributeType.WIND;
+                    break;
+                case "EATTRIBUTE_TYPE::NewEnumerator5":
+                    targetType = AttributeType.LIGHT;
+                    break;
+                case "EATTRIBUTE_TYPE::NewEnumerator6":
+                    targetType = AttributeType.DARK;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return targetType;
+        }
+
+        public static EquipmentCategory ConvertStringToItemEquipmentCategory(string equipmentCategoryString)
+        {
+            EquipmentCategory equipmentCategory;
+            switch (equipmentCategoryString)
+            {
+                case "EEQUIPMENT_CATEGORY::NewEnumerator0":
+                    equipmentCategory = EquipmentCategory.SWORD;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator1":
+                    equipmentCategory = EquipmentCategory.LANCE;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator2":
+                    equipmentCategory = EquipmentCategory.DAGGER;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator3":
+                    equipmentCategory = EquipmentCategory.AXE;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator5":
+                    equipmentCategory = EquipmentCategory.BOW;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator6":
+                    equipmentCategory = EquipmentCategory.ROD;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator7":
+                    equipmentCategory = EquipmentCategory.SHIELD;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator10":
+                    equipmentCategory = EquipmentCategory.HEAVY_HELMET;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator11":
+                    equipmentCategory = EquipmentCategory.HEAVY_ARMOR;
+                    break;
+                case "EEQUIPMENT_CATEGORY::NewEnumerator14":
+                    equipmentCategory = EquipmentCategory.ACCESSORY;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return equipmentCategory;
+        }
+
+        public static AbilityCostType ConvertStringToAbilityCostType(string abilityCostTypeString)
+        {
+            AbilityCostType costType;
+            switch (abilityCostTypeString)
+            {
+                case "EABILITY_COST_TYPE::NewEnumerator0":
+                    costType = AbilityCostType.NONE;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator1":
+                    costType = AbilityCostType.MP;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator2":
+                    costType = AbilityCostType.HP;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator3":
+                    costType = AbilityCostType.MONEY;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator4":
+                    costType = AbilityCostType.NUM;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator5":
+                    costType = AbilityCostType.BP;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator6":
+                    costType = AbilityCostType.SP;
+                    break;
+                case "EABILITY_COST_TYPE::NewEnumerator7":
+                    costType = AbilityCostType.MP_RATIO;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+            return costType;
+        }
+
+        public static AbilityOrderChangeType ConvertStringToAbilityOrderChangeType(string abilityOrderChangeTypeString)
+        {
+            AbilityOrderChangeType orderChangeType;
+            switch (abilityOrderChangeTypeString)
+            {
+                case "EABILITY_ORDER_CHANGE_TYPE::NewEnumerator0":
+                    orderChangeType = AbilityOrderChangeType.TOP;
+                    break;
+                case "EABILITY_ORDER_CHANGE_TYPE::NewEnumerator1":
+                    orderChangeType = AbilityOrderChangeType.SECONDLY;
+                    break;
+                case "EABILITY_ORDER_CHANGE_TYPE::NewEnumerator2":
+                    orderChangeType = AbilityOrderChangeType.ADD_ONE;
+                    break;
+                case "EABILITY_ORDER_CHANGE_TYPE::NewEnumerator3":
+                    orderChangeType = AbilityOrderChangeType.SUB_ONE;
+                    break;
+                case "EABILITY_ORDER_CHANGE_TYPE::NewEnumerator4":
+                    orderChangeType = AbilityOrderChangeType.END;
+                    break;
+                case "EABILITY_ORDER_CHANGE_TYPE::NewEnumerator5":
+                    orderChangeType = AbilityOrderChangeType.NONE;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+            return orderChangeType;
+        }
+
+        public static SupportAilmentType ConvertStringToSupportAilment(string supportString)
+        {
+            SupportAilmentType supportType;
+            switch (supportString)
+            {
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator0":
+                    supportType = SupportAilmentType.MERCHANT_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator1":
+                    supportType = SupportAilmentType.MERCHANT_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator2":
+                    supportType = SupportAilmentType.MERCHANT_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator3":
+                    supportType = SupportAilmentType.MERCHANT_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator4":
+                    supportType = SupportAilmentType.THIEF_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator5":
+                    supportType = SupportAilmentType.THIEF_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator6":
+                    supportType = SupportAilmentType.THIEF_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator7":
+                    supportType = SupportAilmentType.THIEF_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator8":
+                    supportType = SupportAilmentType.FENCER_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator9":
+                    supportType = SupportAilmentType.FENCER_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator10":
+                    supportType = SupportAilmentType.FENCER_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator11":
+                    supportType = SupportAilmentType.FENCER_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator12":
+                    supportType = SupportAilmentType.HUNTER_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator13":
+                    supportType = SupportAilmentType.HUNTER_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator14":
+                    supportType = SupportAilmentType.HUNTER_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator15":
+                    supportType = SupportAilmentType.HUNTER_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator16":
+                    supportType = SupportAilmentType.PRIEST_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator17":
+                    supportType = SupportAilmentType.PRIEST_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator18":
+                    supportType = SupportAilmentType.PRIEST_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator19":
+                    supportType = SupportAilmentType.PRIEST_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator20":
+                    supportType = SupportAilmentType.DANCER_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator21":
+                    supportType = SupportAilmentType.DANCER_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator22":
+                    supportType = SupportAilmentType.DANCER_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator23":
+                    supportType = SupportAilmentType.DANCER_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator24":
+                    supportType = SupportAilmentType.PROFESSOR_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator25":
+                    supportType = SupportAilmentType.PROFESSOR_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator26":
+                    supportType = SupportAilmentType.PROFESSOR_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator27":
+                    supportType = SupportAilmentType.PROFESSOR_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator28":
+                    supportType = SupportAilmentType.ALCHEMIST_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator29":
+                    supportType = SupportAilmentType.ALCHEMIST_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator30":
+                    supportType = SupportAilmentType.ALCHEMIST_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator31":
+                    supportType = SupportAilmentType.ALCHEMIST_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator32":
+                    supportType = SupportAilmentType.WEAPON_MASTER_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator33":
+                    supportType = SupportAilmentType.WEAPON_MASTER_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator34":
+                    supportType = SupportAilmentType.WEAPON_MASTER_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator35":
+                    supportType = SupportAilmentType.WEAPON_MASTER_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator36":
+                    supportType = SupportAilmentType.WIZARD_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator37":
+                    supportType = SupportAilmentType.WIZARD_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator38":
+                    supportType = SupportAilmentType.WIZARD_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator39":
+                    supportType = SupportAilmentType.WIZARD_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator40":
+                    supportType = SupportAilmentType.ASTRONOMY_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator41":
+                    supportType = SupportAilmentType.ASTRONOMY_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator42":
+                    supportType = SupportAilmentType.ASTRONOMY_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator43":
+                    supportType = SupportAilmentType.ASTRONOMY_SUPPORT_004;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator44":
+                    supportType = SupportAilmentType.RUNE_MASTER_SUPPORT_001;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator45":
+                    supportType = SupportAilmentType.RUNE_MASTER_SUPPORT_002;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator46":
+                    supportType = SupportAilmentType.RUNE_MASTER_SUPPORT_003;
+                    break;
+                case "ESUPPORT_AILMENT_TYPE::NewEnumerator47":
+                    supportType = SupportAilmentType.RUNE_MASTER_SUPPORT_004;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+            return supportType;
+        }
+
+        public static ShopType ConvertStringToShopType(string shopTypeString)
+        {
+            ShopType shopType;
+            switch (shopTypeString)
+            {
+                case "ESHOP_TYPE::NewEnumerator0":
+                    shopType = ShopType.WEAPON;
+                    break;
+                case "ESHOP_TYPE::NewEnumerator1":
+                    shopType = ShopType.ITEM;
+                    break;
+                case "ESHOP_TYPE::NewEnumerator2":
+                    shopType = ShopType.GENERAL;
+                    break;
+                case "ESHOP_TYPE::NewEnumerator3":
+                    shopType = ShopType.INN;
+                    break;
+                case "ESHOP_TYPE::NewEnumerator4":
+                    shopType = ShopType.BAR;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return shopType;
+        }
+
+        public static EnemyDeadType ConvertStringToDeadType(string deadString)
+        {
+            EnemyDeadType deadType;
+            switch (deadString)
+            {
+                case "EENEMY_DEAD_TYPE::NewEnumerator0":
+                    deadType = EnemyDeadType.DEADTYPE0;
+                    break;
+                case "EENEMY_DEAD_TYPE::NewEnumerator1":
+                    deadType = EnemyDeadType.DEADTYPE1;
+                    break;
+                case "EENEMY_DEAD_TYPE::NewEnumerator2":
+                    deadType = EnemyDeadType.DEADTYPE2;
+                    break;
+                case "EENEMY_DEAD_TYPE::NewEnumerator3":
+                    deadType = EnemyDeadType.DEADTYPE3;
+                    break;
+                case "EENEMY_DEAD_TYPE::NewEnumerator4":
+                    deadType = EnemyDeadType.DEADTYPE4;
+                    break;
+                case "EENEMY_DEAD_TYPE::NewEnumerator5":
+                    deadType = EnemyDeadType.DEADTYPE5;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return deadType;
+        }
+
+        public static CharacterSize ConvertStringToSizeType(string sizeString)
+        {
+            CharacterSize size;
+            switch (sizeString)
+            {
+                case "ECHARACTER_SIZE::NewEnumerator0":
+                    size = CharacterSize.SMALL;
+                    break;
+                case "ECHARACTER_SIZE::NewEnumerator1":
+                    size = CharacterSize.MEDIUM;
+                    break;
+                case "ECHARACTER_SIZE::NewEnumerator2":
+                    size = CharacterSize.LARGE;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return size;
+        }
+
+        public static AttributeResistance ConvertStringToAttributeResistance(string resistanceString)
+        {
+            AttributeResistance resistance;
+            switch (resistanceString)
+            {
+                case "EATTRIBUTE_RESIST::NewEnumerator0":
+                    resistance = AttributeResistance.NONE;
+                    break;
+                case "EATTRIBUTE_RESIST::NewEnumerator1":
+                    resistance = AttributeResistance.WEAK;
+                    break;
+                case "EATTRIBUTE_RESIST::NewEnumerator2":
+                    resistance = AttributeResistance.REDUCE;
+                    break;
+                case "EATTRIBUTE_RESIST::NewEnumerator3":
+                    resistance = AttributeResistance.INVALID;
+                    break;
+                default:
+                    throw new ArgumentException("Received a string that did not match an attribute resistance.");
+            }
+
+            return resistance;
+        }
+
+        //As of right now, it seems races went pretty much unused. This is more of a formality thing than anything.
+        public static CharacterRace ConvertStringToRaceType(string raceString)
+        {
+            CharacterRace race;
+            switch (raceString)
+            {
+                case "ECHARACTER_RACE::NewEnumerator0":
+                    race = CharacterRace.UNKNOWN;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator1":
+                    race = CharacterRace.HUMAN;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator2":
+                    race = CharacterRace.BEAST;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator3":
+                    race = CharacterRace.INSECT;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator4":
+                    race = CharacterRace.BIRD;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator5":
+                    race = CharacterRace.FISH;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator6":
+                    race = CharacterRace.DRAGON;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator7":
+                    race = CharacterRace.PLANT;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator8":
+                    race = CharacterRace.CHIMERA;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator9":
+                    race = CharacterRace.SHELL;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator10":
+                    race = CharacterRace.UNDEAD;
+                    break;
+                case "ECHARACTER_RACE::NewEnumerator11":
+                    race = CharacterRace.DEVIL;
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return race;
+        }
+
+        #endregion
     }
 }

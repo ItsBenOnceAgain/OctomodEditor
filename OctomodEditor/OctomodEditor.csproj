@@ -80,9 +80,12 @@
     <Compile Include="Canvases\ShopEditorCanvas.xaml.cs">
       <DependentUpon>ShopEditorCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Ability.cs" />
+    <Compile Include="Models\OctopathEnums.cs" />
     <Compile Include="Models\PurchaseItem.cs" />
     <Compile Include="Models\ShopInfo.cs" />
     <Compile Include="Models\ShopList.cs" />
+    <Compile Include="Utilities\AbilityDataParser.cs" />
     <Compile Include="Utilities\PurchaseItemTableParser.cs" />
     <Compile Include="Utilities\ShopInfoParser.cs" />
     <Compile Include="Utilities\ShopListParser.cs" />
