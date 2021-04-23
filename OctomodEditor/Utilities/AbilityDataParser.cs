@@ -178,9 +178,14 @@ namespace OctomodEditor.Utilities
             };
         }
 
-        private static string ConvertIntToCommandEffecter(int v, Dictionary<int, string> uassetStrings)
+        private static string ConvertIntToCommandEffecter(int effecterInt, Dictionary<int, string> uassetStrings)
         {
-            return null;
+            string effecter = null;
+            if(effecterInt != 0)
+            {
+                
+            }
+            return effecter;
         }
 
         private static string ConvertIntToCommandActor(int v, Dictionary<int, string> uassetStrings)

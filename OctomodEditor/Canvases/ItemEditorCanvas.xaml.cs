@@ -107,19 +107,19 @@ namespace OctomodEditor.Canvases
             switch (s)
             {
                 case "Standard":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.CONSUMABLE).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.CONSUMABLE).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID]).ToList();
                     break;
                 case "Equipment":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.EQUIPMENT).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.EQUIPMENT).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID]).ToList();
                     break;
                 case "Information":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.INFORMATION).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.INFORMATION).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID]).ToList();
                     break;
                 case "Concoct Materials":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.MATERIAL_A || x.Value.Category == ItemCategory.MATERIAL_B).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.MATERIAL_A || x.Value.Category == ItemCategory.MATERIAL_B).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID]).ToList();
                     break;
                 case "Key Items":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.TREASURE).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.TREASURE).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID]).ToList();
                     break;
             }
         }

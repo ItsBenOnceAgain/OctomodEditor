@@ -71,6 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Canvases\AbilityEditorCanvas.xaml.cs">
+      <DependentUpon>AbilityEditorCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Canvases\EnemyEditorCanvas.xaml.cs">
       <DependentUpon>EnemyEditorCanvas.xaml</DependentUpon>
     </Compile>
@@ -89,8 +92,10 @@
     <Compile Include="Utilities\PurchaseItemTableParser.cs" />
     <Compile Include="Utilities\ShopInfoParser.cs" />
     <Compile Include="Utilities\ShopListParser.cs" />
+    <Compile Include="ValueConverters\AbilityIDValueConverter.cs" />
     <Compile Include="ValueConverters\ItemIDValueConverter.cs" />
     <Compile Include="ValueConverters\TextBlockNewLineConverter.cs" />
+    <Compile Include="ViewModels\AbilityViewModel.cs" />
     <Compile Include="ViewModels\EnemyViewModel.cs" />
     <Compile Include="Models\Ailment.cs" />
     <Compile Include="Models\Item.cs" />
@@ -104,6 +109,10 @@
     <Compile Include="Windows\PreferencesWindow.xaml.cs">
       <DependentUpon>PreferencesWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Canvases\AbilityEditorCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Canvases\EnemyEditorCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

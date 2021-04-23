@@ -40,6 +40,18 @@
                     <ColumnDefinition Width="90*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="OptionStackPanel" Grid.Column="0" Orientation="Vertical">
+                    <Label x:Name="AbilitySelectorLabel"
+                       Margin="0 10"
+                       Content="Abilities"
+                       FontSize="30"
+                       Style="{DynamicResource ResourceKey=LabelFontColor}"
+                       HorizontalContentAlignment="Center"
+                       HorizontalAlignment="Stretch"
+                       MouseDown="AbilitySelectorLabel_MouseDown">
+                        <Label.Background>
+                            <SolidColorBrush Opacity="0.5" Color="Black"/>
+                        </Label.Background>
+                    </Label>
                     <Label x:Name="EnemySelectorLabel"
                        Margin="0 10"
                        Content="Enemies"

@@ -44,5 +44,19 @@ namespace OctomodEditor.Models
         public bool EnableDisableMagic { get; set; }
         public bool EnableEnchant { get; set; }
         public bool EnableChaseAttack { get; set; }
+
+        public override string ToString()
+        {
+            string name = null;
+            if (MainWindow.ModGameText.ContainsKey(DisplayName))
+            {
+                name = MainWindow.ModGameText[DisplayName];
+            }
+            else
+            {
+                name = Key;
+            }
+            return name;
+        }
     }
 }

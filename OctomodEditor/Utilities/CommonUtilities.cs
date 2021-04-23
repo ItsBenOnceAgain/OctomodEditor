@@ -264,7 +264,7 @@ namespace OctomodEditor.Utilities
             string prefix = string.Join("_", data.Where(y => y != data.Last()));
 
             byte[] byteData = new byte[8];
-            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(prefix))
             {
                 AddStringToUasset(uassetPath, modUassetPath, stringWithPossibleSuffix);
                 uassetStrings = ParseUAssetFile(modUassetPath);

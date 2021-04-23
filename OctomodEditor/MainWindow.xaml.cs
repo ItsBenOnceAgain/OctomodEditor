@@ -216,5 +216,15 @@ namespace OctomodEditor
                 DataGrid.Children.Add(new ShopEditorCanvas());
             }
         }
+
+        private void AbilitySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ConfigLoadedSuccessfully)
+            {
+                ClearCanvas();
+                AbilitySelectorLabel.Background.Opacity = 0.8;
+                DataGrid.Children.Add(new AbilityEditorCanvas());
+            }
+        }
     }
 }
