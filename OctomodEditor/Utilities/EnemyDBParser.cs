@@ -897,7 +897,7 @@ namespace OctomodEditor.Utilities
             string prefix = string.Join("_", data.Where(y => y != data.Last()));
 
             byte[] byteData = new byte[8];
-            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(stringWithPossibleSuffix))
+            if (!uassetStrings.ContainsValue(stringWithPossibleSuffix) && !uassetStrings.ContainsValue(prefix))
             {
                 CommonUtilities.AddStringToUasset(uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset", stringWithPossibleSuffix);
                 uassetStrings = CommonUtilities.ParseUAssetFile($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Character/Database/EnemyDB.uasset");
