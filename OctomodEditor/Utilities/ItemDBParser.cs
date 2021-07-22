@@ -330,8 +330,8 @@ namespace OctomodEditor.Utilities
             resistBytes[7] = BitConverter.GetBytes(item.ResistInstantDeath).Single();
             resistBytes[8] = BitConverter.GetBytes(item.ResistTransform).Single();
             resistBytes[9] = BitConverter.GetBytes(item.ResistDebuff).Single();
-            resistBytes[0] = 0;
-            resistBytes[0] = 0;
+            resistBytes[10] = 0;
+            resistBytes[11] = 0;
 
             return resistBytes;
         }
