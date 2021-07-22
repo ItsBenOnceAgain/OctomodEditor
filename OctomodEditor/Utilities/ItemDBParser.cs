@@ -521,7 +521,6 @@ namespace OctomodEditor.Utilities
         public static byte[] ConvertItemResistancesToBytes(Item item, Dictionary<int, string> uassetStrings)
         {
             byte[] resistBytes = new byte[12];
-
             resistBytes[0] = BitConverter.GetBytes(item.ResistPoison).Single();
             resistBytes[1] = BitConverter.GetBytes(item.ResistSilence).Single();
             resistBytes[2] = BitConverter.GetBytes(item.ResistBlindness).Single();
@@ -532,8 +531,8 @@ namespace OctomodEditor.Utilities
             resistBytes[7] = BitConverter.GetBytes(item.ResistInstantDeath).Single();
             resistBytes[8] = BitConverter.GetBytes(item.ResistTransform).Single();
             resistBytes[9] = BitConverter.GetBytes(item.ResistDebuff).Single();
-            resistBytes[0] = 0;
-            resistBytes[0] = 0;
+            resistBytes[10] = 0;
+            resistBytes[11] = 0;
 
             return resistBytes;
         }
