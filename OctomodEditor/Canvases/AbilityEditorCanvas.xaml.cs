@@ -33,7 +33,7 @@ namespace OctomodEditor.Canvases
             AbilitiesToSave = new List<Ability>();
 
             ViewModel = new AbilityViewModel(AbilityDataParser.ParseAbilityObjects());
-            DataContext = ViewModel;
+            this.DataContext = ViewModel;
 
             UpdateCurrentAbilityList((string)CategoryComboBox.SelectedValue);
             AbilityComboBox.SelectedItem = ViewModel.CurrentAbility;
