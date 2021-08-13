@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Models
 {
-    public class Enemy
+    public class Enemy : OctopathModel
     {
-        public int Offset { get; set; }
-        public string Key { get; set; }
         public int EnemyID { get; set; }
         public string DisplayNameID { get; set; }
         public string FlipbookPath { get; set; }

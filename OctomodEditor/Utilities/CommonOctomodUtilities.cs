@@ -8,12 +8,62 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Utilities
 {
-    public static class CommonUtilities
+    public static class CommonOctomodUtilities
     {
         public const int ENTRY_COUNT_OFFSET = 117;
         public const int ENTRY_LIST_START_OFFSET = 193;
         public static string BaseFilesLocation { get; set; }
         public static string ModLocation { get; set; }
+
+        public static (string, string) GetProperUassetAndUexpReadPaths(string directory, string filePathPrefix, bool useBaseGame = false)
+        {
+            string uassetPath;
+            if (!useBaseGame && File.Exists($"{ModLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uasset"))
+            {
+                uassetPath = $"{ModLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uasset";
+            }
+            else
+            {
+                uassetPath = $"{BaseFilesLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uasset";
+            }
+
+            string uexpPath;
+            if (!useBaseGame && File.Exists($"{ModLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uexp"))
+            {
+                uexpPath = $"{ModLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uexp";
+            }
+            else
+            {
+                uexpPath = $"{BaseFilesLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uexp";
+            }
+            return (uassetPath, uexpPath);
+        }
+
+        public static (string, string) GetProperUassetAndUexpModWritePathsAndCreateDirectories(string directory, string filePathPrefix)
+        {
+            if (!Directory.Exists($"{ModLocation}/Octopath_Traveler/Content/{directory}"))
+            {
+                Directory.CreateDirectory($"{ModLocation}/Octopath_Traveler/Content/{directory}");
+            }
+
+            string uassetPath = $"{ModLocation}/Octopath_Traveler/Content/Character/{directory}{filePathPrefix}.uasset";
+            string uexpPath = $"{ModLocation}/Octopath_Traveler/Content/Character/{directory}{filePathPrefix}.uexp";
+
+            if (!File.Exists(uassetPath))
+            {
+                var openStream = File.Create(uassetPath);
+                openStream.Close();
+            }
+
+            if (!File.Exists(uexpPath))
+            {
+                var openStream = File.Create(uassetPath);
+                openStream.Close();
+            }
+
+            return (uassetPath, uexpPath);
+        }
+
         public static Dictionary<int, string> ParseUAssetFile(string path)
         {
             byte[] allBytes = File.ReadAllBytes(path);

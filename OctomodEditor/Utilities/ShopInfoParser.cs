@@ -15,26 +15,26 @@ namespace OctomodEditor.Utilities
         public static Dictionary<string, ShopInfo> ParseShopInfoObjects(bool useBaseGame = false)
         {
             string uassetPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
             }
 
             string uexpPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp"))
             {
-                uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
+                uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
             }
             else
             {
-                uexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
+                uexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
             }
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(uexpPath);
             int numOfEntries = BitConverter.ToInt32(allBytes, LIST_ENTRY_COUNT_OFFSET);
@@ -53,17 +53,17 @@ namespace OctomodEditor.Utilities
         public static ShopInfo ParseSingleShopInfo(Dictionary<int, string> uassetStrings, byte[] allBytes, ref int currentOffset)
         {
             int itemOffset = currentOffset;
-            string key = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string key = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
-            string shopName = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string shopName = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 41;
-            ShopType shopType = CommonUtilities.ConvertStringToShopType(uassetStrings[BitConverter.ToInt32(allBytes, currentOffset)]);
+            ShopType shopType = CommonOctomodUtilities.ConvertStringToShopType(uassetStrings[BitConverter.ToInt32(allBytes, currentOffset)]);
             currentOffset += 33;
-            string shopBGM = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string shopBGM = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
             int innBasePrice = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 29;
-            string innDiscountItem = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string innDiscountItem = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
             int innDiscountPrice = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 12;
@@ -83,44 +83,44 @@ namespace OctomodEditor.Utilities
 
         public static void SaveShopInfoObjects(List<ShopInfo> shopInfos)
         {
-            if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/"))
+            if (!Directory.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/"))
             {
-                Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/");
+                Directory.CreateDirectory($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/");
             }
 
             string uassetPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset"))
+            if (File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset";
             }
             string oldUexpPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp"))
+            if (File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp"))
             {
-                oldUexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
+                oldUexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
             }
             else
             {
-                oldUexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
+                oldUexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
             }
 
             string uexpPath;
-            if (!File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp"))
+            if (!File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp"))
             {
-                var openStream = File.Create($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp");
+                var openStream = File.Create($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp");
                 openStream.Close();
             }
-            uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
+            uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uexp";
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(oldUexpPath);
             foreach (var shopInfo in shopInfos)
             {
-                SaveShopInfo(shopInfo, allBytes, uassetStrings, uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset");
+                SaveShopInfo(shopInfo, allBytes, uassetStrings, uassetPath, $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopInfo.uasset");
             }
             File.WriteAllBytes(uexpPath, allBytes);
         }
@@ -128,23 +128,23 @@ namespace OctomodEditor.Utilities
         public static void SaveShopInfo(ShopInfo shop, byte[] allBytes, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
         {
             int currentOffset = shop.Offset + 33;
-            byte[] shopNameData = CommonUtilities.GetBytesFromStringWithPossibleSuffix(shop.ShopName, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(shopNameData, allBytes, currentOffset);
+            byte[] shopNameData = CommonOctomodUtilities.GetBytesFromStringWithPossibleSuffix(shop.ShopName, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(shopNameData, allBytes, currentOffset);
             currentOffset += 41;
-            byte[] shopTypeBytes = CommonUtilities.ConvertShopTypeToBytes(shop.ShopType, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(shopTypeBytes, allBytes, currentOffset);
+            byte[] shopTypeBytes = CommonOctomodUtilities.ConvertShopTypeToBytes(shop.ShopType, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(shopTypeBytes, allBytes, currentOffset);
             currentOffset += 33;
-            byte[] shopBGMBytes = CommonUtilities.GetBytesFromStringWithPossibleSuffix(shop.ShopBGM, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(shopBGMBytes, allBytes, currentOffset);
+            byte[] shopBGMBytes = CommonOctomodUtilities.GetBytesFromStringWithPossibleSuffix(shop.ShopBGM, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(shopBGMBytes, allBytes, currentOffset);
             currentOffset += 33;
             byte[] innBasePriceBytes = BitConverter.GetBytes(shop.InnBasePrice);
-            CommonUtilities.UpdateBytesAtOffset(innBasePriceBytes, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(innBasePriceBytes, allBytes, currentOffset);
             currentOffset += 29;
-            byte[] innDiscountItemBytes = CommonUtilities.GetBytesFromStringWithPossibleSuffix(shop.InnDiscountItem, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(innDiscountItemBytes, allBytes, currentOffset);
+            byte[] innDiscountItemBytes = CommonOctomodUtilities.GetBytesFromStringWithPossibleSuffix(shop.InnDiscountItem, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(innDiscountItemBytes, allBytes, currentOffset);
             currentOffset += 33;
             byte[] innDiscountPriceBytes = BitConverter.GetBytes(shop.InnDiscountBasePrice);
-            CommonUtilities.UpdateBytesAtOffset(innDiscountPriceBytes, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(innDiscountPriceBytes, allBytes, currentOffset);
         }
     }
 }

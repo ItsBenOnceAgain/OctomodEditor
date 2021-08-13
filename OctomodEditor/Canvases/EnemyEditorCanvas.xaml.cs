@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfAnimatedGif;
+using OctomodEditor.Parsers;
 
 namespace OctomodEditor.Canvases
 {
@@ -27,13 +27,15 @@ namespace OctomodEditor.Canvases
     {
         public EnemyViewModel ViewModel { get; private set; }
         public List<Enemy> EnemiesToSave { get; set; }
+        public EnemyParser Parser { get; set; }
         public EnemyEditorCanvas()
         {
             InitializeComponent();
 
             EnemiesToSave = new List<Enemy>();
-
-            ViewModel = new EnemyViewModel(EnemyDBParser.ParseEnemyObjects());
+            Parser = new EnemyParser();
+            var table = Parser.GetTableFromFile();
+            ViewModel = new EnemyViewModel(Parser.ParseTable(table));
 
             this.DataContext = ViewModel;
             InnerUnusedGrid.DataContext = ViewModel;

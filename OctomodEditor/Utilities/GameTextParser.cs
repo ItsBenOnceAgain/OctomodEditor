@@ -14,26 +14,26 @@ namespace OctomodEditor.Utilities
         public static Dictionary<string, string> ParseGameText(string language, bool useMasterFile = false)
         {
             string uassetPath;
-            if (!useMasterFile && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset"))
+            if (!useMasterFile && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uasset";
             }
 
             string uexpPath;
-            if (!useMasterFile && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp"))
+            if (!useMasterFile && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp"))
             {
-                uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
+                uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
             }
             else
             {
-                uexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
+                uexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/GameText/Database/GameText{language}.uexp";
             }
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(uexpPath);
             int numOfEntries = BitConverter.ToInt32(allBytes, ENEMY_ENTRY_COUNT_OFFSET);
@@ -43,7 +43,7 @@ namespace OctomodEditor.Utilities
 
             for(int i = 0; i < numOfEntries; i++)
             {
-                string key = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+                string key = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
                 currentOffset += 42;
                 int keyLength = BitConverter.ToInt32(allBytes, currentOffset);
                 if(keyLength > 0)

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OctomodEditor.Canvases;
+﻿using OctomodEditor.Canvases;
 using OctomodEditor.Models;
 using OctomodEditor.Utilities;
 using OctomodEditor.Windows;
@@ -103,8 +101,8 @@ namespace OctomodEditor
                         if (resultPath != System.Windows.Forms.DialogResult.Cancel)
                         {
                             string path = openOctopathFolderDialogue.SelectedPath;
-                            CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
-                            CommonUtilities.BaseFilesLocation = path;
+                            CommonOctomodUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
+                            CommonOctomodUtilities.BaseFilesLocation = path;
                         }
                         else
                         {
@@ -120,7 +118,7 @@ namespace OctomodEditor
                 }
                 else
                 {
-                    CommonUtilities.BaseFilesLocation = settings["baseFilesLocation"];
+                    CommonOctomodUtilities.BaseFilesLocation = settings["baseFilesLocation"];
                 }
 
                 if (!settings.ContainsKey("modLocation") && !canceled)
@@ -133,8 +131,8 @@ namespace OctomodEditor
                         if (resultPath != System.Windows.Forms.DialogResult.Cancel)
                         {
                             string path = openOctopathFolderDialogue.SelectedPath;
-                            CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
-                            CommonUtilities.ModLocation = path;
+                            CommonOctomodUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
+                            CommonOctomodUtilities.ModLocation = path;
                         }
                         else
                         {
@@ -150,7 +148,7 @@ namespace OctomodEditor
                 }
                 else if (!canceled)
                 {
-                    CommonUtilities.ModLocation = settings["modLocation"];
+                    CommonOctomodUtilities.ModLocation = settings["modLocation"];
                 }
 
                 if (canceled)

@@ -15,26 +15,26 @@ namespace OctomodEditor.Utilities
         public static Dictionary<string, ShopList> ParseShopListObjects(bool useBaseGame = false)
         {
             string uassetPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uasset"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uasset";
             }
 
             string uexpPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uexp"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uexp"))
             {
-                uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uexp";
+                uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uexp";
             }
             else
             {
-                uexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uexp";
+                uexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Shop/Database/ShopList.uexp";
             }
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(uexpPath);
             int numOfEntries = BitConverter.ToInt32(allBytes, LIST_ENTRY_COUNT_OFFSET);
@@ -53,14 +53,14 @@ namespace OctomodEditor.Utilities
         public static ShopList ParseSingleShopList(Dictionary<int, string> uassetStrings, byte[] allBytes, ref int currentOffset)
         {
             int itemOffset = currentOffset;
-            string key = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string key = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 41;
             int numOfShopItems = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 4;
             string[] purchaseItemIDs = new string[numOfShopItems];
             for(int i = 0; i < numOfShopItems; i++)
             {
-                purchaseItemIDs[i] = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+                purchaseItemIDs[i] = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
                 currentOffset += 8;
             }
             currentOffset += 8;

@@ -15,26 +15,26 @@ namespace OctomodEditor.Utilities
         public static Dictionary<string, Ability> ParseAbilityObjects(bool useBaseGame = false)
         {
             string uassetPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uasset"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uasset";
             }
 
             string uexpPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uexp"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uexp"))
             {
-                uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uexp";
+                uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uexp";
             }
             else
             {
-                uexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uexp";
+                uexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Ability/Database/AbilityData.uexp";
             }
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(uexpPath);
             int numOfEntries = BitConverter.ToInt32(allBytes, ENTRY_COUNT_OFFSET);
@@ -53,33 +53,33 @@ namespace OctomodEditor.Utilities
         public static Ability ParseSingleAbility(Dictionary<int, string> uassetStrings, byte[] allBytes, ref int currentOffset)
         {
             int abilityOffset = currentOffset;
-            string key = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string key = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
             int abilityId = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 29;
-            string displayName = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string displayName = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
-            string detail = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string detail = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
             string commandActor = ConvertIntToCommandActor(BitConverter.ToInt32(allBytes, currentOffset), uassetStrings);
             currentOffset += 37;
-            AbilityType abilityType = CommonUtilities.ConvertStringToAbilityType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            AbilityType abilityType = CommonOctomodUtilities.ConvertStringToAbilityType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 41;
-            AbilityUseType useType = CommonUtilities.ConvertStringToUseType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            AbilityUseType useType = CommonOctomodUtilities.ConvertStringToUseType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 32;
             bool alwaysDisable = BitConverter.ToBoolean(allBytes, currentOffset);
             currentOffset += 35;
-            AttributeType attribute = CommonUtilities.ConvertStringToItemAttributeType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            AttributeType attribute = CommonOctomodUtilities.ConvertStringToItemAttributeType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 32;
             bool dependWeapon = BitConverter.ToBoolean(allBytes, currentOffset);
             currentOffset += 35;
-            WeaponCategory restrictWeapon = CommonUtilities.ConvertStringToWeaponType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            WeaponCategory restrictWeapon = CommonOctomodUtilities.ConvertStringToWeaponType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 41;
-            TargetType targetType = CommonUtilities.ConvertStringToTargetType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            TargetType targetType = CommonOctomodUtilities.ConvertStringToTargetType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 32;
             bool exceptEnforcer = BitConverter.ToBoolean(allBytes, currentOffset);
             currentOffset += 35;
-            AbilityCostType costType = CommonUtilities.ConvertStringToAbilityCostType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            AbilityCostType costType = CommonOctomodUtilities.ConvertStringToAbilityCostType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 33;
             int costValue = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 29;
@@ -89,7 +89,7 @@ namespace OctomodEditor.Utilities
             currentOffset += 29;
             int abilityRatio = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 37;
-            AbilityOrderChangeType orderChange = CommonUtilities.ConvertStringToAbilityOrderChangeType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            AbilityOrderChangeType orderChange = CommonOctomodUtilities.ConvertStringToAbilityOrderChangeType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 41;
             int numOfAilments = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 78;
@@ -106,7 +106,7 @@ namespace OctomodEditor.Utilities
                 ailments[i] = new Ailment() { AilmentName = ailmentName, InvocationValue = invocationValue, InvocationTurn = invocationTurn, DiseaseRate = diseaseRate };
                 currentOffset += i == ailments.Length - 1 ? 45 : 37;
             }
-            SupportAilmentType supportAilment = CommonUtilities.ConvertStringToSupportAilment(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            SupportAilmentType supportAilment = CommonOctomodUtilities.ConvertStringToSupportAilment(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 33;
             string commandEffecter = ConvertIntToCommandEffecter(BitConverter.ToInt32(allBytes, currentOffset), uassetStrings);
             currentOffset += 28;

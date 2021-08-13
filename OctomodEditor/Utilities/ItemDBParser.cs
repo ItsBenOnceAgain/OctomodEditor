@@ -14,26 +14,26 @@ namespace OctomodEditor.Utilities
         public static Dictionary<string, Item> ParseItemObjects(bool useBaseGame = false)
         {
             string uassetPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
             }
 
             string uexpPath;
-            if (!useBaseGame && File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
+            if (!useBaseGame && File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
             {
-                uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
+                uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
             }
             else
             {
-                uexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
+                uexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
             }
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(uexpPath);
             int numOfEntries = BitConverter.ToInt32(allBytes, ITEM_ENTRY_COUNT_OFFSET);
@@ -52,32 +52,32 @@ namespace OctomodEditor.Utilities
         public static Item ParseSingleItem(Dictionary<int, string> uassetStrings, byte[] allBytes, ref int currentOffset)
         {
             int itemOffset = currentOffset;
-            string key = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string key = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
             int itemId = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 29;
-            string nameId = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string nameId = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
-            string detailTextId = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string detailTextId = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 33;
-            string iconLabel = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+            string iconLabel = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
             currentOffset += 41;
-            ItemCategory category = CommonUtilities.ConvertStringToItemCategory(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            ItemCategory category = CommonOctomodUtilities.ConvertStringToItemCategory(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 33;
             int sortCategory = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 37;
-            ItemDisplayType displayType = CommonUtilities.ConvertStringToItemDisplayType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            ItemDisplayType displayType = CommonOctomodUtilities.ConvertStringToItemDisplayType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 41;
-            ItemUseType useType = CommonUtilities.ConvertStringToItemUseType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            ItemUseType useType = CommonOctomodUtilities.ConvertStringToItemUseType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 41;
-            TargetType targetType = CommonUtilities.ConvertStringToTargetType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            TargetType targetType = CommonOctomodUtilities.ConvertStringToTargetType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 41;
-            AttributeType attributeType = CommonUtilities.ConvertStringToItemAttributeType(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            AttributeType attributeType = CommonOctomodUtilities.ConvertStringToItemAttributeType(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 119;
             Ailment[] ailments = new Ailment[4];
             for(int i = 0; i < ailments.Length; i++)
             {
-                string ailmentName = CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
+                string ailmentName = CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings);
                 currentOffset += 33;
                 int invocationValue = BitConverter.ToInt32(allBytes, currentOffset);
                 currentOffset += 29;
@@ -93,7 +93,7 @@ namespace OctomodEditor.Utilities
             currentOffset += 29;
             int sellPrice = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 37;
-            EquipmentCategory equipCategory = CommonUtilities.ConvertStringToItemEquipmentCategory(CommonUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
+            EquipmentCategory equipCategory = CommonOctomodUtilities.ConvertStringToItemEquipmentCategory(CommonOctomodUtilities.ParseUAssetStringWithPossibleSuffix(allBytes, currentOffset, uassetStrings));
             currentOffset += 82;
             int hpRevision = BitConverter.ToInt32(allBytes, currentOffset);
             currentOffset += 29;
@@ -177,44 +177,44 @@ namespace OctomodEditor.Utilities
 
         public static void SaveItems(List<Item> items)
         {
-            if (!Directory.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/"))
+            if (!Directory.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/"))
             {
-                Directory.CreateDirectory($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/");
+                Directory.CreateDirectory($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/");
             }
 
             string uassetPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset"))
+            if (File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset"))
             {
-                uassetPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
+                uassetPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
             }
             else
             {
-                uassetPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
+                uassetPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset";
             }
             string oldUexpPath;
-            if (File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
+            if (File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
             {
-                oldUexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
+                oldUexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
             }
             else
             {
-                oldUexpPath = $"{CommonUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
+                oldUexpPath = $"{CommonOctomodUtilities.BaseFilesLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
             }
 
             string uexpPath;
-            if (!File.Exists($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
+            if (!File.Exists($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp"))
             {
-                var openStream = File.Create($"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp");
+                var openStream = File.Create($"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp");
                 openStream.Close();
             }
-            uexpPath = $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
+            uexpPath = $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uexp";
 
-            Dictionary<int, string> uassetStrings = CommonUtilities.ParseUAssetFile(uassetPath);
+            Dictionary<int, string> uassetStrings = CommonOctomodUtilities.ParseUAssetFile(uassetPath);
 
             byte[] allBytes = File.ReadAllBytes(oldUexpPath);
             foreach (var item in items)
             {
-                SaveItem(item, allBytes, uassetStrings, uassetPath, $"{CommonUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset");
+                SaveItem(item, allBytes, uassetStrings, uassetPath, $"{CommonOctomodUtilities.ModLocation}/Octopath_Traveler/Content/Item/Database/ItemDB.uasset");
             }
             File.WriteAllBytes(uexpPath, allBytes);
         }
@@ -222,98 +222,98 @@ namespace OctomodEditor.Utilities
         public static void SaveItem(Item item, byte[] allBytes, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)
         {
             int currentOffset = item.Offset + 95;
-            byte[] detailTextIdData = CommonUtilities.GetBytesFromStringWithPossibleSuffix(item.DetailTextID, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(detailTextIdData, allBytes, currentOffset);
+            byte[] detailTextIdData = CommonOctomodUtilities.GetBytesFromStringWithPossibleSuffix(item.DetailTextID, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(detailTextIdData, allBytes, currentOffset);
             currentOffset += 33;
-            byte[] iconLabelData = CommonUtilities.GetBytesFromStringWithPossibleSuffix(item.IconLabelID, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(iconLabelData, allBytes, currentOffset);
+            byte[] iconLabelData = CommonOctomodUtilities.GetBytesFromStringWithPossibleSuffix(item.IconLabelID, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(iconLabelData, allBytes, currentOffset);
             currentOffset += 41;
-            byte[] categoryData = CommonUtilities.ConvertItemCategoryToBytes(item.Category, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(categoryData, allBytes, currentOffset);
+            byte[] categoryData = CommonOctomodUtilities.ConvertItemCategoryToBytes(item.Category, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(categoryData, allBytes, currentOffset);
             currentOffset += 33;
             byte[] sortCategoryBytes = BitConverter.GetBytes(item.SortCategory);
-            CommonUtilities.UpdateBytesAtOffset(sortCategoryBytes, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(sortCategoryBytes, allBytes, currentOffset);
             currentOffset += 37;
-            byte[] displayTypeData = CommonUtilities.ConvertItemDisplayTypeToBytes(item.DisplayType, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(displayTypeData, allBytes, currentOffset);
+            byte[] displayTypeData = CommonOctomodUtilities.ConvertItemDisplayTypeToBytes(item.DisplayType, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(displayTypeData, allBytes, currentOffset);
             currentOffset += 41;
-            byte[] useTypeData = CommonUtilities.ConvertItemUseTypeToBytes(item.UseType, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(useTypeData, allBytes, currentOffset);
+            byte[] useTypeData = CommonOctomodUtilities.ConvertItemUseTypeToBytes(item.UseType, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(useTypeData, allBytes, currentOffset);
             currentOffset += 41;
-            byte[] targetTypeData = CommonUtilities.ConvertItemTargetTypeToBytes(item.TargetType, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(targetTypeData, allBytes, currentOffset);
+            byte[] targetTypeData = CommonOctomodUtilities.ConvertItemTargetTypeToBytes(item.TargetType, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(targetTypeData, allBytes, currentOffset);
             currentOffset += 41;
-            byte[] attributeTypeData = CommonUtilities.ConvertItemAttributeTypeToBytes(item.AttributeType, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(attributeTypeData, allBytes, currentOffset);
+            byte[] attributeTypeData = CommonOctomodUtilities.ConvertItemAttributeTypeToBytes(item.AttributeType, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(attributeTypeData, allBytes, currentOffset);
             currentOffset += 119;
             for (int i = 0; i < item.Ailments.Length; i++)
             {
-                byte[] ailmentNameData = CommonUtilities.GetBytesFromStringWithPossibleSuffix(item.Ailments[i].AilmentName, uassetStrings, uassetPath, modUassetPath);
-                CommonUtilities.UpdateBytesAtOffset(ailmentNameData, allBytes, currentOffset);
+                byte[] ailmentNameData = CommonOctomodUtilities.GetBytesFromStringWithPossibleSuffix(item.Ailments[i].AilmentName, uassetStrings, uassetPath, modUassetPath);
+                CommonOctomodUtilities.UpdateBytesAtOffset(ailmentNameData, allBytes, currentOffset);
                 currentOffset += 33;
                 byte[] invocationValueData = BitConverter.GetBytes(item.Ailments[i].InvocationValue);
-                CommonUtilities.UpdateBytesAtOffset(invocationValueData, allBytes, currentOffset);
+                CommonOctomodUtilities.UpdateBytesAtOffset(invocationValueData, allBytes, currentOffset);
                 currentOffset += 29;
                 byte[] invocationTurnData = BitConverter.GetBytes(item.Ailments[i].InvocationTurn);
-                CommonUtilities.UpdateBytesAtOffset(invocationTurnData, allBytes, currentOffset);
+                CommonOctomodUtilities.UpdateBytesAtOffset(invocationTurnData, allBytes, currentOffset);
                 currentOffset += 29;
                 byte[] diseaseRateData = BitConverter.GetBytes(item.Ailments[i].DiseaseRate);
-                CommonUtilities.UpdateBytesAtOffset(diseaseRateData, allBytes, currentOffset);
+                CommonOctomodUtilities.UpdateBytesAtOffset(diseaseRateData, allBytes, currentOffset);
                 currentOffset += i == item.Ailments.Length - 1 ? 36 : 37;
             }
             byte[] isValuableData = BitConverter.GetBytes(item.IsValuable);
-            CommonUtilities.UpdateBytesAtOffset(isValuableData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(isValuableData, allBytes, currentOffset);
             currentOffset += 27;
             byte[] buyPriceData = BitConverter.GetBytes(item.BuyPrice);
-            CommonUtilities.UpdateBytesAtOffset(buyPriceData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(buyPriceData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] sellPriceData = BitConverter.GetBytes(item.SellPrice);
-            CommonUtilities.UpdateBytesAtOffset(sellPriceData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(sellPriceData, allBytes, currentOffset);
             currentOffset += 37;
-            byte[] equipCategoryData = CommonUtilities.ConvertItemEquipmentCategoryToBytes(item.EquipmentCategory, uassetStrings, uassetPath, modUassetPath);
-            CommonUtilities.UpdateBytesAtOffset(equipCategoryData, allBytes, currentOffset);
+            byte[] equipCategoryData = CommonOctomodUtilities.ConvertItemEquipmentCategoryToBytes(item.EquipmentCategory, uassetStrings, uassetPath, modUassetPath);
+            CommonOctomodUtilities.UpdateBytesAtOffset(equipCategoryData, allBytes, currentOffset);
             currentOffset += 82;
             byte[] hpRevisionData = BitConverter.GetBytes(item.HPRevision);
-            CommonUtilities.UpdateBytesAtOffset(hpRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(hpRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] mpRevisionData = BitConverter.GetBytes(item.MPRevision);
-            CommonUtilities.UpdateBytesAtOffset(mpRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(mpRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] bpRevisionData = BitConverter.GetBytes(item.BPRevision);
-            CommonUtilities.UpdateBytesAtOffset(bpRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(bpRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] spRevisionData = BitConverter.GetBytes(item.SPRevision);
-            CommonUtilities.UpdateBytesAtOffset(spRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(spRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] pAttackRevisionData = BitConverter.GetBytes(item.PAttackRevision);
-            CommonUtilities.UpdateBytesAtOffset(pAttackRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(pAttackRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] pDefenseRevisionData = BitConverter.GetBytes(item.PDefenseRevision);
-            CommonUtilities.UpdateBytesAtOffset(pDefenseRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(pDefenseRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] mAttackRevisionData = BitConverter.GetBytes(item.MAttackRevision);
-            CommonUtilities.UpdateBytesAtOffset(mAttackRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(mAttackRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] mDefenseRevisionData = BitConverter.GetBytes(item.MDefenseRevision);
-            CommonUtilities.UpdateBytesAtOffset(mDefenseRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(mDefenseRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] accuracyRevisionData = BitConverter.GetBytes(item.AccuracyRevision);
-            CommonUtilities.UpdateBytesAtOffset(accuracyRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(accuracyRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] evasionRevisionData = BitConverter.GetBytes(item.EvasionRevision);
-            CommonUtilities.UpdateBytesAtOffset(evasionRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(evasionRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] criticalRevisionData = BitConverter.GetBytes(item.CriticalRevision);
-            CommonUtilities.UpdateBytesAtOffset(criticalRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(criticalRevisionData, allBytes, currentOffset);
             currentOffset += 29;
             byte[] speedRevisionData = BitConverter.GetBytes(item.SpeedRevision);
-            CommonUtilities.UpdateBytesAtOffset(speedRevisionData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(speedRevisionData, allBytes, currentOffset);
             currentOffset += 142;
             byte[] resistanceData = ConvertItemResistancesToBytes(item, uassetStrings);
-            CommonUtilities.UpdateBytesAtOffset(resistanceData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(resistanceData, allBytes, currentOffset);
             currentOffset += 37;
             byte[] commandEffecterData = GetEffecterBytesFromString(uassetStrings, item.CommandEffecterPath);
-            CommonUtilities.UpdateBytesAtOffset(commandEffecterData, allBytes, currentOffset);
+            CommonOctomodUtilities.UpdateBytesAtOffset(commandEffecterData, allBytes, currentOffset);
         }
 
         public static byte[] ConvertItemResistancesToBytes(Item item, Dictionary<int, string> uassetStrings)
