@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Models
 {
-    public class Ability
+    public class Ability : OctopathModel
     {
-        public int Offset { get; set; }
-        public string Key { get; set; }
         public int AbilityID { get; set; }
         public string DisplayName { get; set; }
         public string Detail { get; set; }
-        public string CommandActor { get; set; }
+        public int CommandActorID { get; set; }
         public AbilityType AbilityType { get; set; }
         public AbilityUseType AbilityUseType { get; set; }
         public bool AlwaysDisable { get; set; }
@@ -30,7 +28,7 @@ namespace OctomodEditor.Models
         public AbilityOrderChangeType OrderChange { get; set; }
         public Ailment[] Ailments { get; set; }
         public SupportAilmentType SupportAilment { get; set; }
-        public string CommandEffecter { get; set; }
+        public int CommandEffecterID { get; set; }
         public bool KeepBoostEffect { get; set; }
         public bool EnableItemAll { get; set; }
         public bool EnableSkillAll { get; set; }

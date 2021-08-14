@@ -1,4 +1,5 @@
 ﻿using OctomodEditor.Models;
+using OctomodEditor.Parsers;
 using OctomodEditor.Utilities;
 using OctomodEditor.ViewModels;
 using System;
@@ -25,6 +26,7 @@ namespace OctomodEditor.Canvases
     {
         public AbilityViewModel ViewModel { get; private set; }
         public List<Ability> AbilitiesToSave { get; set; }
+        public AbilityParser Parser { get; set; }
 
         public AbilityEditorCanvas()
         {
@@ -32,7 +34,10 @@ namespace OctomodEditor.Canvases
 
             AbilitiesToSave = new List<Ability>();
 
-            ViewModel = new AbilityViewModel(AbilityDataParser.ParseAbilityObjects());
+            Parser = new AbilityParser();
+            var table = Parser.GetTableFromFile();
+
+            ViewModel = new AbilityViewModel(table, Parser.ParseTable(table));
             this.DataContext = ViewModel;
 
             UpdateCurrentAbilityList((string)CategoryComboBox.SelectedValue);

@@ -27,7 +27,7 @@ namespace OctomodEditor.Parsers
             cells[6].Value = CommonOctomodUtilities.ConvertItemDisplayTypeToString(model.DisplayType);
             cells[7].Value = CommonOctomodUtilities.ConvertItemUseTypeToString(model.UseType);
             cells[8].Value = CommonOctomodUtilities.ConvertTargetTypeToString(model.TargetType);
-            cells[9].Value = CommonOctomodUtilities.ConvertItemAttributeTypeToString(model.AttributeType);
+            cells[9].Value = CommonOctomodUtilities.ConvertAttributeTypeToString(model.AttributeType);
 
             var ailmentCellList = (List<UEDataTableCell>)cells[10].Value;
             for (int i = 0; i < ailmentCellList.Count; i++)
@@ -47,7 +47,7 @@ namespace OctomodEditor.Parsers
             cells[11].Value = model.IsValuable;
             cells[12].Value = model.BuyPrice;
             cells[13].Value = model.SellPrice;
-            cells[14].Value = CommonOctomodUtilities.ConvertItemEquipmentCategoryToString(model.EquipmentCategory);
+            cells[14].Value = CommonOctomodUtilities.ConvertEquipmentCategoryToString(model.EquipmentCategory);
 
             var equipmentRevisionParams = ((UEDataTableObject)cells[15].Value).Cells;
             equipmentRevisionParams[0].Value = model.HPRevision;
@@ -108,7 +108,7 @@ namespace OctomodEditor.Parsers
             item.DisplayType = CommonOctomodUtilities.ConvertStringToItemDisplayType(cells[6].Value);
             item.UseType = CommonOctomodUtilities.ConvertStringToItemUseType(cells[7].Value);
             item.TargetType = CommonOctomodUtilities.ConvertStringToTargetType(cells[8].Value);
-            item.AttributeType = CommonOctomodUtilities.ConvertStringToItemAttributeType(cells[9].Value);
+            item.AttributeType = CommonOctomodUtilities.ConvertStringToAttributeType(cells[9].Value);
 
             List<Ailment> ailments = new List<Ailment>();
             var ailmentCellList = (List<UEDataTableCell>)cells[10].Value;

@@ -1,4 +1,5 @@
-﻿using OctomodEditor.Models;
+﻿using DataEditorUE4.Models;
+using OctomodEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace OctomodEditor.ViewModels
         private Ability _currentAbility;
         private List<Ability> _currentAbilityList;
 
+        public UEDataTable Table { get; set; }
         public List<AbilityType> AbilityTypes { get; set; }
         public List<AbilityUseType> AbilityUseTypes { get; set; }
         public List<AttributeType> AttributeTypes { get; set; }
@@ -69,8 +71,9 @@ namespace OctomodEditor.ViewModels
             }
         }
 
-        public AbilityViewModel(Dictionary<string, Ability> abilities)
+        public AbilityViewModel(UEDataTable table, Dictionary<string, Ability> abilities)
         {
+            Table = table;
             AbilityList = abilities;
             CurrentAbility = abilities.First().Value;
 

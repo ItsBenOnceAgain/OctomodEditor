@@ -63,6 +63,7 @@ namespace OctomodEditor
             var shopInfoParser = new ShopInfoParser();
             var shopListParser = new ShopListParser();
             var purchaseItemParser = new PurchaseItemParser();
+            var abilityParser = new AbilityParser();
 
             MasterGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile(true));
             ModGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile());
@@ -76,8 +77,8 @@ namespace OctomodEditor
             ModShopListList = shopListParser.ParseTable(shopListParser.GetTableFromFile());
             MasterShopInfoList = shopInfoParser.ParseTable(shopInfoParser.GetTableFromFile(true));
             ModShopInfoList = shopInfoParser.ParseTable(shopInfoParser.GetTableFromFile());
-            MasterAbilityList = AbilityDataParser.ParseAbilityObjects(true);
-            ModAbilityList = AbilityDataParser.ParseAbilityObjects();
+            MasterAbilityList = abilityParser.ParseTable(abilityParser.GetTableFromFile(true));
+            ModAbilityList = abilityParser.ParseTable(abilityParser.GetTableFromFile());
         }
 
         private void LoadPaths()
