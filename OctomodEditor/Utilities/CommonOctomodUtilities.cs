@@ -46,8 +46,8 @@ namespace OctomodEditor.Utilities
                 Directory.CreateDirectory($"{ModLocation}/Octopath_Traveler/Content/{directory}");
             }
 
-            string uassetPath = $"{ModLocation}/Octopath_Traveler/Content/Character/{directory}{filePathPrefix}.uasset";
-            string uexpPath = $"{ModLocation}/Octopath_Traveler/Content/Character/{directory}{filePathPrefix}.uexp";
+            string uassetPath = $"{ModLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uasset";
+            string uexpPath = $"{ModLocation}/Octopath_Traveler/Content/{directory}{filePathPrefix}.uexp";
 
             if (!File.Exists(uassetPath))
             {
@@ -333,6 +333,372 @@ namespace OctomodEditor.Utilities
             return byteData;
         }
 
+        #region Enum to String Converters
+
+        public static string ConvertItemCategoryToString(ItemCategory category)
+        {
+            string categoryString;
+            switch (category)
+            {
+                case ItemCategory.CONSUMABLE:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator0";
+                    break;
+                case ItemCategory.MATERIAL_A:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator1";
+                    break;
+                case ItemCategory.TREASURE:
+                case ItemCategory.TRADING:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator4";
+                    break;
+                case ItemCategory.EQUIPMENT:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator7";
+                    break;
+                case ItemCategory.INFORMATION:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator8";
+                    break;
+                case ItemCategory.MATERIAL_B:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator9";
+                    break;
+                default:
+                    categoryString = "EITEM_CATEGORY::NewEnumerator0";
+                    break;
+            }
+
+            return categoryString;
+        }
+
+        public static string ConvertItemDisplayTypeToString(ItemDisplayType displayType)
+        {
+            string displayTypeString;
+            switch (displayType)
+            {
+                case ItemDisplayType.ITEM_USE:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator0";
+                    break;
+                case ItemDisplayType.ON_HIT:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator1";
+                    break;
+                case ItemDisplayType.BATTLE_START:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator2";
+                    break;
+                case ItemDisplayType.DISABLE:
+                    displayTypeString = "EITEM_DISPLAY_TYPE::NewEnumerator3";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return displayTypeString;
+        }
+
+        public static string ConvertItemUseTypeToString(ItemUseType useType)
+        {
+            string useTypeString;
+            switch (useType)
+            {
+                case ItemUseType.DISABLE:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator0";
+                    break;
+                case ItemUseType.ALWAYS:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator1";
+                    break;
+                case ItemUseType.FIELD_ONLY:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator2";
+                    break;
+                case ItemUseType.BATTLE_ONLY:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator3";
+                    break;
+                default:
+                    useTypeString = "EITEM_USE_TYPE::NewEnumerator0";
+                    break;
+            }
+
+            return useTypeString;
+        }
+
+        public static string ConvertItemTargetTypeToString(TargetType targetType)
+        {
+            string targetTypeString;
+            switch (targetType)
+            {
+                case TargetType.SELF:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator0";
+                    break;
+                case TargetType.PARTY_SINGLE:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator1";
+                    break;
+                case TargetType.PARTY_ALL:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator2";
+                    break;
+                case TargetType.ENEMY_SINGLE:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator3";
+                    break;
+                case TargetType.ENEMY_ALL:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator4";
+                    break;
+                case TargetType.ALL:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator5";
+                    break;
+                default:
+                    targetTypeString = "ETARGET_TYPE::NewEnumerator0";
+                    break;
+            }
+
+            return targetTypeString;
+        }
+
+        public static string ConvertItemAttributeTypeToString(AttributeType attributeType)
+        {
+            string attributeTypeString;
+            switch (attributeType)
+            {
+                case AttributeType.NONE:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator0";
+                    break;
+                case AttributeType.FIRE:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator1";
+                    break;
+                case AttributeType.ICE:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator2";
+                    break;
+                case AttributeType.LIGHTNING:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator3";
+                    break;
+                case AttributeType.WIND:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator4";
+                    break;
+                case AttributeType.LIGHT:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator5";
+                    break;
+                case AttributeType.DARK:
+                    attributeTypeString = "EATTRIBUTE_TYPE::NewEnumerator6";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return attributeTypeString;
+        }
+
+        public static string ConvertItemEquipmentCategoryToString(EquipmentCategory equipmentCategory)
+        {
+            string equipmentCategoryString;
+            switch (equipmentCategory)
+            {
+                case EquipmentCategory.SWORD:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator0";
+                    break;
+                case EquipmentCategory.LANCE:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator1";
+                    break;
+                case EquipmentCategory.DAGGER:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator2";
+                    break;
+                case EquipmentCategory.AXE:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator3";
+                    break;
+                case EquipmentCategory.BOW:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator5";
+                    break;
+                case EquipmentCategory.ROD:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator6";
+                    break;
+                case EquipmentCategory.SHIELD:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator7";
+                    break;
+                case EquipmentCategory.HEAVY_HELMET:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator10";
+                    break;
+                case EquipmentCategory.HEAVY_ARMOR:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator11";
+                    break;
+                case EquipmentCategory.ACCESSORY:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator14";
+                    break;
+                default:
+                    equipmentCategoryString = "EEQUIPMENT_CATEGORY::NewEnumerator0";
+                    break;
+            }
+
+            return equipmentCategoryString;
+        }
+
+        public static string ConvertShopTypeToString(ShopType shopType)
+        {
+            string shopTypeString;
+            switch (shopType)
+            {
+                case ShopType.WEAPON:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator0";
+                    break;
+                case ShopType.ITEM:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator1";
+                    break;
+                case ShopType.GENERAL:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator2";
+                    break;
+                case ShopType.INN:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator3";
+                    break;
+                case ShopType.BAR:
+                    shopTypeString = "ESHOP_TYPE::NewEnumerator4";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return shopTypeString;
+        }
+
+        public static string ConvertDeadTypeToString(EnemyDeadType deadType)
+        {
+            string deadString;
+            switch (deadType)
+            {
+                case EnemyDeadType.DEADTYPE0:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator0";
+                    break;
+                case EnemyDeadType.DEADTYPE1:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator1";
+                    break;
+                case EnemyDeadType.DEADTYPE2:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator2";
+                    break;
+                case EnemyDeadType.DEADTYPE3:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator3";
+                    break;
+                case EnemyDeadType.DEADTYPE4:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator4";
+                    break;
+                case EnemyDeadType.DEADTYPE5:
+                    deadString = "EENEMY_DEAD_TYPE::NewEnumerator5";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return deadString;
+        }
+
+        public static string ConvertSizeTypeToString(CharacterSize size)
+        {
+            string sizeString;
+            switch (size)
+            {
+                case CharacterSize.SMALL:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator0";
+                    break;
+                case CharacterSize.MEDIUM:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator1";
+                    break;
+                case CharacterSize.LARGE:
+                    sizeString = "ECHARACTER_SIZE::NewEnumerator2";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return sizeString;
+        }
+
+        public static string ConvertAttributeResistanceToString(AttributeResistance resistance)
+        {
+            string resistanceString;
+            switch (resistance)
+            {
+                case AttributeResistance.NONE:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator0";
+                    break;
+                case AttributeResistance.WEAK:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator1";
+                    break;
+                case AttributeResistance.REDUCE:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator2";
+                    break;
+                case AttributeResistance.INVALID:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator3";
+                    break;
+                default:
+                    throw new ArgumentException("Received a string that did not match an attribute resistance.");
+            }
+
+            return resistanceString;
+        }
+
+        public static string ConvertRaceTypeToString(CharacterRace race)
+        {
+            string raceString;
+            switch (race)
+            {
+                case CharacterRace.UNKNOWN:
+                    raceString = "ECHARACTER_RACE::NewEnumerator0";
+                    break;
+                case CharacterRace.HUMAN:
+                    raceString = "ECHARACTER_RACE::NewEnumerator1";
+                    break;
+                case CharacterRace.BEAST:
+                    raceString = "ECHARACTER_RACE::NewEnumerator2";
+                    break;
+                case CharacterRace.INSECT:
+                    raceString = "ECHARACTER_RACE::NewEnumerator3";
+                    break;
+                case CharacterRace.BIRD:
+                    raceString = "ECHARACTER_RACE::NewEnumerator4";
+                    break;
+                case CharacterRace.FISH:
+                    raceString = "ECHARACTER_RACE::NewEnumerator5";
+                    break;
+                case CharacterRace.DRAGON:
+                    raceString = "ECHARACTER_RACE::NewEnumerator6";
+                    break;
+                case CharacterRace.PLANT:
+                    raceString = "ECHARACTER_RACE::NewEnumerator7";
+                    break;
+                case CharacterRace.CHIMERA:
+                    raceString = "ECHARACTER_RACE::NewEnumerator8";
+                    break;
+                case CharacterRace.SHELL:
+                    raceString = "ECHARACTER_RACE::NewEnumerator9";
+                    break;
+                case CharacterRace.UNDEAD:
+                    raceString = "ECHARACTER_RACE::NewEnumerator10";
+                    break;
+                case CharacterRace.DEVIL:
+                    raceString = "ECHARACTER_RACE::NewEnumerator11";
+                    break;
+                default:
+                    throw new ArgumentException("String was not in expected format.");
+            }
+
+            return raceString;
+        }
+
+        public static string GetBytesFromAttributeResistanceType(AttributeResistance resistance)
+        {
+            string resistanceString;
+            switch (resistance)
+            {
+                case AttributeResistance.NONE:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator0";
+                    break;
+                case AttributeResistance.WEAK:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator1";
+                    break;
+                case AttributeResistance.REDUCE:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator2";
+                    break;
+                case AttributeResistance.INVALID:
+                    resistanceString = "EATTRIBUTE_RESIST::NewEnumerator3";
+                    break;
+                default:
+                    throw new ArgumentException("Received a string that did not match an attribute resistance.");
+            }
+            return resistanceString;
+        }
+
+        #endregion
+
+        //TODO: Remove these methods.
         #region Enum to Byte Array Converters
 
         public static byte[] ConvertItemCategoryToBytes(ItemCategory category, Dictionary<int, string> uassetStrings, string uassetPath, string modUassetPath)

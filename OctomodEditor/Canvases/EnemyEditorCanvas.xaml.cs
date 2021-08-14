@@ -35,7 +35,7 @@ namespace OctomodEditor.Canvases
             EnemiesToSave = new List<Enemy>();
             Parser = new EnemyParser();
             var table = Parser.GetTableFromFile();
-            ViewModel = new EnemyViewModel(Parser.ParseTable(table));
+            ViewModel = new EnemyViewModel(table, Parser.ParseTable(table));
 
             this.DataContext = ViewModel;
             InnerUnusedGrid.DataContext = ViewModel;
@@ -170,11 +170,14 @@ namespace OctomodEditor.Canvases
 
             if(result == MessageBoxResult.OK)
             {
-                EnemyDBParser.SaveEnemies(EnemiesToSave);
+                Parser.SaveTable(ViewModel.Table, EnemiesToSave);
                 EnemiesToSave.Clear();
                 SaveEnemyButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                MainWindow.ModEnemyList = EnemyDBParser.ParseEnemyObjects();
+                var table = Parser.GetTableFromFile();
+                var enemyDictionary = Parser.ParseTable(table);
+                MainWindow.ModEnemyList = enemyDictionary;
+                ViewModel = new EnemyViewModel(table, enemyDictionary);
             }
         }
 
@@ -191,7 +194,7 @@ namespace OctomodEditor.Canvases
             if(result == MessageBoxResult.OK)
             {
                 EnemiesToSave.Clear();
-                ViewModel.EnemyList = EnemyDBParser.ParseEnemyObjects();
+                ViewModel.EnemyList = Parser.ParseTable(ViewModel.Table);
                 ViewModel.CurrentEnemy = ViewModel.EnemyList.Single(x => x.Key == ViewModel.CurrentEnemy.Key).Value;
                 UpdateCurrentEnemyList((string)CategoryComboBox.SelectedValue);
                 EnemyComboBox.SelectedItem = ViewModel.CurrentEnemy;

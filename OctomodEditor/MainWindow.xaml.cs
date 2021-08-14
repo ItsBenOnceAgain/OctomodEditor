@@ -1,5 +1,6 @@
 ﻿using OctomodEditor.Canvases;
 using OctomodEditor.Models;
+using OctomodEditor.Parsers;
 using OctomodEditor.Utilities;
 using OctomodEditor.Windows;
 using System;
@@ -56,10 +57,12 @@ namespace OctomodEditor
 
         public static void LoadMasterFiles()
         {
+            var enemyParser = new EnemyParser();
+
             MasterGameText = GameTextParser.ParseGameText("EN", true);
             ModGameText = GameTextParser.ParseGameText("EN");
-            MasterEnemyList = EnemyDBParser.ParseEnemyObjects(true);
-            ModEnemyList = EnemyDBParser.ParseEnemyObjects();
+            MasterEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile(true));
+            ModEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile());
             MasterItemList = ItemDBParser.ParseItemObjects(true);
             ModItemList = ItemDBParser.ParseItemObjects();
             MasterPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects(true);

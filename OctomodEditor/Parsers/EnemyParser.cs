@@ -22,6 +22,7 @@ namespace OctomodEditor.Parsers
 
             Enemy enemy = new Enemy();
             enemy.Key = row.Key;
+            enemy.OriginalRow = row.Value;
 
             enemy.EnemyID = cells[0].Value;
             enemy.DisplayNameID = cells[1].Value;
@@ -91,10 +92,10 @@ namespace OctomodEditor.Parsers
             enemy.AIPath = cells[34].Value;
             
             var abilityCells = (List<UEDataTableCell>)cells[35].Value;
-            enemy.AbilityList = ConvertCellArrayToStringArray(abilityCells.ToArray());
+            enemy.AbilityList = ConvertCellListToStringArray(abilityCells);
 
             var eventCells = (List<UEDataTableCell>)cells[36].Value;
-            enemy.BattleEvents = ConvertCellArrayToStringArray(eventCells.ToArray());
+            enemy.BattleEvents = ConvertCellListToStringArray(eventCells);
 
             enemy.DiseaseOffset = ConvertObjectToVector3(cells[37].Value);
             enemy.EnemyEffectOffset = ConvertObjectToVector3(cells[38].Value);
@@ -108,14 +109,113 @@ namespace OctomodEditor.Parsers
             return enemy;
         }
 
-        public override UEDataTable ConvertListToTable(Dictionary<string, Enemy> objectList)
+        public override UEDataTableObject ConvertModelToTableRow(Enemy enemy)
         {
-            throw new NotImplementedException();
+            var originalRow = enemy.OriginalRow;
+            var cells = originalRow.Cells;
+
+            cells[0].Value = enemy.EnemyID;
+            cells[1].Value = enemy.DisplayNameID;
+            cells[2].Value = enemy.FlipbookPath;
+            cells[3].Value = enemy.TexturePath;
+            cells[4].Value = enemy.DisplayRank;
+            cells[5].Value = enemy.EnemyLevel;
+            cells[6].Value = enemy.DamageRatio;
+
+            cells[7].Value = CommonOctomodUtilities.ConvertRaceTypeToString(enemy.RaceType);
+            cells[8].Value = CommonOctomodUtilities.ConvertSizeTypeToString(enemy.Size);
+            cells[9].Value = enemy.IsNPC;
+            cells[10].Value = enemy.PlaysSlowAnimationOnDeath;
+            cells[11].Value = enemy.IsMainEnemy;
+            cells[12].Value = enemy.IsExemptFromBattle;
+            cells[13].Value = enemy.UsesCatDamageType;
+            cells[14].Value = enemy.HasNoKnockbackAnimation;
+
+            var paramsCells = ((UEDataTableObject)cells[15].Value).Cells;
+            paramsCells[0].Value = enemy.HP;
+            paramsCells[1].Value = enemy.MP;
+            paramsCells[2].Value = enemy.BP;
+            paramsCells[3].Value = enemy.Shields;
+            paramsCells[4].Value = enemy.PhysicalAttack;
+            paramsCells[5].Value = enemy.PhysicalDefense;
+            paramsCells[6].Value = enemy.ElementalAttack;
+            paramsCells[7].Value = enemy.ElementalDefense;
+            paramsCells[8].Value = enemy.Accuracy;
+            paramsCells[9].Value = enemy.Evasion;
+            paramsCells[10].Value = enemy.Critical;
+            paramsCells[11].Value = enemy.Speed;
+            ((UEDataTableObject)cells[15].Value).Cells = paramsCells;
+
+            cells[16].Value = enemy.ExperiencePoints;
+            cells[17].Value = enemy.JobPoints;
+            cells[18].Value = enemy.Money;
+            cells[19].Value = enemy.MoneyFromCollecting;
+            cells[20].Value = enemy.CanBeCaptured;
+            cells[21].Value = enemy.DefaultTameRate;
+            cells[22].Value = enemy.CapturedEnemyID;
+            cells[23].Value = enemy.FirstBP;
+            cells[24].Value = enemy.BreakType;
+            cells[25].Value = enemy.InvocationValue;
+            cells[26].Value = enemy.InvocationTurn;
+            cells[27].Value = CommonOctomodUtilities.ConvertDeadTypeToString(enemy.DeadType);
+
+            var elementalResistanceCells = (List<UEDataTableCell>)cells[28].Value;
+            elementalResistanceCells[1].Value = ConvertAttributeBoolToString(enemy.IsWeakToFire);
+            elementalResistanceCells[2].Value = ConvertAttributeBoolToString(enemy.IsWeakToIce);
+            elementalResistanceCells[3].Value = ConvertAttributeBoolToString(enemy.IsWeakToLightning);
+            elementalResistanceCells[4].Value = ConvertAttributeBoolToString(enemy.IsWeakToWind);
+            elementalResistanceCells[5].Value = ConvertAttributeBoolToString(enemy.IsWeakToLight);
+            elementalResistanceCells[6].Value = ConvertAttributeBoolToString(enemy.IsWeakToDark);
+            cells[28].Value = elementalResistanceCells;
+
+            var physicalResistanceCells = (List<UEDataTableCell>)cells[29].Value;
+            physicalResistanceCells[0].Value = ConvertAttributeBoolToString(enemy.IsWeakToSwords);
+            physicalResistanceCells[1].Value = ConvertAttributeBoolToString(enemy.IsWeakToSpears);
+            physicalResistanceCells[2].Value = ConvertAttributeBoolToString(enemy.IsWeakToDaggers);
+            physicalResistanceCells[3].Value = ConvertAttributeBoolToString(enemy.IsWeakToAxes);
+            physicalResistanceCells[4].Value = ConvertAttributeBoolToString(enemy.IsWeakToBows);
+            physicalResistanceCells[5].Value = ConvertAttributeBoolToString(enemy.IsWeakToStaves);
+            cells[29].Value = physicalResistanceCells;
+
+            var diseaseResistanceCells = (List<UEDataTableCell>)cells[30].Value;
+            diseaseResistanceCells = ConvertAttributeResistancesToCellList(diseaseResistanceCells, enemy.AttributeResistances);
+            cells[30].Value = diseaseResistanceCells;
+
+            cells[31].Value = enemy.IsGuardedFromStealing;
+            cells[32].Value = enemy.ItemID;
+            cells[33].Value = enemy.ItemDropPercentage;
+            cells[34].Value = enemy.AIPath;
+
+            var abilityCells = (List<UEDataTableCell>)cells[35].Value;
+            abilityCells = ConvertStringArrayToCellList(abilityCells, enemy.AbilityList);
+            cells[35].Value = abilityCells;
+
+            var eventCells = (List<UEDataTableCell>)cells[36].Value;
+            eventCells = ConvertStringArrayToCellList(eventCells, enemy.BattleEvents);
+            cells[36].Value = eventCells;
+
+            cells[37].Value = ConvertVector3ToObject(cells[37].Value, enemy.DiseaseOffset);
+            cells[38].Value = ConvertVector3ToObject(cells[38].Value, enemy.EnemyEffectOffset);
+            cells[39].Value = ConvertVector3ToObject(cells[39].Value, enemy.StatusUIOffset);
+            cells[40].Value = ConvertVector3ToObject(cells[40].Value, enemy.DamageUIOffset);
+            cells[41].Value = ConvertVector2ToObject(cells[41].Value, enemy.IconL);
+            cells[42].Value = ConvertVector2ToObject(cells[42].Value, enemy.PixelScaleL);
+            cells[43].Value = ConvertVector2ToObject(cells[43].Value, enemy.IconS);
+            cells[44].Value = ConvertVector2ToObject(cells[44].Value, enemy.PixelScaleS);
+
+            originalRow.Cells = cells;
+
+            return originalRow;
         }
 
         public bool ConvertStringToAttributeBool(string attributeString)
         {
             return attributeString == "EATTRIBUTE_RESIST::NewEnumerator1";
+        }
+
+        public string ConvertAttributeBoolToString(bool attributeBool)
+        {
+            return attributeBool ? "EATTRIBUTE_RESIST::NewEnumerator1" : "EATTRIBUTE_RESIST::NewEnumerator0";
         }
 
         public AttributeResistance[] GetDiseaseResistances(UEDataTableCell[] attributeCells)
@@ -126,6 +226,15 @@ namespace OctomodEditor.Parsers
                 resistances[i] = CommonOctomodUtilities.ConvertStringToAttributeResistance(attributeCells[i].Value);
             }
             return resistances;
+        }
+
+        public List<UEDataTableCell> ConvertAttributeResistancesToCellList(List<UEDataTableCell> attributeCells, AttributeResistance[] resistances)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                attributeCells[i].Value = CommonOctomodUtilities.ConvertAttributeResistanceToString(resistances[i]);
+            }
+            return attributeCells;
         }
     }
 }

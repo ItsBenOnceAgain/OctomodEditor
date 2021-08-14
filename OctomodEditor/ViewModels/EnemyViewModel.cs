@@ -1,4 +1,5 @@
-﻿using OctomodEditor.Models;
+﻿using DataEditorUE4.Models;
+using OctomodEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace OctomodEditor.ViewModels
         private Dictionary<string, Enemy> _enemyList;
         private Enemy _currentEnemy;
         private List<Enemy> _currentEnemyList;
+        public UEDataTable Table { get; set; }
         public Dictionary<string, string> AllItems { get; set; }
         public Dictionary<string, string> AllFlipbookPaths { get; set; }
         public Dictionary<string, string> AllTexturePaths { get; set; }
@@ -70,8 +72,9 @@ namespace OctomodEditor.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public EnemyViewModel(Dictionary<string, Enemy> enemies)
+        public EnemyViewModel(UEDataTable table, Dictionary<string, Enemy> enemies)
         {
+            Table = table;
             EnemyList = enemies;
             CurrentEnemy = enemies.First().Value;
             Sizes = Enum.GetValues(typeof(CharacterSize)).Cast<CharacterSize>().ToList();
