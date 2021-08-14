@@ -60,6 +60,9 @@ namespace OctomodEditor
             var enemyParser = new EnemyParser();
             var gameTextParser = new GameTextParser("EN");
             var itemParser = new ItemParser();
+            var shopInfoParser = new ShopInfoParser();
+            var shopListParser = new ShopListParser();
+            var purchaseItemParser = new PurchaseItemParser();
 
             MasterGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile(true));
             ModGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile());
@@ -67,12 +70,12 @@ namespace OctomodEditor
             ModEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile());
             MasterItemList = itemParser.ParseTable(itemParser.GetTableFromFile(true));
             ModItemList = itemParser.ParseTable(itemParser.GetTableFromFile());
-            MasterPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects(true);
-            ModPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects();
-            MasterShopListList = ShopListParser.ParseShopListObjects(true);
-            ModShopListList = ShopListParser.ParseShopListObjects();
-            MasterShopInfoList = ShopInfoParser.ParseShopInfoObjects(true);
-            ModShopInfoList = ShopInfoParser.ParseShopInfoObjects();
+            MasterPurchaseItemList = purchaseItemParser.ParseTable(purchaseItemParser.GetTableFromFile(true));
+            ModPurchaseItemList = purchaseItemParser.ParseTable(purchaseItemParser.GetTableFromFile());
+            MasterShopListList = shopListParser.ParseTable(shopListParser.GetTableFromFile(true));
+            ModShopListList = shopListParser.ParseTable(shopListParser.GetTableFromFile());
+            MasterShopInfoList = shopInfoParser.ParseTable(shopInfoParser.GetTableFromFile(true));
+            ModShopInfoList = shopInfoParser.ParseTable(shopInfoParser.GetTableFromFile());
             MasterAbilityList = AbilityDataParser.ParseAbilityObjects(true);
             ModAbilityList = AbilityDataParser.ParseAbilityObjects();
         }

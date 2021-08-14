@@ -1,4 +1,5 @@
-﻿using OctomodEditor.Models;
+﻿using DataEditorUE4.Models;
+using OctomodEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,9 @@ namespace OctomodEditor.ViewModels
         private ShopList _currentShopList;
         private List<PurchaseItem> _currentPurchaseItems;
         private List<ShopInfo> _currentSelectableShopInfoRecords;
-
+        public UEDataTable ShopInfoTable { get; set; }
+        public UEDataTable ShopListTable { get; set; }
+        public UEDataTable PurchaseItemTable { get; set; }
         public List<ShopType> ShopTypes { get; set; }
         public Dictionary<string, string> AllItems { get; set; }
 
@@ -124,8 +127,11 @@ namespace OctomodEditor.ViewModels
             }
         }
 
-        public ShopViewModel(Dictionary<string, ShopInfo> shops, Dictionary<string, ShopList> shopLists, Dictionary<string, PurchaseItem> purchaseItems)
+        public ShopViewModel(UEDataTable shopInfoTable, UEDataTable shopListTable, UEDataTable purchaseItemTable, Dictionary<string, ShopInfo> shops, Dictionary<string, ShopList> shopLists, Dictionary<string, PurchaseItem> purchaseItems)
         {
+            ShopInfoTable = shopInfoTable;
+            ShopListTable = shopListTable;
+            PurchaseItemTable = purchaseItemTable;
             AllShopInfoRecords = shops;
             AllShopListRecords = shopLists;
             AllPurchaseItemRecords = purchaseItems;

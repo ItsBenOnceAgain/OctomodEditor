@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Models
 {
-    public class ShopInfo
+    public class ShopInfo : OctopathModel
     {
-        public int Offset { get; set; }
-        public string Key { get; set; }
         public string ShopName { get; set; }
         public ShopType ShopType { get; set; }
         public string ShopBGM { get; set; }

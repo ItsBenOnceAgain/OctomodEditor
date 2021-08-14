@@ -1,4 +1,5 @@
 ﻿using OctomodEditor.Models;
+using OctomodEditor.Parsers;
 using OctomodEditor.Utilities;
 using OctomodEditor.ViewModels;
 using System;
@@ -26,6 +27,9 @@ namespace OctomodEditor.Canvases
         public ShopViewModel ViewModel { get; private set; }
         public List<ShopInfo> ShopsToSave { get; set; }
         public List<PurchaseItem> PurchaseItemsToSave { get; set; }
+        public ShopInfoParser ShopInfoParser { get; set; }
+        public ShopListParser ShopListParser { get; set; }
+        public PurchaseItemParser PurchaseItemParser { get; set; }
 
         public ShopEditorCanvas()
         {
@@ -34,7 +38,16 @@ namespace OctomodEditor.Canvases
             ShopsToSave = new List<ShopInfo>();
             PurchaseItemsToSave = new List<PurchaseItem>();
 
-            ViewModel = new ShopViewModel(ShopInfoParser.ParseShopInfoObjects(), ShopListParser.ParseShopListObjects(), PurchaseItemTableParser.ParsePurchaseItemObjects());
+            ShopInfoParser = new ShopInfoParser();
+            ShopListParser = new ShopListParser();
+            PurchaseItemParser = new PurchaseItemParser();
+
+            var shopInfoTable = ShopInfoParser.GetTableFromFile();
+            var shopListTable = ShopListParser.GetTableFromFile();
+            var purchaseItemTable = PurchaseItemParser.GetTableFromFile();
+
+            ViewModel = new ShopViewModel(shopInfoTable, shopListTable, purchaseItemTable, 
+                ShopInfoParser.ParseTable(shopInfoTable), ShopListParser.ParseTable(shopListTable), PurchaseItemParser.ParseTable(purchaseItemTable));
             this.DataContext = ViewModel;
 
             UpdateCurrentSelectableShopList((string)CategoryComboBox.SelectedValue);
@@ -272,15 +285,26 @@ namespace OctomodEditor.Canvases
 
             if (result == MessageBoxResult.OK)
             {
-                ShopInfoParser.SaveShopInfoObjects(ShopsToSave);
+                ShopInfoParser.SaveTable(ViewModel.ShopInfoTable, ShopsToSave);
                 ShopsToSave.Clear();
-                PurchaseItemTableParser.SavePurchaseItemObjects(PurchaseItemsToSave);
+                PurchaseItemParser.SaveTable(ViewModel.PurchaseItemTable, PurchaseItemsToSave);
                 PurchaseItemsToSave.Clear();
+
+                var shopInfoTable = ShopInfoParser.GetTableFromFile();
+                var shopInfoDictionary = ShopInfoParser.ParseTable(shopInfoTable);
+
+                var shopListTable = ShopListParser.GetTableFromFile();
+                var shopListDictionary = ShopListParser.ParseTable(shopListTable);
+
+                var purchaseItemTable = PurchaseItemParser.GetTableFromFile();
+                var purchaseItemDictionary = PurchaseItemParser.ParseTable(purchaseItemTable);
+
                 SaveShopButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                MainWindow.ModShopInfoList = ShopInfoParser.ParseShopInfoObjects();
-                MainWindow.ModShopListList = ShopListParser.ParseShopListObjects();
-                MainWindow.ModPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects();
+                MainWindow.ModShopInfoList = shopInfoDictionary;
+                MainWindow.ModShopListList = shopListDictionary;
+                MainWindow.ModPurchaseItemList = purchaseItemDictionary;
+                ViewModel = new ShopViewModel(shopInfoTable, shopListTable, purchaseItemTable, shopInfoDictionary, shopListDictionary, purchaseItemDictionary);
             }
         }
 
@@ -313,9 +337,9 @@ namespace OctomodEditor.Canvases
             {
                 ShopsToSave.Clear();
                 PurchaseItemsToSave.Clear();
-                ViewModel.AllShopInfoRecords = ShopInfoParser.ParseShopInfoObjects();
-                ViewModel.AllShopListRecords = ShopListParser.ParseShopListObjects();
-                ViewModel.AllPurchaseItemRecords = PurchaseItemTableParser.ParsePurchaseItemObjects();
+                ViewModel.AllShopInfoRecords = ShopInfoParser.ParseTable(ViewModel.ShopInfoTable);
+                ViewModel.AllShopListRecords = ShopListParser.ParseTable(ViewModel.ShopListTable);
+                ViewModel.AllPurchaseItemRecords = PurchaseItemParser.ParseTable(ViewModel.PurchaseItemTable);
                 ViewModel.CurrentShop = ViewModel.AllShopInfoRecords.Single(x => x.Key == ViewModel.CurrentShop.Key).Value;
                 UpdateCurrentSelectableShopList((string)CategoryComboBox.SelectedValue);
                 ShopComboBox.SelectedItem = ViewModel.CurrentShop;
