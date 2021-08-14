@@ -78,7 +78,7 @@ namespace OctomodEditor.Models
 
         public override string ToString()
         {
-            return MainWindow.ModGameText.ContainsKey(DisplayNameID) ? IsNPC ? $"{MainWindow.ModGameText[DisplayNameID]} (ID: {EnemyID})" : MainWindow.ModGameText[DisplayNameID] : Key;
+            return MainWindow.ModGameText.ContainsKey(DisplayNameID) ? IsNPC ? $"{MainWindow.ModGameText[DisplayNameID].ToString()} (ID: {EnemyID})" : MainWindow.ModGameText[DisplayNameID].ToString() : Key;
         }
 
         public bool IsDifferentFrom(Enemy enemy)

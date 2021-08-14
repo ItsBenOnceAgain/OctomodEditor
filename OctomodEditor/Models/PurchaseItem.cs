@@ -26,7 +26,7 @@ namespace OctomodEditor.Models
                 Item item = MainWindow.ModItemList[ItemLabel];
                 if (MainWindow.ModGameText.ContainsKey(item.ItemNameID))
                 {
-                    returnString = MainWindow.ModGameText[item.ItemNameID];
+                    returnString = MainWindow.ModGameText[item.ItemNameID].Text;
                 }
             }
             return returnString;

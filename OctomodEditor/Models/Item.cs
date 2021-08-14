@@ -53,7 +53,7 @@ namespace OctomodEditor.Models
         {
             get
             {
-                return MainWindow.ModGameText.ContainsKey(DetailTextID) ? MainWindow.ModGameText[DetailTextID] : DetailTextID;
+                return MainWindow.ModGameText.ContainsKey(DetailTextID) ? MainWindow.ModGameText[DetailTextID].Text : DetailTextID;
             }
         }
 
@@ -103,7 +103,7 @@ namespace OctomodEditor.Models
 
         public override string ToString()
         {
-            return MainWindow.ModGameText.ContainsKey(ItemNameID) ? MainWindow.ModGameText[ItemNameID] : Key;
+            return MainWindow.ModGameText.ContainsKey(ItemNameID) ? MainWindow.ModGameText[ItemNameID].ToString() : Key;
         }
     }
 }

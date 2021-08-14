@@ -50,7 +50,7 @@ namespace OctomodEditor.Models
             string name = null;
             if (MainWindow.ModGameText.ContainsKey(DisplayName))
             {
-                name = MainWindow.ModGameText[DisplayName];
+                name = MainWindow.ModGameText[DisplayName].Text;
             }
             else
             {

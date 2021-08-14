@@ -26,8 +26,8 @@ namespace OctomodEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Dictionary<string, string> MasterGameText { get; set; }
-        public static Dictionary<string, string> ModGameText { get; set; }
+        public static Dictionary<string, GameText> MasterGameText { get; set; }
+        public static Dictionary<string, GameText> ModGameText { get; set; }
         public static Dictionary<string, Enemy> MasterEnemyList { get; set; }
         public static Dictionary<string, Enemy> ModEnemyList { get; set; }
         public static Dictionary<string, Item> MasterItemList { get; set; }
@@ -58,9 +58,10 @@ namespace OctomodEditor
         public static void LoadMasterFiles()
         {
             var enemyParser = new EnemyParser();
+            var gameTextParser = new GameTextParser("EN");
 
-            MasterGameText = GameTextParser.ParseGameText("EN", true);
-            ModGameText = GameTextParser.ParseGameText("EN");
+            MasterGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile(true));
+            ModGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile());
             MasterEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile(true));
             ModEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile());
             MasterItemList = ItemDBParser.ParseItemObjects(true);

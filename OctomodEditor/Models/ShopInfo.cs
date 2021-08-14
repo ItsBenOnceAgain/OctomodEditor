@@ -23,17 +23,17 @@ namespace OctomodEditor.Models
             string[] shopData = Key.Split('_');
             if(shopData[0] == "MINATO")
             {
-                returnString = $"Unused Shop - {MainWindow.ModGameText[ShopName]}";
+                returnString = $"Unused Shop - {MainWindow.ModGameText[ShopName].Text}";
             }
             else if(shopData[0] == "NPC")
             {
                 if (shopData[1].StartsWith("T"))
                 {
-                    returnString = MainWindow.ModGameText[ShopName];
+                    returnString = MainWindow.ModGameText[ShopName].Text;
                 }
                 else
                 {
-                    returnString = $"{MainWindow.ModGameText[ShopName]} - {GetNPCShopLocation(shopData[1])}";
+                    returnString = $"{MainWindow.ModGameText[ShopName].Text} - {GetNPCShopLocation(shopData[1])}";
                 }
             }
             else
