@@ -416,7 +416,7 @@ namespace OctomodEditor.Utilities
             return useTypeString;
         }
 
-        public static string ConvertItemTargetTypeToString(TargetType targetType)
+        public static string ConvertTargetTypeToString(TargetType targetType)
         {
             string targetTypeString;
             switch (targetType)

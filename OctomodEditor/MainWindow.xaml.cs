@@ -59,13 +59,14 @@ namespace OctomodEditor
         {
             var enemyParser = new EnemyParser();
             var gameTextParser = new GameTextParser("EN");
+            var itemParser = new ItemParser();
 
             MasterGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile(true));
             ModGameText = gameTextParser.ParseTable(gameTextParser.GetTableFromFile());
             MasterEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile(true));
             ModEnemyList = enemyParser.ParseTable(enemyParser.GetTableFromFile());
-            MasterItemList = ItemDBParser.ParseItemObjects(true);
-            ModItemList = ItemDBParser.ParseItemObjects();
+            MasterItemList = itemParser.ParseTable(itemParser.GetTableFromFile(true));
+            ModItemList = itemParser.ParseTable(itemParser.GetTableFromFile());
             MasterPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects(true);
             ModPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects();
             MasterShopListList = ShopListParser.ParseShopListObjects(true);

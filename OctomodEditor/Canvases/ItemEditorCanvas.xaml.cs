@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using OctomodEditor.Utilities;
+using OctomodEditor.Parsers;
 
 namespace OctomodEditor.Canvases
 {
@@ -25,13 +26,15 @@ namespace OctomodEditor.Canvases
     {
         public ItemViewModel ViewModel { get; private set; }
         public List<Item> ItemsToSave { get; set; }
+        public ItemParser Parser { get; set; }
         public ItemEditorCanvas()
         {
             InitializeComponent();
 
             ItemsToSave = new List<Item>();
-
-            ViewModel = new ItemViewModel(ItemDBParser.ParseItemObjects());
+            Parser = new ItemParser();
+            var table = Parser.GetTableFromFile();
+            ViewModel = new ItemViewModel(table, Parser.ParseTable(table));
             this.DataContext = ViewModel;
 
             UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
@@ -435,11 +438,14 @@ namespace OctomodEditor.Canvases
 
             if (result == MessageBoxResult.OK)
             {
-                ItemDBParser.SaveItems(ItemsToSave);
+                Parser.SaveTable(ViewModel.Table, ItemsToSave);
                 ItemsToSave.Clear();
                 SaveItemButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                MainWindow.ModItemList = ItemDBParser.ParseItemObjects();
+                var table = Parser.GetTableFromFile();
+                var itemDictionary = Parser.ParseTable(table);
+                MainWindow.ModItemList = itemDictionary;
+                ViewModel = new ItemViewModel(table, itemDictionary);
             }
         }
 
@@ -455,7 +461,7 @@ namespace OctomodEditor.Canvases
             if (result == MessageBoxResult.OK)
             {
                 ItemsToSave.Clear();
-                ViewModel.ItemList = ItemDBParser.ParseItemObjects();
+                ViewModel.ItemList = Parser.ParseTable(ViewModel.Table);
                 ViewModel.CurrentItem = ViewModel.ItemList.Single(x => x.Key == ViewModel.CurrentItem.Key).Value;
                 UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
                 ItemComboBox.SelectedItem = ViewModel.CurrentItem;

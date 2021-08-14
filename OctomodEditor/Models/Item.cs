@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Models
 {
-    public class Item
+    public class Item : OctopathModel
     {
-        public int Offset { get; set; }
-        public string Key { get; set; }
         public int ItemID { get; set; }
         public string ItemNameID { get; set; }
         public string DetailTextID { get; set; }
@@ -37,6 +35,7 @@ namespace OctomodEditor.Models
         public int EvasionRevision { get; set; }
         public int CriticalRevision { get; set; }
         public int SpeedRevision { get; set; }
+        public AttributeResistance[] AttributeResistances { get; set; }
         public bool ResistPoison { get; set; }
         public bool ResistSilence { get; set; }
         public bool ResistBlindness { get; set; }
@@ -47,7 +46,7 @@ namespace OctomodEditor.Models
         public bool ResistInstantDeath { get; set; }
         public bool ResistTransform { get; set; }
         public bool ResistDebuff { get; set; }
-        public string CommandEffecterPath { get; set; }
+        public int CommandEffecterID { get; set; }
 
         public string DescriptionText
         {
@@ -97,7 +96,7 @@ namespace OctomodEditor.Models
                    ResistInstantDeath == item.ResistInstantDeath &&
                    ResistTransform == item.ResistTransform &&
                    ResistDebuff == item.ResistDebuff &&
-                   CommandEffecterPath == item.CommandEffecterPath &&
+                   CommandEffecterID == item.CommandEffecterID &&
                    DescriptionText == item.DescriptionText);
         }
 
