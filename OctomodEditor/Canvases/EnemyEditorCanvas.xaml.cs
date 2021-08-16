@@ -34,8 +34,7 @@ namespace OctomodEditor.Canvases
 
             EnemiesToSave = new List<Enemy>();
             Parser = new EnemyParser();
-            var table = Parser.GetTableFromFile();
-            ViewModel = new EnemyViewModel(table, Parser.ParseTable(table));
+            ViewModel = new EnemyViewModel(MainWindow.ModEnemyList);
 
             this.DataContext = ViewModel;
             InnerUnusedGrid.DataContext = ViewModel;
@@ -109,20 +108,11 @@ namespace OctomodEditor.Canvases
 
         private void UpdateEnemiesToSave()
         {
-            if (EnemiesToSave.Select(x => x.Key).Contains(ViewModel.CurrentEnemy.Key))
-            {
-                EnemiesToSave.Remove(EnemiesToSave.Single(x => x.Key == ViewModel.CurrentEnemy.Key));
-            }
-            if (ViewModel.CurrentEnemy.IsDifferentFrom(MainWindow.ModEnemyList[ViewModel.CurrentEnemy.Key]))
+            if (!EnemiesToSave.Select(x => x.Key).Contains(ViewModel.CurrentEnemy.Key))
             {
                 EnemiesToSave.Add(ViewModel.CurrentEnemy);
                 SaveEnemyButton.IsEnabled = true;
                 DiscardChangesButton.IsEnabled = true;
-            }
-            else if(EnemiesToSave.Count == 0)
-            {
-                SaveEnemyButton.IsEnabled = false;
-                DiscardChangesButton.IsEnabled = false;
             }
         }
 
@@ -158,7 +148,7 @@ namespace OctomodEditor.Canvases
             }
         }
 
-        private void SaveEnemyButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveEnemyButton_Click(object sender, RoutedEventArgs e)
         {
             // Save Enemy Here
             string enemyList = "";
@@ -170,18 +160,23 @@ namespace OctomodEditor.Canvases
 
             if(result == MessageBoxResult.OK)
             {
-                Parser.SaveTable(ViewModel.Table, EnemiesToSave);
+                MainWindow.Instance.StartLoading();
+                await Task.Run(() =>
+                {
+                    Parser.SaveTable(MainWindow.ModEnemyTable, EnemiesToSave);
+                });
                 EnemiesToSave.Clear();
                 SaveEnemyButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                var table = Parser.GetTableFromFile();
-                var enemyDictionary = Parser.ParseTable(table);
-                MainWindow.ModEnemyList = enemyDictionary;
-                ViewModel = new EnemyViewModel(table, enemyDictionary);
+
+                await MainWindow.Instance.LoadEnemyLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel = new EnemyViewModel(MainWindow.ModEnemyList);
             }
         }
 
-        private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
+        private async void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
             // Discard Enemy Here
             string enemyList = "";
@@ -194,7 +189,12 @@ namespace OctomodEditor.Canvases
             if(result == MessageBoxResult.OK)
             {
                 EnemiesToSave.Clear();
-                ViewModel.EnemyList = Parser.ParseTable(ViewModel.Table);
+
+                MainWindow.Instance.StartLoading();
+                await MainWindow.Instance.LoadEnemyLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel.EnemyList = MainWindow.ModEnemyList;
                 ViewModel.CurrentEnemy = ViewModel.EnemyList.Single(x => x.Key == ViewModel.CurrentEnemy.Key).Value;
                 UpdateCurrentEnemyList((string)CategoryComboBox.SelectedValue);
                 EnemyComboBox.SelectedItem = ViewModel.CurrentEnemy;

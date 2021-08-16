@@ -17,6 +17,8 @@
     <None Remove="Resources\Images\Ability5.png" />
     <None Remove="Resources\Images\Accuracy.png" />
     <None Remove="Resources\Images\AccuracyDown.png" />
+    <None Remove="Resources\Images\Aelfric.png" />
+    <None Remove="Resources\Images\Alephan.png" />
     <None Remove="Resources\Images\Apothecary.png" />
     <None Remove="Resources\Images\Axe.png" />
     <None Remove="Resources\Images\BattleFont\Blue0.png" />
@@ -26,20 +28,27 @@
     <None Remove="Resources\Images\Blindness.png" />
     <None Remove="Resources\Images\Bottle.png" />
     <None Remove="Resources\Images\Bow.png" />
+    <None Remove="Resources\Images\BPBoost.png" />
+    <None Remove="Resources\Images\Buff.png" />
     <None Remove="Resources\Images\Cleric.png" />
     <None Remove="Resources\Images\ConcoctItem.png" />
     <None Remove="Resources\Images\Confusion.png" />
+    <None Remove="Resources\Images\Counter.png" />
     <None Remove="Resources\Images\Critical.png" />
     <None Remove="Resources\Images\CriticalDown.png" />
+    <None Remove="Resources\Images\CriticalMagic.png" />
+    <None Remove="Resources\Images\CriticalUp.png" />
     <None Remove="Resources\Images\Dagger.png" />
     <None Remove="Resources\Images\Dancer.png" />
     <None Remove="Resources\Images\Dark.png" />
     <None Remove="Resources\Images\DarkColor.png" />
     <None Remove="Resources\Images\Debuff.png" />
+    <None Remove="Resources\Images\Dohter.png" />
     <None Remove="Resources\Images\Evasion.png" />
     <None Remove="Resources\Images\EvasionDown.png" />
     <None Remove="Resources\Images\Fire.png" />
     <None Remove="Resources\Images\FireColor.png" />
+    <None Remove="Resources\Images\FireRune.png" />
     <None Remove="Resources\Images\folder.png" />
     <None Remove="Resources\Images\Grape.png" />
     <None Remove="Resources\Images\Herb.png" />
@@ -47,6 +56,9 @@
     <None Remove="Resources\Images\Hunter.png" />
     <None Remove="Resources\Images\Ice.png" />
     <None Remove="Resources\Images\IceColor.png" />
+    <None Remove="Resources\Images\IceRune.png" />
+    <None Remove="Resources\Images\Incite.png" />
+    <None Remove="Resources\Images\Invincibility.png" />
     <None Remove="Resources\Images\Item.png" />
     <None Remove="Resources\Images\Jam.png" />
     <None Remove="Resources\Images\Leghold.png" />
@@ -54,11 +66,13 @@
     <None Remove="Resources\Images\LightColor.png" />
     <None Remove="Resources\Images\Lightning.png" />
     <None Remove="Resources\Images\LightningColor.png" />
+    <None Remove="Resources\Images\LightRune.png" />
     <None Remove="Resources\Images\MagicAttack.png" />
     <None Remove="Resources\Images\MagicDefense.png" />
     <None Remove="Resources\Images\MagicDefenseDown.png" />
     <None Remove="Resources\Images\MagicDown.png" />
     <None Remove="Resources\Images\MagicSealed.png" />
+    <None Remove="Resources\Images\MagicUp.png" />
     <None Remove="Resources\Images\MainIcon.ico" />
     <None Remove="Resources\Images\MainIcon.png" />
     <None Remove="Resources\Images\Merchant.png" />
@@ -72,14 +86,19 @@
     <None Remove="Resources\Images\Petrify.png" />
     <None Remove="Resources\Images\PhysicalAttack.png" />
     <None Remove="Resources\Images\PhysicalAttackDown.png" />
+    <None Remove="Resources\Images\PhysicalAttackUp.png" />
     <None Remove="Resources\Images\PhysicalDefense.png" />
     <None Remove="Resources\Images\PhysicalDefenseDown.png" />
+    <None Remove="Resources\Images\PhysicalDefenseUp.png" />
     <None Remove="Resources\Images\Plum.png" />
     <None Remove="Resources\Images\Poison.png" />
     <None Remove="Resources\Images\Pomegranate.png" />
+    <None Remove="Resources\Images\Reflect.png" />
     <None Remove="Resources\Images\Runelord.png" />
     <None Remove="Resources\Images\Scholar.png" />
+    <None Remove="Resources\Images\Sealticge.png" />
     <None Remove="Resources\Images\Shields.png" />
+    <None Remove="Resources\Images\Sidestep.png" />
     <None Remove="Resources\Images\Silence.png" />
     <None Remove="Resources\Images\Sleep.png" />
     <None Remove="Resources\Images\Sorcerer.png" />
@@ -103,12 +122,17 @@
     <None Remove="Resources\Images\Terror.png" />
     <None Remove="Resources\Images\Thief.png" />
     <None Remove="Resources\Images\ToxicRainbow.png" />
+    <None Remove="Resources\Images\TransferRune.png" />
     <None Remove="Resources\Images\Unconcious.png" />
     <None Remove="Resources\Images\Unknown.png" />
     <None Remove="Resources\Images\Warmaster.png" />
     <None Remove="Resources\Images\Warrior.png" />
     <None Remove="Resources\Images\Wind.png" />
     <None Remove="Resources\Images\WindColor.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
   </ItemGroup>
 
   <ItemGroup>
@@ -126,6 +150,8 @@
     <Resource Include="Resources\Images\Ability5.png" />
     <Resource Include="Resources\Images\Accuracy.png" />
     <Resource Include="Resources\Images\AccuracyDown.png" />
+    <Resource Include="Resources\Images\Aelfric.png" />
+    <Resource Include="Resources\Images\Alephan.png" />
     <Resource Include="Resources\Images\Apothecary.png" />
     <Resource Include="Resources\Images\Axe.png" />
     <Resource Include="Resources\Images\BattleFont\Blue0.png" />
@@ -135,20 +161,27 @@
     <Resource Include="Resources\Images\Blindness.png" />
     <Resource Include="Resources\Images\Bottle.png" />
     <Resource Include="Resources\Images\Bow.png" />
+    <Resource Include="Resources\Images\BPBoost.png" />
+    <Resource Include="Resources\Images\Buff.png" />
     <Resource Include="Resources\Images\Cleric.png" />
     <Resource Include="Resources\Images\ConcoctItem.png" />
     <Resource Include="Resources\Images\Confusion.png" />
+    <Resource Include="Resources\Images\Counter.png" />
     <Resource Include="Resources\Images\Critical.png" />
     <Resource Include="Resources\Images\CriticalDown.png" />
+    <Resource Include="Resources\Images\CriticalMagic.png" />
+    <Resource Include="Resources\Images\CriticalUp.png" />
     <Resource Include="Resources\Images\Dagger.png" />
     <Resource Include="Resources\Images\Dancer.png" />
     <Resource Include="Resources\Images\Dark.png" />
     <Resource Include="Resources\Images\DarkColor.png" />
     <Resource Include="Resources\Images\Debuff.png" />
+    <Resource Include="Resources\Images\Dohter.png" />
     <Resource Include="Resources\Images\Evasion.png" />
     <Resource Include="Resources\Images\EvasionDown.png" />
     <Resource Include="Resources\Images\Fire.png" />
     <Resource Include="Resources\Images\FireColor.png" />
+    <Resource Include="Resources\Images\FireRune.png" />
     <Resource Include="Resources\Images\folder.png" />
     <Resource Include="Resources\Images\Grape.png" />
     <Resource Include="Resources\Images\Herb.png" />
@@ -156,6 +189,9 @@
     <Resource Include="Resources\Images\Hunter.png" />
     <Resource Include="Resources\Images\Ice.png" />
     <Resource Include="Resources\Images\IceColor.png" />
+    <Resource Include="Resources\Images\IceRune.png" />
+    <Resource Include="Resources\Images\Incite.png" />
+    <Resource Include="Resources\Images\Invincibility.png" />
     <Resource Include="Resources\Images\Item.png" />
     <Resource Include="Resources\Images\Jam.png" />
     <Resource Include="Resources\Images\Leghold.png" />
@@ -163,11 +199,13 @@
     <Resource Include="Resources\Images\LightColor.png" />
     <Resource Include="Resources\Images\Lightning.png" />
     <Resource Include="Resources\Images\LightningColor.png" />
+    <Resource Include="Resources\Images\LightRune.png" />
     <Resource Include="Resources\Images\MagicAttack.png" />
     <Resource Include="Resources\Images\MagicDefense.png" />
     <Resource Include="Resources\Images\MagicDefenseDown.png" />
     <Resource Include="Resources\Images\MagicDown.png" />
     <Resource Include="Resources\Images\MagicSealed.png" />
+    <Resource Include="Resources\Images\MagicUp.png" />
     <Resource Include="Resources\Images\MainIcon.ico" />
     <Resource Include="Resources\Images\MainIcon.png" />
     <Resource Include="Resources\Images\Merchant.png" />
@@ -181,14 +219,19 @@
     <Resource Include="Resources\Images\Petrify.png" />
     <Resource Include="Resources\Images\PhysicalAttack.png" />
     <Resource Include="Resources\Images\PhysicalAttackDown.png" />
+    <Resource Include="Resources\Images\PhysicalAttackUp.png" />
     <Resource Include="Resources\Images\PhysicalDefense.png" />
     <Resource Include="Resources\Images\PhysicalDefenseDown.png" />
+    <Resource Include="Resources\Images\PhysicalDefenseUp.png" />
     <Resource Include="Resources\Images\Plum.png" />
     <Resource Include="Resources\Images\Poison.png" />
     <Resource Include="Resources\Images\Pomegranate.png" />
+    <Resource Include="Resources\Images\Reflect.png" />
     <Resource Include="Resources\Images\Runelord.png" />
     <Resource Include="Resources\Images\Scholar.png" />
+    <Resource Include="Resources\Images\Sealticge.png" />
     <Resource Include="Resources\Images\Shields.png" />
+    <Resource Include="Resources\Images\Sidestep.png" />
     <Resource Include="Resources\Images\Silence.png" />
     <Resource Include="Resources\Images\Sleep.png" />
     <Resource Include="Resources\Images\Sorcerer.png" />
@@ -196,6 +239,7 @@
     <Resource Include="Resources\Images\Spear.png" />
     <Resource Include="Resources\Images\Speed.png" />
     <Resource Include="Resources\Images\SpeedDown.png" />
+    <Resource Include="Resources\Images\TransferRune.png" />
     <SplashScreen Include="Resources\Images\SplashScreen.png" />
     <Resource Include="Resources\Images\Sprites\Alfyn.png" />
     <Resource Include="Resources\Images\Sprites\Cyrus.png" />

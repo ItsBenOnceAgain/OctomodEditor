@@ -189,6 +189,21 @@ namespace OctomodEditor.Utilities
             return ConvertEnumPrefixAndIndexToString("ECHARACTER_RACE", (int)race);
         }
 
+        public static string ConvertCommandMenuTypeToString(CommandMenuType commandMenuType)
+        {
+            return ConvertEnumPrefixAndIndexToString("ECOMMAND_MENU_TYPE", (int)commandMenuType);
+        }
+
+        public static string ConvertCommandSubMenuTypeToString(CommandSubMenuType commandSubMenuType)
+        {
+            return ConvertEnumPrefixAndIndexToString("ECOMMAND_SUB_MENU_TYPE", (int)commandSubMenuType);
+        }
+
+        public static string ConvertAbilityIconTypeToString(AbilityIconType iconType)
+        {
+            return ConvertEnumPrefixAndIndexToString("EABILITY_ICON_TYPE", (int)iconType);
+        }
+
         #endregion
 
         #region String to Enum Converters
@@ -299,6 +314,21 @@ namespace OctomodEditor.Utilities
         public static CharacterRace ConvertStringToRaceType(string raceString)
         {
             return (CharacterRace)GetEnumIndexFromEnumString(raceString, "ECHARACTER_RACE");
+        }
+
+        public static CommandMenuType ConvertStringToCommandMenuType(string commandMenuString)
+        {
+            return (CommandMenuType)GetEnumIndexFromEnumString(commandMenuString, "ECOMMAND_MENU_TYPE");
+        }
+
+        public static CommandSubMenuType ConvertStringToCommandSubMenuType(string commandSubMenuString)
+        {
+            return (CommandSubMenuType)GetEnumIndexFromEnumString(commandSubMenuString, "ECOMMAND_SUB_MENU_TYPE");
+        }
+
+        public static AbilityIconType ConvertStringToAbilityIconType(string abilityIconString)
+        {
+            return (AbilityIconType)GetEnumIndexFromEnumString(abilityIconString, "EABILITY_ICON_TYPE");
         }
 
         #endregion

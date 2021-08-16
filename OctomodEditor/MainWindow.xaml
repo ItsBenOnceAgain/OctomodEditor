@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         WindowState="Maximized"
         mc:Ignorable="d"
         Title="Octomod Editor" Height="900" Width="1600"
@@ -93,6 +94,18 @@
                     <Image Source="/Resources/Images/OctomodLogoWhite.png"
                        Stretch="Uniform"/>
                 </Grid>
+            </Grid>
+            <Grid x:Name="LoadingScreen"
+                      Grid.Row="1"
+                      Visibility="Hidden">
+                <Grid Background="White"
+                      Opacity="0.5"/>
+                <fa:ImageAwesome
+                             Foreground="Black"
+                             Icon="Refresh"
+                             Spin="True"
+                             Width="200"
+                             Height="200"/>
             </Grid>
         </Grid>
     </DockPanel>

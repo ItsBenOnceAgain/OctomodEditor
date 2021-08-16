@@ -41,17 +41,6 @@ namespace OctomodEditor.Models
             return returnString;
         }
 
-        public bool IsDifferentFrom(ShopInfo info)
-        {
-            return !(Key == info.Key &&
-                   ShopName == info.ShopName &&
-                   ShopType == info.ShopType &&
-                   ShopBGM == info.ShopBGM &&
-                   InnBasePrice == info.InnBasePrice &&
-                   InnDiscountItem == info.InnDiscountItem &&
-                   InnDiscountBasePrice == info.InnDiscountBasePrice);
-        }
-
         public static string GetNPCShopLocation(string identifier)
         {
             switch (identifier)

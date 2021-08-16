@@ -17,8 +17,6 @@ namespace OctomodEditor.ViewModels
         private Dictionary<string, Item> _itemList;
         private Item _currentItem;
         private List<Item> _currentItemList;
-
-        public UEDataTable Table { get; set; }
         public List<ItemCategory> Categories { get; set; }
         public List<ItemDisplayType> DisplayTypes { get; set; }
         public List<ItemUseType> UseTypes { get; set; }
@@ -71,9 +69,8 @@ namespace OctomodEditor.ViewModels
             }
         }
 
-        public ItemViewModel(UEDataTable table, Dictionary<string, Item> items)
+        public ItemViewModel(Dictionary<string, Item> items)
         {
-            Table = table;
             ItemList = items;
             CurrentItem = items.First().Value;
 

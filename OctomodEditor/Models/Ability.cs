@@ -45,10 +45,10 @@ namespace OctomodEditor.Models
 
         public override string ToString()
         {
-            string name = null;
+            string name;
             if (MainWindow.ModGameText.ContainsKey(DisplayName))
             {
-                name = MainWindow.ModGameText[DisplayName].Text;
+                name = MainWindow.ModGameText[DisplayName].Text == string.Empty ? Key : $"{MainWindow.ModGameText[DisplayName].Text} : {Key}";
             }
             else
             {

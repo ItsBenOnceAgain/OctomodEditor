@@ -33,8 +33,7 @@ namespace OctomodEditor.Canvases
 
             ItemsToSave = new List<Item>();
             Parser = new ItemParser();
-            var table = Parser.GetTableFromFile();
-            ViewModel = new ItemViewModel(table, Parser.ParseTable(table));
+            ViewModel = new ItemViewModel(MainWindow.ModItemList);
             this.DataContext = ViewModel;
 
             UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
@@ -61,20 +60,11 @@ namespace OctomodEditor.Canvases
 
         private void UpdateItemsToSave()
         {
-            if (ItemsToSave.Select(x => x.Key).Contains(ViewModel.CurrentItem.Key))
-            {
-                ItemsToSave.Remove(ItemsToSave.Single(x => x.Key == ViewModel.CurrentItem.Key));
-            }
-            if (ViewModel.CurrentItem.IsDifferentFrom(MainWindow.ModItemList[ViewModel.CurrentItem.Key]))
+            if (!ItemsToSave.Select(x => x.Key).Contains(ViewModel.CurrentItem.Key))
             {
                 ItemsToSave.Add(ViewModel.CurrentItem);
                 SaveItemButton.IsEnabled = true;
                 DiscardChangesButton.IsEnabled = true;
-            }
-            else if (ItemsToSave.Count == 0)
-            {
-                SaveItemButton.IsEnabled = false;
-                DiscardChangesButton.IsEnabled = false;
             }
         }
 
@@ -165,6 +155,7 @@ namespace OctomodEditor.Canvases
 
         private void IsValuableCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -427,7 +418,7 @@ namespace OctomodEditor.Canvases
             UpdateItemsToSave();
         }
 
-        private void SaveItemButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveItemButton_Click(object sender, RoutedEventArgs e)
         {
             string itemList = "";
             foreach (var item in ItemsToSave)
@@ -438,18 +429,23 @@ namespace OctomodEditor.Canvases
 
             if (result == MessageBoxResult.OK)
             {
-                Parser.SaveTable(ViewModel.Table, ItemsToSave);
+                MainWindow.Instance.StartLoading();
+                await Task.Run(() =>
+                {
+                    Parser.SaveTable(MainWindow.ModItemTable, ItemsToSave);
+                });
                 ItemsToSave.Clear();
                 SaveItemButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                var table = Parser.GetTableFromFile();
-                var itemDictionary = Parser.ParseTable(table);
-                MainWindow.ModItemList = itemDictionary;
-                ViewModel = new ItemViewModel(table, itemDictionary);
+
+                await MainWindow.Instance.LoadItemLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel = new ItemViewModel(MainWindow.ModItemList);
             }
         }
 
-        private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
+        private async void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
             string itemList = "";
             foreach (var item in ItemsToSave)
@@ -461,7 +457,12 @@ namespace OctomodEditor.Canvases
             if (result == MessageBoxResult.OK)
             {
                 ItemsToSave.Clear();
-                ViewModel.ItemList = Parser.ParseTable(ViewModel.Table);
+
+                MainWindow.Instance.StartLoading();
+                await MainWindow.Instance.LoadItemLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel.ItemList = MainWindow.ModItemList;
                 ViewModel.CurrentItem = ViewModel.ItemList.Single(x => x.Key == ViewModel.CurrentItem.Key).Value;
                 UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
                 ItemComboBox.SelectedItem = ViewModel.CurrentItem;

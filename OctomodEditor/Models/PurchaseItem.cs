@@ -29,17 +29,5 @@ namespace OctomodEditor.Models
             }
             return returnString;
         }
-
-        public bool IsDifferentFrom(PurchaseItem item)
-        {
-            return !(Key == item.Key &&
-                   ItemLabel == item.ItemLabel &&
-                   FCPrice == item.FCPrice &&
-                   PossibleFlag == item.PossibleFlag &&
-                   PossibleItemLabel == item.PossibleItemLabel &&
-                   ArrivalStatus == item.ArrivalStatus &&
-                   ObtainFlag == item.ObtainFlag && 
-                   ProperSteal == item.ProperSteal);
-        }
     }
 }
