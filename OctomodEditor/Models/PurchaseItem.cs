@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Models
 {
-    public class PurchaseItem
+    public class PurchaseItem : OctopathModel
     {
-        public int Offset { get; set; }
-        public string Key { get; set; }
         public string ItemLabel { get; set; }
         public int FCPrice { get; set; }
         public int PossibleFlag { get; set; }
@@ -26,22 +24,10 @@ namespace OctomodEditor.Models
                 Item item = MainWindow.ModItemList[ItemLabel];
                 if (MainWindow.ModGameText.ContainsKey(item.ItemNameID))
                 {
-                    returnString = MainWindow.ModGameText[item.ItemNameID];
+                    returnString = MainWindow.ModGameText[item.ItemNameID].Text;
                 }
             }
             return returnString;
-        }
-
-        public bool IsDifferentFrom(PurchaseItem item)
-        {
-            return !(Key == item.Key &&
-                   ItemLabel == item.ItemLabel &&
-                   FCPrice == item.FCPrice &&
-                   PossibleFlag == item.PossibleFlag &&
-                   PossibleItemLabel == item.PossibleItemLabel &&
-                   ArrivalStatus == item.ArrivalStatus &&
-                   ObtainFlag == item.ObtainFlag && 
-                   ProperSteal == item.ProperSteal);
         }
     }
 }

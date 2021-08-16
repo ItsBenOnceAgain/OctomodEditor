@@ -1,4 +1,5 @@
-﻿using OctomodEditor.Models;
+﻿using DataEditorUE4.Models;
+using OctomodEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,13 +17,12 @@ namespace OctomodEditor.ViewModels
         private Dictionary<string, Item> _itemList;
         private Item _currentItem;
         private List<Item> _currentItemList;
-
         public List<ItemCategory> Categories { get; set; }
         public List<ItemDisplayType> DisplayTypes { get; set; }
         public List<ItemUseType> UseTypes { get; set; }
-        public List<ItemTargetType> TargetTypes { get; set; }
-        public List<ItemAttributeType> AttributeTypes { get; set; }
-        public List<ItemEquipmentCategory> EquipmentCategories { get; set; }
+        public List<TargetType> TargetTypes { get; set; }
+        public List<AttributeType> AttributeTypes { get; set; }
+        public List<EquipmentCategory> EquipmentCategories { get; set; }
         public List<string> EffectNames { get; set; }
         public List<string> DetailIDs { get; set; }
         public List<string> IconLabels { get; set; }
@@ -77,9 +77,9 @@ namespace OctomodEditor.ViewModels
             Categories = Enum.GetValues(typeof(ItemCategory)).Cast<ItemCategory>().ToList();
             DisplayTypes = Enum.GetValues(typeof(ItemDisplayType)).Cast<ItemDisplayType>().ToList();
             UseTypes = Enum.GetValues(typeof(ItemUseType)).Cast<ItemUseType>().ToList();
-            TargetTypes = Enum.GetValues(typeof(ItemTargetType)).Cast<ItemTargetType>().ToList();
-            AttributeTypes = Enum.GetValues(typeof(ItemAttributeType)).Cast<ItemAttributeType>().ToList();
-            EquipmentCategories = Enum.GetValues(typeof(ItemEquipmentCategory)).Cast<ItemEquipmentCategory>().ToList();
+            TargetTypes = Enum.GetValues(typeof(TargetType)).Cast<TargetType>().ToList();
+            AttributeTypes = Enum.GetValues(typeof(AttributeType)).Cast<AttributeType>().ToList();
+            EquipmentCategories = Enum.GetValues(typeof(EquipmentCategory)).Cast<EquipmentCategory>().ToList();
 
             EffectNames = GetEffectNames();
             DetailIDs = GetDetailIDs();

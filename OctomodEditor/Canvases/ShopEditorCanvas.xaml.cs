@@ -1,4 +1,5 @@
 ﻿using OctomodEditor.Models;
+using OctomodEditor.Parsers;
 using OctomodEditor.Utilities;
 using OctomodEditor.ViewModels;
 using System;
@@ -26,6 +27,9 @@ namespace OctomodEditor.Canvases
         public ShopViewModel ViewModel { get; private set; }
         public List<ShopInfo> ShopsToSave { get; set; }
         public List<PurchaseItem> PurchaseItemsToSave { get; set; }
+        public ShopInfoParser ShopInfoParser { get; set; }
+        public ShopListParser ShopListParser { get; set; }
+        public PurchaseItemParser PurchaseItemParser { get; set; }
 
         public ShopEditorCanvas()
         {
@@ -34,13 +38,25 @@ namespace OctomodEditor.Canvases
             ShopsToSave = new List<ShopInfo>();
             PurchaseItemsToSave = new List<PurchaseItem>();
 
-            ViewModel = new ShopViewModel(ShopInfoParser.ParseShopInfoObjects(), ShopListParser.ParseShopListObjects(), PurchaseItemTableParser.ParsePurchaseItemObjects());
+            ShopInfoParser = new ShopInfoParser();
+            ShopListParser = new ShopListParser();
+            PurchaseItemParser = new PurchaseItemParser();
+
+            ViewModel = new ShopViewModel(MainWindow.ModShopInfoList, MainWindow.ModShopListList, MainWindow.ModPurchaseItemList);
             this.DataContext = ViewModel;
 
             UpdateCurrentSelectableShopList((string)CategoryComboBox.SelectedValue);
             ShopComboBox.SelectedItem = ViewModel.CurrentShop;
 
             UpdateComboBoxes();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShopsToSave.Clear();
+            PurchaseItemsToSave.Clear();
+            SaveShopButton.IsEnabled = false;
+            DiscardChangesButton.IsEnabled = false;
         }
 
         private void LoadPurchaseItemRows()
@@ -197,11 +213,7 @@ namespace OctomodEditor.Canvases
 
         private void UpdateShopsToSave()
         {
-            if (ShopsToSave.Select(x => x.Key).Contains(ViewModel.CurrentShop.Key))
-            {
-                ShopsToSave.Remove(ShopsToSave.Single(x => x.Key == ViewModel.CurrentShop.Key));
-            }
-            if (ViewModel.CurrentShop.IsDifferentFrom(MainWindow.ModShopInfoList[ViewModel.CurrentShop.Key]))
+            if (!ShopsToSave.Select(x => x.Key).Contains(ViewModel.CurrentShop.Key))
             {
                 ShopsToSave.Add(ViewModel.CurrentShop);
                 SaveShopButton.IsEnabled = true;
@@ -210,22 +222,12 @@ namespace OctomodEditor.Canvases
 
             foreach(var purchaseItem in ViewModel.CurrentPurchaseItems)
             {
-                if (PurchaseItemsToSave.Select(x => x.Key).Contains(purchaseItem.Key))
-                {
-                    PurchaseItemsToSave.Remove(PurchaseItemsToSave.Single(x => x.Key == purchaseItem.Key));
-                }
-                if (purchaseItem.IsDifferentFrom(MainWindow.ModPurchaseItemList[purchaseItem.Key]))
+                if (!PurchaseItemsToSave.Select(x => x.Key).Contains(purchaseItem.Key))
                 {
                     PurchaseItemsToSave.Add(purchaseItem);
                     SaveShopButton.IsEnabled = true;
                     DiscardChangesButton.IsEnabled = true;
                 }
-            }
-
-            if (ShopsToSave.Count == 0 && PurchaseItemsToSave.Count == 0)
-            {
-                SaveShopButton.IsEnabled = false;
-                DiscardChangesButton.IsEnabled = false;
             }
         }
 
@@ -245,7 +247,7 @@ namespace OctomodEditor.Canvases
             }
         }
 
-        private void SaveShopButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveShopButton_Click(object sender, RoutedEventArgs e)
         {
             string shopList = "";
             foreach (var shop in ShopsToSave)
@@ -272,19 +274,27 @@ namespace OctomodEditor.Canvases
 
             if (result == MessageBoxResult.OK)
             {
-                ShopInfoParser.SaveShopInfoObjects(ShopsToSave);
+                MainWindow.Instance.StartLoading();
+                await Task.Run(() =>
+                {
+                    ShopInfoParser.SaveTable(MainWindow.ModShopInfoTable, ShopsToSave);
+                });
                 ShopsToSave.Clear();
-                PurchaseItemTableParser.SavePurchaseItemObjects(PurchaseItemsToSave);
+                PurchaseItemParser.SaveTable(MainWindow.ModPurchaseItemTable, PurchaseItemsToSave);
                 PurchaseItemsToSave.Clear();
+
+                await MainWindow.Instance.LoadShopInfoLists();
+                await MainWindow.Instance.LoadShopLists();
+                await MainWindow.Instance.LoadPurchaseItemLists();
+                MainWindow.Instance.StopLoading();
+
                 SaveShopButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                MainWindow.ModShopInfoList = ShopInfoParser.ParseShopInfoObjects();
-                MainWindow.ModShopListList = ShopListParser.ParseShopListObjects();
-                MainWindow.ModPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects();
+                ViewModel = new ShopViewModel(MainWindow.ModShopInfoList, MainWindow.ModShopListList, MainWindow.ModPurchaseItemList);
             }
         }
 
-        private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
+        private async void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
             string shopList = "";
             foreach (var shop in ShopsToSave)
@@ -313,9 +323,17 @@ namespace OctomodEditor.Canvases
             {
                 ShopsToSave.Clear();
                 PurchaseItemsToSave.Clear();
-                ViewModel.AllShopInfoRecords = ShopInfoParser.ParseShopInfoObjects();
-                ViewModel.AllShopListRecords = ShopListParser.ParseShopListObjects();
-                ViewModel.AllPurchaseItemRecords = PurchaseItemTableParser.ParsePurchaseItemObjects();
+
+                MainWindow.Instance.StartLoading();
+                await MainWindow.Instance.LoadShopInfoLists();
+                await MainWindow.Instance.LoadShopLists();
+                await MainWindow.Instance.LoadPurchaseItemLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel.AllShopInfoRecords = MainWindow.ModShopInfoList;
+                ViewModel.AllShopListRecords = MainWindow.ModShopListList;
+                ViewModel.AllPurchaseItemRecords = MainWindow.ModPurchaseItemList;
+
                 ViewModel.CurrentShop = ViewModel.AllShopInfoRecords.Single(x => x.Key == ViewModel.CurrentShop.Key).Value;
                 UpdateCurrentSelectableShopList((string)CategoryComboBox.SelectedValue);
                 ShopComboBox.SelectedItem = ViewModel.CurrentShop;

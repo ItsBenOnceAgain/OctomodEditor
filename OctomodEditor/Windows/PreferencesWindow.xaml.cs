@@ -23,8 +23,8 @@ namespace OctomodEditor.Windows
         public PreferencesWindow()
         {
             InitializeComponent();
-            MainLocationLabel.Content = CommonUtilities.BaseFilesLocation;
-            ModLocationLabel.Content = CommonUtilities.ModLocation;
+            MainLocationLabel.Content = CommonOctomodUtilities.BaseFilesLocation;
+            ModLocationLabel.Content = CommonOctomodUtilities.ModLocation;
         }
 
         private void MainFilesLocationButton_Click(object sender, RoutedEventArgs e)
@@ -34,9 +34,9 @@ namespace OctomodEditor.Windows
             if (resultPath != System.Windows.Forms.DialogResult.Cancel)
             {
                 string path = openOctopathFolderDialogue.SelectedPath;
-                CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
-                CommonUtilities.BaseFilesLocation = path;
-                MainLocationLabel.Content = CommonUtilities.BaseFilesLocation;
+                CommonOctomodUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
+                CommonOctomodUtilities.BaseFilesLocation = path;
+                MainLocationLabel.Content = CommonOctomodUtilities.BaseFilesLocation;
             }
         }
 
@@ -47,9 +47,9 @@ namespace OctomodEditor.Windows
             if (resultPath != System.Windows.Forms.DialogResult.Cancel)
             {
                 string path = openOctopathFolderDialogue.SelectedPath;
-                CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
-                CommonUtilities.ModLocation = path;
-                ModLocationLabel.Content = CommonUtilities.ModLocation;
+                CommonOctomodUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
+                CommonOctomodUtilities.ModLocation = path;
+                ModLocationLabel.Content = CommonOctomodUtilities.ModLocation;
             }
         }
     }

@@ -1,332 +1,246 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{82E34FE2-1A2A-4D8D-A78D-671924B90F51}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>OctomodEditor</RootNamespace>
-    <AssemblyName>OctomodEditor</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="WpfAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9e7cd3b544a090dc, processorArchitecture=MSIL">
-      <HintPath>..\packages\WpfAnimatedGif.2.0.0\lib\net40\WpfAnimatedGif.dll</HintPath>
+    <None Remove="Resources\Fonts\smorgasbord\Smorgasbord.otf" />
+    <None Remove="Resources\Images\Ability1.png" />
+    <None Remove="Resources\Images\Ability2.png" />
+    <None Remove="Resources\Images\Ability3.png" />
+    <None Remove="Resources\Images\Ability4.png" />
+    <None Remove="Resources\Images\Ability5.png" />
+    <None Remove="Resources\Images\Accuracy.png" />
+    <None Remove="Resources\Images\AccuracyDown.png" />
+    <None Remove="Resources\Images\Aelfric.png" />
+    <None Remove="Resources\Images\Alephan.png" />
+    <None Remove="Resources\Images\Apothecary.png" />
+    <None Remove="Resources\Images\Axe.png" />
+    <None Remove="Resources\Images\BattleFont\Blue0.png" />
+    <None Remove="Resources\Images\BattleFont\Blue1.png" />
+    <None Remove="Resources\Images\BattleFont\Blue2.png" />
+    <None Remove="Resources\Images\BattleFont\Blue3.png" />
+    <None Remove="Resources\Images\Blindness.png" />
+    <None Remove="Resources\Images\Bottle.png" />
+    <None Remove="Resources\Images\Bow.png" />
+    <None Remove="Resources\Images\BPBoost.png" />
+    <None Remove="Resources\Images\Buff.png" />
+    <None Remove="Resources\Images\Cleric.png" />
+    <None Remove="Resources\Images\ConcoctItem.png" />
+    <None Remove="Resources\Images\Confusion.png" />
+    <None Remove="Resources\Images\Counter.png" />
+    <None Remove="Resources\Images\Critical.png" />
+    <None Remove="Resources\Images\CriticalDown.png" />
+    <None Remove="Resources\Images\CriticalMagic.png" />
+    <None Remove="Resources\Images\CriticalUp.png" />
+    <None Remove="Resources\Images\Dagger.png" />
+    <None Remove="Resources\Images\Dancer.png" />
+    <None Remove="Resources\Images\Dark.png" />
+    <None Remove="Resources\Images\DarkColor.png" />
+    <None Remove="Resources\Images\Debuff.png" />
+    <None Remove="Resources\Images\Dohter.png" />
+    <None Remove="Resources\Images\Evasion.png" />
+    <None Remove="Resources\Images\EvasionDown.png" />
+    <None Remove="Resources\Images\Fire.png" />
+    <None Remove="Resources\Images\FireColor.png" />
+    <None Remove="Resources\Images\FireRune.png" />
+    <None Remove="Resources\Images\folder.png" />
+    <None Remove="Resources\Images\Grape.png" />
+    <None Remove="Resources\Images\Herb.png" />
+    <None Remove="Resources\Images\HP.png" />
+    <None Remove="Resources\Images\Hunter.png" />
+    <None Remove="Resources\Images\Ice.png" />
+    <None Remove="Resources\Images\IceColor.png" />
+    <None Remove="Resources\Images\IceRune.png" />
+    <None Remove="Resources\Images\Incite.png" />
+    <None Remove="Resources\Images\Invincibility.png" />
+    <None Remove="Resources\Images\Item.png" />
+    <None Remove="Resources\Images\Jam.png" />
+    <None Remove="Resources\Images\Leghold.png" />
+    <None Remove="Resources\Images\Light.png" />
+    <None Remove="Resources\Images\LightColor.png" />
+    <None Remove="Resources\Images\Lightning.png" />
+    <None Remove="Resources\Images\LightningColor.png" />
+    <None Remove="Resources\Images\LightRune.png" />
+    <None Remove="Resources\Images\MagicAttack.png" />
+    <None Remove="Resources\Images\MagicDefense.png" />
+    <None Remove="Resources\Images\MagicDefenseDown.png" />
+    <None Remove="Resources\Images\MagicDown.png" />
+    <None Remove="Resources\Images\MagicSealed.png" />
+    <None Remove="Resources\Images\MagicUp.png" />
+    <None Remove="Resources\Images\MainIcon.ico" />
+    <None Remove="Resources\Images\MainIcon.png" />
+    <None Remove="Resources\Images\Merchant.png" />
+    <None Remove="Resources\Images\Nut.png" />
+    <None Remove="Resources\Images\OctomodLogo.png" />
+    <None Remove="Resources\Images\OctomodLogoWhite.png" />
+    <None Remove="Resources\Images\octopath_traveler_logo.png" />
+    <None Remove="Resources\Images\Olive.png" />
+    <None Remove="Resources\Images\Orsterra.jpg" />
+    <None Remove="Resources\Images\PeerlessPoison.png" />
+    <None Remove="Resources\Images\Petrify.png" />
+    <None Remove="Resources\Images\PhysicalAttack.png" />
+    <None Remove="Resources\Images\PhysicalAttackDown.png" />
+    <None Remove="Resources\Images\PhysicalAttackUp.png" />
+    <None Remove="Resources\Images\PhysicalDefense.png" />
+    <None Remove="Resources\Images\PhysicalDefenseDown.png" />
+    <None Remove="Resources\Images\PhysicalDefenseUp.png" />
+    <None Remove="Resources\Images\Plum.png" />
+    <None Remove="Resources\Images\Poison.png" />
+    <None Remove="Resources\Images\Pomegranate.png" />
+    <None Remove="Resources\Images\Reflect.png" />
+    <None Remove="Resources\Images\Runelord.png" />
+    <None Remove="Resources\Images\Scholar.png" />
+    <None Remove="Resources\Images\Sealticge.png" />
+    <None Remove="Resources\Images\Shields.png" />
+    <None Remove="Resources\Images\Sidestep.png" />
+    <None Remove="Resources\Images\Silence.png" />
+    <None Remove="Resources\Images\Sleep.png" />
+    <None Remove="Resources\Images\Sorcerer.png" />
+    <None Remove="Resources\Images\SP.png" />
+    <None Remove="Resources\Images\Spear.png" />
+    <None Remove="Resources\Images\Speed.png" />
+    <None Remove="Resources\Images\SpeedDown.png" />
+    <None Remove="Resources\Images\SplashScreen.png" />
+    <None Remove="Resources\Images\Sprites\Alfyn.png" />
+    <None Remove="Resources\Images\Sprites\Cyrus.png" />
+    <None Remove="Resources\Images\Sprites\Hannit.png" />
+    <None Remove="Resources\Images\Sprites\Olberic.png" />
+    <None Remove="Resources\Images\Sprites\Ophilia.png" />
+    <None Remove="Resources\Images\Sprites\Primrose.png" />
+    <None Remove="Resources\Images\Sprites\Therion.png" />
+    <None Remove="Resources\Images\Sprites\Tressa.png" />
+    <None Remove="Resources\Images\Staff.png" />
+    <None Remove="Resources\Images\Starseer.png" />
+    <None Remove="Resources\Images\Support.png" />
+    <None Remove="Resources\Images\Sword.png" />
+    <None Remove="Resources\Images\Terror.png" />
+    <None Remove="Resources\Images\Thief.png" />
+    <None Remove="Resources\Images\ToxicRainbow.png" />
+    <None Remove="Resources\Images\TransferRune.png" />
+    <None Remove="Resources\Images\Unconcious.png" />
+    <None Remove="Resources\Images\Unknown.png" />
+    <None Remove="Resources\Images\Warmaster.png" />
+    <None Remove="Resources\Images\Warrior.png" />
+    <None Remove="Resources\Images\Wind.png" />
+    <None Remove="Resources\Images\WindColor.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataEditorUE4">
+      <HintPath>..\..\..\..\..\..\source\repos\DataEditorUE4\DataEditorUE4\bin\Release\netcoreapp3.1\DataEditorUE4.dll</HintPath>
     </Reference>
   </ItemGroup>
+
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Canvases\EnemyEditorCanvas.xaml.cs">
-      <DependentUpon>EnemyEditorCanvas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Canvases\ItemEditorCanvas.xaml.cs">
-      <DependentUpon>ItemEditorCanvas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Canvases\ShopEditorCanvas.xaml.cs">
-      <DependentUpon>ShopEditorCanvas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PurchaseItem.cs" />
-    <Compile Include="Models\ShopInfo.cs" />
-    <Compile Include="Models\ShopList.cs" />
-    <Compile Include="Utilities\PurchaseItemTableParser.cs" />
-    <Compile Include="Utilities\ShopInfoParser.cs" />
-    <Compile Include="Utilities\ShopListParser.cs" />
-    <Compile Include="ValueConverters\ItemIDValueConverter.cs" />
-    <Compile Include="ValueConverters\TextBlockNewLineConverter.cs" />
-    <Compile Include="ViewModels\EnemyViewModel.cs" />
-    <Compile Include="Models\Ailment.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Utilities\CommonUtilities.cs" />
-    <Compile Include="Utilities\EnemyDBParser.cs" />
-    <Compile Include="Utilities\GameTextParser.cs" />
-    <Compile Include="Utilities\ItemDBParser.cs" />
-    <Compile Include="ValueConverters\EnemyIDValueConverter.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
-    <Compile Include="ViewModels\ShopViewModel.cs" />
-    <Compile Include="Windows\PreferencesWindow.xaml.cs">
-      <DependentUpon>PreferencesWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Canvases\EnemyEditorCanvas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Canvases\ItemEditorCanvas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Canvases\ShopEditorCanvas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Windows\PreferencesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Enemy.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <Resource Include="Resources\Fonts\smorgasbord\Smorgasbord.otf" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\OctomodLogo.png" />
-    <Resource Include="Resources\Images\Orsterra.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="MainIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\MainIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\MainIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\Ability1.png" />
     <Resource Include="Resources\Images\Ability2.png" />
     <Resource Include="Resources\Images\Ability3.png" />
     <Resource Include="Resources\Images\Ability4.png" />
     <Resource Include="Resources\Images\Ability5.png" />
     <Resource Include="Resources\Images\Accuracy.png" />
-    <Resource Include="Resources\Images\Axe.png" />
-    <Resource Include="Resources\Images\Bow.png" />
-    <Resource Include="Resources\Images\Critical.png" />
-    <Resource Include="Resources\Images\Dagger.png" />
-    <Resource Include="Resources\Images\Dark.png" />
-    <Resource Include="Resources\Images\DarkColor.png" />
-    <Resource Include="Resources\Images\Evasion.png" />
-    <Resource Include="Resources\Images\Fire.png" />
-    <Resource Include="Resources\Images\FireColor.png" />
-    <Resource Include="Resources\Images\HP.png" />
-    <Resource Include="Resources\Images\Ice.png" />
-    <Resource Include="Resources\Images\IceColor.png" />
-    <Resource Include="Resources\Images\Light.png" />
-    <Resource Include="Resources\Images\LightColor.png" />
-    <Resource Include="Resources\Images\Lightning.png" />
-    <Resource Include="Resources\Images\LightningColor.png" />
-    <Resource Include="Resources\Images\MagicAttack.png" />
-    <Resource Include="Resources\Images\MagicDefense.png" />
-    <Resource Include="Resources\Images\PhysicalAttack.png" />
-    <Resource Include="Resources\Images\PhysicalDefense.png" />
-    <Resource Include="Resources\Images\Shields.png" />
-    <Resource Include="Resources\Images\SP.png" />
-    <Resource Include="Resources\Images\Spear.png" />
-    <Resource Include="Resources\Images\Speed.png" />
-    <Resource Include="Resources\Images\Staff.png" />
-    <Resource Include="Resources\Images\Sword.png" />
-    <Resource Include="Resources\Images\Wind.png" />
-    <Resource Include="Resources\Images\WindColor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\OctomodLogoWhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Unknown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Hunter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Starseer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Warrior.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Support.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Poison.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\AccuracyDown.png" />
-    <Resource Include="Resources\Images\Blindness.png" />
-    <Resource Include="Resources\Images\Confusion.png" />
-    <Resource Include="Resources\Images\CriticalDown.png" />
-    <Resource Include="Resources\Images\Debuff.png" />
-    <Resource Include="Resources\Images\EvasionDown.png" />
-    <Resource Include="Resources\Images\Leghold.png" />
-    <Resource Include="Resources\Images\MagicDefenseDown.png" />
-    <Resource Include="Resources\Images\MagicDown.png" />
-    <Resource Include="Resources\Images\MagicSealed.png" />
-    <Resource Include="Resources\Images\PeerlessPoison.png" />
-    <Resource Include="Resources\Images\Petrify.png" />
-    <Resource Include="Resources\Images\PhysicalAttackDown.png" />
-    <Resource Include="Resources\Images\PhysicalDefenseDown.png" />
-    <Resource Include="Resources\Images\Silence.png" />
-    <Resource Include="Resources\Images\Sleep.png" />
-    <Resource Include="Resources\Images\SpeedDown.png" />
-    <Resource Include="Resources\Images\Terror.png" />
-    <Resource Include="Resources\Images\ToxicRainbow.png" />
-    <Resource Include="Resources\Images\Unconcious.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <SplashScreen Include="Resources\Images\SplashScreen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\folder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="preview.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UserControls\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Merchant.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Images\Aelfric.png" />
+    <Resource Include="Resources\Images\Alephan.png" />
     <Resource Include="Resources\Images\Apothecary.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Cleric.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Dancer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Runelord.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Scholar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Sorcerer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Thief.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Warmaster.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Pomegranate.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Plum.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Olive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Nut.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Jam.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Herb.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Grape.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\ConcoctItem.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Bottle.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Images\Axe.png" />
     <Resource Include="Resources\Images\BattleFont\Blue0.png" />
     <Resource Include="Resources\Images\BattleFont\Blue1.png" />
     <Resource Include="Resources\Images\BattleFont\Blue2.png" />
     <Resource Include="Resources\Images\BattleFont\Blue3.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Images\Blindness.png" />
+    <Resource Include="Resources\Images\Bottle.png" />
+    <Resource Include="Resources\Images\Bow.png" />
+    <Resource Include="Resources\Images\BPBoost.png" />
+    <Resource Include="Resources\Images\Buff.png" />
+    <Resource Include="Resources\Images\Cleric.png" />
+    <Resource Include="Resources\Images\ConcoctItem.png" />
+    <Resource Include="Resources\Images\Confusion.png" />
+    <Resource Include="Resources\Images\Counter.png" />
+    <Resource Include="Resources\Images\Critical.png" />
+    <Resource Include="Resources\Images\CriticalDown.png" />
+    <Resource Include="Resources\Images\CriticalMagic.png" />
+    <Resource Include="Resources\Images\CriticalUp.png" />
+    <Resource Include="Resources\Images\Dagger.png" />
+    <Resource Include="Resources\Images\Dancer.png" />
+    <Resource Include="Resources\Images\Dark.png" />
+    <Resource Include="Resources\Images\DarkColor.png" />
+    <Resource Include="Resources\Images\Debuff.png" />
+    <Resource Include="Resources\Images\Dohter.png" />
+    <Resource Include="Resources\Images\Evasion.png" />
+    <Resource Include="Resources\Images\EvasionDown.png" />
+    <Resource Include="Resources\Images\Fire.png" />
+    <Resource Include="Resources\Images\FireColor.png" />
+    <Resource Include="Resources\Images\FireRune.png" />
+    <Resource Include="Resources\Images\folder.png" />
+    <Resource Include="Resources\Images\Grape.png" />
+    <Resource Include="Resources\Images\Herb.png" />
+    <Resource Include="Resources\Images\HP.png" />
+    <Resource Include="Resources\Images\Hunter.png" />
+    <Resource Include="Resources\Images\Ice.png" />
+    <Resource Include="Resources\Images\IceColor.png" />
+    <Resource Include="Resources\Images\IceRune.png" />
+    <Resource Include="Resources\Images\Incite.png" />
+    <Resource Include="Resources\Images\Invincibility.png" />
+    <Resource Include="Resources\Images\Item.png" />
+    <Resource Include="Resources\Images\Jam.png" />
+    <Resource Include="Resources\Images\Leghold.png" />
+    <Resource Include="Resources\Images\Light.png" />
+    <Resource Include="Resources\Images\LightColor.png" />
+    <Resource Include="Resources\Images\Lightning.png" />
+    <Resource Include="Resources\Images\LightningColor.png" />
+    <Resource Include="Resources\Images\LightRune.png" />
+    <Resource Include="Resources\Images\MagicAttack.png" />
+    <Resource Include="Resources\Images\MagicDefense.png" />
+    <Resource Include="Resources\Images\MagicDefenseDown.png" />
+    <Resource Include="Resources\Images\MagicDown.png" />
+    <Resource Include="Resources\Images\MagicSealed.png" />
+    <Resource Include="Resources\Images\MagicUp.png" />
+    <Resource Include="Resources\Images\MainIcon.ico" />
+    <Resource Include="Resources\Images\MainIcon.png" />
+    <Resource Include="Resources\Images\Merchant.png" />
+    <Resource Include="Resources\Images\Nut.png" />
+    <Resource Include="Resources\Images\OctomodLogo.png" />
+    <Resource Include="Resources\Images\OctomodLogoWhite.png" />
+    <Resource Include="Resources\Images\octopath_traveler_logo.png" />
+    <Resource Include="Resources\Images\Olive.png" />
+    <Resource Include="Resources\Images\Orsterra.jpg" />
+    <Resource Include="Resources\Images\PeerlessPoison.png" />
+    <Resource Include="Resources\Images\Petrify.png" />
+    <Resource Include="Resources\Images\PhysicalAttack.png" />
+    <Resource Include="Resources\Images\PhysicalAttackDown.png" />
+    <Resource Include="Resources\Images\PhysicalAttackUp.png" />
+    <Resource Include="Resources\Images\PhysicalDefense.png" />
+    <Resource Include="Resources\Images\PhysicalDefenseDown.png" />
+    <Resource Include="Resources\Images\PhysicalDefenseUp.png" />
+    <Resource Include="Resources\Images\Plum.png" />
+    <Resource Include="Resources\Images\Poison.png" />
+    <Resource Include="Resources\Images\Pomegranate.png" />
+    <Resource Include="Resources\Images\Reflect.png" />
+    <Resource Include="Resources\Images\Runelord.png" />
+    <Resource Include="Resources\Images\Scholar.png" />
+    <Resource Include="Resources\Images\Sealticge.png" />
+    <Resource Include="Resources\Images\Shields.png" />
+    <Resource Include="Resources\Images\Sidestep.png" />
+    <Resource Include="Resources\Images\Silence.png" />
+    <Resource Include="Resources\Images\Sleep.png" />
+    <Resource Include="Resources\Images\Sorcerer.png" />
+    <Resource Include="Resources\Images\SP.png" />
+    <Resource Include="Resources\Images\Spear.png" />
+    <Resource Include="Resources\Images\Speed.png" />
+    <Resource Include="Resources\Images\SpeedDown.png" />
+    <Resource Include="Resources\Images\TransferRune.png" />
+    <SplashScreen Include="Resources\Images\SplashScreen.png" />
     <Resource Include="Resources\Images\Sprites\Alfyn.png" />
     <Resource Include="Resources\Images\Sprites\Cyrus.png" />
     <Resource Include="Resources\Images\Sprites\Hannit.png" />
@@ -335,6 +249,19 @@
     <Resource Include="Resources\Images\Sprites\Primrose.png" />
     <Resource Include="Resources\Images\Sprites\Therion.png" />
     <Resource Include="Resources\Images\Sprites\Tressa.png" />
+    <Resource Include="Resources\Images\Staff.png" />
+    <Resource Include="Resources\Images\Starseer.png" />
+    <Resource Include="Resources\Images\Support.png" />
+    <Resource Include="Resources\Images\Sword.png" />
+    <Resource Include="Resources\Images\Terror.png" />
+    <Resource Include="Resources\Images\Thief.png" />
+    <Resource Include="Resources\Images\ToxicRainbow.png" />
+    <Resource Include="Resources\Images\Unconcious.png" />
+    <Resource Include="Resources\Images\Unknown.png" />
+    <Resource Include="Resources\Images\Warmaster.png" />
+    <Resource Include="Resources\Images\Warrior.png" />
+    <Resource Include="Resources\Images\Wind.png" />
+    <Resource Include="Resources\Images\WindColor.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

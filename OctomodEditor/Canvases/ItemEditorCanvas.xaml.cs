@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using OctomodEditor.Utilities;
+using OctomodEditor.Parsers;
 
 namespace OctomodEditor.Canvases
 {
@@ -25,13 +26,14 @@ namespace OctomodEditor.Canvases
     {
         public ItemViewModel ViewModel { get; private set; }
         public List<Item> ItemsToSave { get; set; }
+        public ItemParser Parser { get; set; }
         public ItemEditorCanvas()
         {
             InitializeComponent();
 
             ItemsToSave = new List<Item>();
-
-            ViewModel = new ItemViewModel(ItemDBParser.ParseItemObjects());
+            Parser = new ItemParser();
+            ViewModel = new ItemViewModel(MainWindow.ModItemList);
             this.DataContext = ViewModel;
 
             UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
@@ -58,20 +60,11 @@ namespace OctomodEditor.Canvases
 
         private void UpdateItemsToSave()
         {
-            if (ItemsToSave.Select(x => x.Key).Contains(ViewModel.CurrentItem.Key))
-            {
-                ItemsToSave.Remove(ItemsToSave.Single(x => x.Key == ViewModel.CurrentItem.Key));
-            }
-            if (ViewModel.CurrentItem.IsDifferentFrom(MainWindow.ModItemList[ViewModel.CurrentItem.Key]))
+            if (!ItemsToSave.Select(x => x.Key).Contains(ViewModel.CurrentItem.Key))
             {
                 ItemsToSave.Add(ViewModel.CurrentItem);
                 SaveItemButton.IsEnabled = true;
                 DiscardChangesButton.IsEnabled = true;
-            }
-            else if (ItemsToSave.Count == 0)
-            {
-                SaveItemButton.IsEnabled = false;
-                DiscardChangesButton.IsEnabled = false;
             }
         }
 
@@ -107,19 +100,19 @@ namespace OctomodEditor.Canvases
             switch (s)
             {
                 case "Standard":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.CONSUMABLE).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.CONSUMABLE).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID].ToString()).ToList();
                     break;
                 case "Equipment":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.EQUIPMENT).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.EQUIPMENT).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID].ToString()).ToList();
                     break;
                 case "Information":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.INFORMATION).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.INFORMATION).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID].ToString()).ToList();
                     break;
                 case "Concoct Materials":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.MATERIAL_A || x.Value.Category == ItemCategory.MATERIAL_B).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.MATERIAL_A || x.Value.Category == ItemCategory.MATERIAL_B).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID].ToString()).ToList();
                     break;
                 case "Key Items":
-                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.TREASURE).Select(x => x.Value).OrderBy(x => MainWindow.MasterGameText[x.ItemNameID]).ToList();
+                    ViewModel.CurrentItemList = ViewModel.ItemList.Where(x => x.Value.Category == ItemCategory.TREASURE).Select(x => x.Value).OrderBy(x => MainWindow.ModGameText[x.ItemNameID].ToString()).ToList();
                     break;
             }
         }
@@ -144,24 +137,25 @@ namespace OctomodEditor.Canvases
 
         private void TargetTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentItem.TargetType = (ItemTargetType)TargetTypeComboBox.SelectedItem;
+            ViewModel.CurrentItem.TargetType = (TargetType)TargetTypeComboBox.SelectedItem;
             UpdateItemsToSave();
         }
 
         private void AttributeTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentItem.AttributeType = (ItemAttributeType)AttributeTypeComboBox.SelectedItem;
+            ViewModel.CurrentItem.AttributeType = (AttributeType)AttributeTypeComboBox.SelectedItem;
             UpdateItemsToSave();
         }
 
         private void EquipmentCategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.CurrentItem.EquipmentCategory = (ItemEquipmentCategory)EquipmentCategoryComboBox.SelectedItem;
+            ViewModel.CurrentItem.EquipmentCategory = (EquipmentCategory)EquipmentCategoryComboBox.SelectedItem;
             UpdateItemsToSave();
         }
 
         private void IsValuableCheckBox_Click(object sender, RoutedEventArgs e)
         {
+            ((CheckBox)sender).GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
             UpdateItemsToSave();
         }
 
@@ -424,7 +418,7 @@ namespace OctomodEditor.Canvases
             UpdateItemsToSave();
         }
 
-        private void SaveItemButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveItemButton_Click(object sender, RoutedEventArgs e)
         {
             string itemList = "";
             foreach (var item in ItemsToSave)
@@ -435,15 +429,23 @@ namespace OctomodEditor.Canvases
 
             if (result == MessageBoxResult.OK)
             {
-                ItemDBParser.SaveItems(ItemsToSave);
+                MainWindow.Instance.StartLoading();
+                await Task.Run(() =>
+                {
+                    Parser.SaveTable(MainWindow.ModItemTable, ItemsToSave);
+                });
                 ItemsToSave.Clear();
                 SaveItemButton.IsEnabled = false;
                 DiscardChangesButton.IsEnabled = false;
-                MainWindow.ModItemList = ItemDBParser.ParseItemObjects();
+
+                await MainWindow.Instance.LoadItemLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel = new ItemViewModel(MainWindow.ModItemList);
             }
         }
 
-        private void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
+        private async void DiscardChangesButton_Click(object sender, RoutedEventArgs e)
         {
             string itemList = "";
             foreach (var item in ItemsToSave)
@@ -455,7 +457,12 @@ namespace OctomodEditor.Canvases
             if (result == MessageBoxResult.OK)
             {
                 ItemsToSave.Clear();
-                ViewModel.ItemList = ItemDBParser.ParseItemObjects();
+
+                MainWindow.Instance.StartLoading();
+                await MainWindow.Instance.LoadItemLists();
+                MainWindow.Instance.StopLoading();
+
+                ViewModel.ItemList = MainWindow.ModItemList;
                 ViewModel.CurrentItem = ViewModel.ItemList.Single(x => x.Key == ViewModel.CurrentItem.Key).Value;
                 UpdateCurrentItemList((string)CategoryComboBox.SelectedValue);
                 ItemComboBox.SelectedItem = ViewModel.CurrentItem;

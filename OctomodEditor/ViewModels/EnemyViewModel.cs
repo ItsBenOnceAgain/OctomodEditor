@@ -1,4 +1,5 @@
-﻿using OctomodEditor.Models;
+﻿using DataEditorUE4.Models;
+using OctomodEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -98,7 +99,7 @@ namespace OctomodEditor.ViewModels
             Dictionary<string, string> items = new Dictionary<string, string>();
             foreach(var item in MainWindow.ModItemList)
             {
-                items.Add(item.Value.Key, MainWindow.ModGameText[item.Value.ItemNameID]);
+                items.Add(item.Value.Key, MainWindow.ModGameText[item.Value.ItemNameID].Text);
             }
             var finalDictionary = items.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
             finalDictionary.Add("None", "None");
@@ -180,7 +181,7 @@ namespace OctomodEditor.ViewModels
                         string text;
                         if (MainWindow.MasterGameText.ContainsKey(textKey))
                         {
-                            text = MainWindow.MasterGameText[textKey];
+                            text = MainWindow.MasterGameText[textKey].ToString();
                         }
                         else
                         {

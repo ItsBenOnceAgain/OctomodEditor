@@ -1,4 +1,5 @@
-﻿using OctomodEditor.Models;
+﻿using DataEditorUE4.Models;
+using OctomodEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,6 @@ namespace OctomodEditor.ViewModels
         private ShopList _currentShopList;
         private List<PurchaseItem> _currentPurchaseItems;
         private List<ShopInfo> _currentSelectableShopInfoRecords;
-
         public List<ShopType> ShopTypes { get; set; }
         public Dictionary<string, string> AllItems { get; set; }
 
@@ -145,7 +145,7 @@ namespace OctomodEditor.ViewModels
             Dictionary<string, string> items = new Dictionary<string, string>();
             foreach (var item in MainWindow.ModItemList)
             {
-                items.Add(item.Value.Key, MainWindow.ModGameText[item.Value.ItemNameID]);
+                items.Add(item.Value.Key, MainWindow.ModGameText[item.Value.ItemNameID].ToString());
             }
             var finalDictionary = items.OrderBy(x => x.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
             finalDictionary.Add("None", "None");

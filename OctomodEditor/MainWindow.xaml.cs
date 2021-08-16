@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using DataEditorUE4.Models;
 using OctomodEditor.Canvases;
 using OctomodEditor.Models;
+using OctomodEditor.Parsers;
 using OctomodEditor.Utilities;
 using OctomodEditor.Windows;
 using System;
@@ -27,22 +27,44 @@ namespace OctomodEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Dictionary<string, string> MasterGameText { get; set; }
-        public static Dictionary<string, string> ModGameText { get; set; }
+        public static Dictionary<string, GameText> MasterGameText { get; set; }
+        public static Dictionary<string, GameText> ModGameText { get; set; }
+        public static UEDataTable MasterGameTextTable { get; set; }
+        public static UEDataTable ModGameTextTable { get; set; }
         public static Dictionary<string, Enemy> MasterEnemyList { get; set; }
         public static Dictionary<string, Enemy> ModEnemyList { get; set; }
+        public static UEDataTable MasterEnemyTable { get; set; }
+        public static UEDataTable ModEnemyTable { get; set; }
         public static Dictionary<string, Item> MasterItemList { get; set; }
         public static Dictionary<string, Item> ModItemList { get; set; }
+        public static UEDataTable MasterItemTable { get; set; }
+        public static UEDataTable ModItemTable { get; set; }
         public static Dictionary<string, PurchaseItem> MasterPurchaseItemList { get; set; }
         public static Dictionary<string, PurchaseItem> ModPurchaseItemList { get; set; }
+        public static UEDataTable MasterPurchaseItemTable { get; set; }
+        public static UEDataTable ModPurchaseItemTable { get; set; }
         public static Dictionary<string, ShopList> MasterShopListList { get; set; }
         public static Dictionary<string, ShopList> ModShopListList { get; set; }
+        public static UEDataTable MasterShopListTable { get; set; }
+        public static UEDataTable ModShopListTable { get; set; }
         public static Dictionary<string, ShopInfo> MasterShopInfoList { get; set; }
         public static Dictionary<string, ShopInfo> ModShopInfoList { get; set; }
+        public static UEDataTable MasterShopInfoTable { get; set; }
+        public static UEDataTable ModShopInfoTable { get; set; }
+        public static Dictionary<string, Ability> MasterAbilityList { get; set; }
+        public static Dictionary<string, Ability> ModAbilityList { get; set; }
+        public static UEDataTable MasterAbilityTable { get; set; }
+        public static UEDataTable ModAbilityTable { get; set; }
+        public static Dictionary<string, AbilitySet> MasterAbilitySetList { get; set; }
+        public static Dictionary<string, AbilitySet> ModAbilitySetList { get; set; }
+        public static UEDataTable MasterAbilitySetTable { get; set; }
+        public static UEDataTable ModAbilitySetTable { get; set; }
+        public static MainWindow Instance { get; set; }
         public bool ConfigLoadedSuccessfully { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            Instance = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -50,24 +72,124 @@ namespace OctomodEditor
             LoadPaths();
             if (ConfigLoadedSuccessfully)
             {
-                LoadMasterFiles();
+                LoadTextLists("EN");
             }
         }
 
-        public static void LoadMasterFiles()
+        public async Task LoadEnemyLists()
         {
-            MasterGameText = GameTextParser.ParseGameText("EN", true);
-            ModGameText = GameTextParser.ParseGameText("EN");
-            MasterEnemyList = EnemyDBParser.ParseEnemyObjects(true);
-            ModEnemyList = EnemyDBParser.ParseEnemyObjects();
-            MasterItemList = ItemDBParser.ParseItemObjects(true);
-            ModItemList = ItemDBParser.ParseItemObjects();
-            MasterPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects(true);
-            ModPurchaseItemList = PurchaseItemTableParser.ParsePurchaseItemObjects();
-            MasterShopListList = ShopListParser.ParseShopListObjects(true);
-            ModShopListList = ShopListParser.ParseShopListObjects();
-            MasterShopInfoList = ShopInfoParser.ParseShopInfoObjects(true);
-            ModShopInfoList = ShopInfoParser.ParseShopInfoObjects();
+            var enemyParser = new EnemyParser();
+
+            await Task.Run(() =>
+            {
+                MasterEnemyTable = enemyParser.GetTableFromFile(true);
+                MasterEnemyList = enemyParser.ParseTable(MasterEnemyTable);
+                ModEnemyTable = enemyParser.GetTableFromFile();
+                ModEnemyList = enemyParser.ParseTable(ModEnemyTable);
+            });
+        }
+
+        public async Task LoadTextLists(string language)
+        {
+            var gameTextParser = new GameTextParser(language);
+
+            await Task.Run(() =>
+            {
+                MasterGameTextTable = gameTextParser.GetTableFromFile(true);
+                MasterGameText = gameTextParser.ParseTable(MasterGameTextTable);
+                ModGameTextTable = gameTextParser.GetTableFromFile();
+                ModGameText = gameTextParser.ParseTable(ModGameTextTable);
+            });
+        }
+
+        public async Task LoadItemLists()
+        {
+            var itemParser = new ItemParser();
+
+            await Task.Run(() =>
+            {
+                MasterItemTable = itemParser.GetTableFromFile(true);
+                ModItemTable = itemParser.GetTableFromFile();
+                MasterItemList = itemParser.ParseTable(MasterItemTable);
+                ModItemList = itemParser.ParseTable(ModItemTable);
+            });
+        }
+
+        public async Task LoadPurchaseItemLists()
+        {
+            var purchaseItemParser = new PurchaseItemParser();
+
+            await Task.Run(() =>
+            {
+                MasterPurchaseItemTable = purchaseItemParser.GetTableFromFile(true);
+                ModPurchaseItemTable = purchaseItemParser.GetTableFromFile();
+                MasterPurchaseItemList = purchaseItemParser.ParseTable(MasterPurchaseItemTable);
+                ModPurchaseItemList = purchaseItemParser.ParseTable(ModPurchaseItemTable);
+            });
+        }
+
+        public async Task LoadShopInfoLists()
+        {
+            var shopInfoParser = new ShopInfoParser();
+
+            await Task.Run(() =>
+            {
+                MasterShopInfoTable = shopInfoParser.GetTableFromFile(true);
+                ModShopInfoTable = shopInfoParser.GetTableFromFile();
+                MasterShopInfoList = shopInfoParser.ParseTable(MasterShopInfoTable);
+                ModShopInfoList = shopInfoParser.ParseTable(ModShopInfoTable);
+            });
+        }
+
+        public async Task LoadShopLists()
+        {
+            var shopListParser = new ShopListParser();
+
+            await Task.Run(() =>
+            {
+                MasterShopListTable = shopListParser.GetTableFromFile(true);
+                ModShopListTable = shopListParser.GetTableFromFile();
+                MasterShopListList = shopListParser.ParseTable(MasterShopListTable);
+                ModShopListList = shopListParser.ParseTable(ModShopListTable);
+            });
+        }
+
+        public async Task LoadAbilityLists()
+        {
+            var abilityParser = new AbilityParser();
+
+            await Task.Run(() =>
+            {
+                MasterAbilityTable = abilityParser.GetTableFromFile(true);
+                ModAbilityTable = abilityParser.GetTableFromFile();
+                MasterAbilityList = abilityParser.ParseTable(MasterAbilityTable);
+                ModAbilityList = abilityParser.ParseTable(ModAbilityTable);
+            });
+        }
+
+        public async Task LoadAbilitySetLists()
+        {
+            var abilitySetParser = new AbilitySetParser();
+
+            await Task.Run(() =>
+            {
+                MasterAbilitySetTable = abilitySetParser.GetTableFromFile(true);
+                ModAbilitySetTable = abilitySetParser.GetTableFromFile();
+                MasterAbilitySetList = abilitySetParser.ParseTable(MasterAbilitySetTable);
+                ModAbilitySetList = abilitySetParser.ParseTable(ModAbilitySetTable);
+            });
+        }
+
+        public void StartLoading()
+        {
+            DataGrid.IsEnabled = false;
+            LoadingScreen.Visibility = Visibility.Visible;
+        }
+
+        public void StopLoading()
+        {
+            LoadingScreen.Visibility = Visibility.Hidden;
+            DataGrid.IsEnabled = true;
         }
 
         private void LoadPaths()
@@ -99,8 +221,8 @@ namespace OctomodEditor
                         if (resultPath != System.Windows.Forms.DialogResult.Cancel)
                         {
                             string path = openOctopathFolderDialogue.SelectedPath;
-                            CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
-                            CommonUtilities.BaseFilesLocation = path;
+                            CommonOctomodUtilities.AddSettingToConfig(new KeyValuePair<string, string>("baseFilesLocation", path));
+                            CommonOctomodUtilities.BaseFilesLocation = path;
                         }
                         else
                         {
@@ -116,7 +238,7 @@ namespace OctomodEditor
                 }
                 else
                 {
-                    CommonUtilities.BaseFilesLocation = settings["baseFilesLocation"];
+                    CommonOctomodUtilities.BaseFilesLocation = settings["baseFilesLocation"];
                 }
 
                 if (!settings.ContainsKey("modLocation") && !canceled)
@@ -129,8 +251,8 @@ namespace OctomodEditor
                         if (resultPath != System.Windows.Forms.DialogResult.Cancel)
                         {
                             string path = openOctopathFolderDialogue.SelectedPath;
-                            CommonUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
-                            CommonUtilities.ModLocation = path;
+                            CommonOctomodUtilities.AddSettingToConfig(new KeyValuePair<string, string>("modLocation", path));
+                            CommonOctomodUtilities.ModLocation = path;
                         }
                         else
                         {
@@ -146,7 +268,7 @@ namespace OctomodEditor
                 }
                 else if (!canceled)
                 {
-                    CommonUtilities.ModLocation = settings["modLocation"];
+                    CommonOctomodUtilities.ModLocation = settings["modLocation"];
                 }
 
                 if (canceled)
@@ -183,33 +305,60 @@ namespace OctomodEditor
             prefWindow.ResizeMode = ResizeMode.NoResize;
         }
 
-        private void EnemySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        private async void EnemySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (ConfigLoadedSuccessfully)
             {
+                StartLoading();
+                await LoadEnemyLists();
+                await LoadItemLists();
                 ClearCanvas();
                 EnemySelectorLabel.Background.Opacity = 0.8;
                 DataGrid.Children.Add(new EnemyEditorCanvas());
+                StopLoading();
             }
         }
 
-        private void ItemSelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        private async void ItemSelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (ConfigLoadedSuccessfully)
             {
+                StartLoading();
+                await LoadItemLists();
                 ClearCanvas();
                 ItemSelectorLabel.Background.Opacity = 0.8;
                 DataGrid.Children.Add(new ItemEditorCanvas());
+                StopLoading();
             }
         }
 
-        private void ShopSelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        private async void ShopSelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (ConfigLoadedSuccessfully)
             {
+                StartLoading();
+                await LoadShopInfoLists();
+                await LoadShopLists();
+                await LoadPurchaseItemLists();
+                await LoadItemLists();
                 ClearCanvas();
                 ShopSelectorLabel.Background.Opacity = 0.8;
                 DataGrid.Children.Add(new ShopEditorCanvas());
+                StopLoading();
+            }
+        }
+
+        private async void AbilitySelectorLabel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ConfigLoadedSuccessfully)
+            {
+                StartLoading();
+                await LoadAbilityLists();
+                await LoadAbilitySetLists();
+                ClearCanvas();
+                AbilitySelectorLabel.Background.Opacity = 0.8;
+                DataGrid.Children.Add(new AbilityEditorCanvas());
+                StopLoading();
             }
         }
     }

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OctomodEditor.Models
 {
-    public class ShopInfo
+    public class ShopInfo : OctopathModel
     {
-        public int Offset { get; set; }
-        public string Key { get; set; }
         public string ShopName { get; set; }
         public ShopType ShopType { get; set; }
         public string ShopBGM { get; set; }
@@ -23,17 +21,17 @@ namespace OctomodEditor.Models
             string[] shopData = Key.Split('_');
             if(shopData[0] == "MINATO")
             {
-                returnString = $"Unused Shop - {MainWindow.ModGameText[ShopName]}";
+                returnString = $"Unused Shop - {MainWindow.ModGameText[ShopName].Text}";
             }
             else if(shopData[0] == "NPC")
             {
                 if (shopData[1].StartsWith("T"))
                 {
-                    returnString = MainWindow.ModGameText[ShopName];
+                    returnString = MainWindow.ModGameText[ShopName].Text;
                 }
                 else
                 {
-                    returnString = $"{MainWindow.ModGameText[ShopName]} - {GetNPCShopLocation(shopData[1])}";
+                    returnString = $"{MainWindow.ModGameText[ShopName].Text} - {GetNPCShopLocation(shopData[1])}";
                 }
             }
             else
@@ -41,17 +39,6 @@ namespace OctomodEditor.Models
                 returnString = $"{GetMainShopLocation(shopData[0], shopData[1])} - {ShopType}";
             }
             return returnString;
-        }
-
-        public bool IsDifferentFrom(ShopInfo info)
-        {
-            return !(Key == info.Key &&
-                   ShopName == info.ShopName &&
-                   ShopType == info.ShopType &&
-                   ShopBGM == info.ShopBGM &&
-                   InnBasePrice == info.InnBasePrice &&
-                   InnDiscountItem == info.InnDiscountItem &&
-                   InnDiscountBasePrice == info.InnDiscountBasePrice);
         }
 
         public static string GetNPCShopLocation(string identifier)
@@ -159,6 +146,4 @@ namespace OctomodEditor.Models
             }
         }
     }
-    
-    public enum ShopType { WEAPON, ITEM, GENERAL, INN, BAR }
 }
